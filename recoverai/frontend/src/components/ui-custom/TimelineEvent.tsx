@@ -96,7 +96,7 @@ interface AuditTimelineItemProps {
   timestamp: string;
   correlationId: string;
   recoveryCaseId?: string;
-  eventData: Record<string, unknown>;
+  eventData?: Record<string, any> | null;
   isLast?: boolean;
   overrideStatus?: EventStatus;
   index?: number;

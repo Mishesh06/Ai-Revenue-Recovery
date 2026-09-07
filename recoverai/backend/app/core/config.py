@@ -34,6 +34,15 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8001
 
+    # ── LLM Configuration ─────────────────────────────────────────
+    llm_provider: str = "mock"  # "mock" | "openai" | "gemini" | "anthropic" | "ollama"
+    llm_api_key: str | None = None
+    llm_model: str = "gpt-4o-mini"
+    llm_base_url: str | None = None
+    llm_timeout_seconds: float = 2.0
+    llm_max_tokens: int = 300
+    llm_temperature: float = 0.0
+
 
 @lru_cache
 def get_settings() -> Settings:

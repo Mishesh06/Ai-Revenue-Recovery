@@ -30,67 +30,73 @@ function formatStreamMessage(evt: AuditEventOut) {
       return {
         tag: "PAYMENT_FAILED",
         tagColor: "text-[var(--status-danger-text)] bg-[var(--status-danger-subtle)] border-[var(--status-danger-border)]",
-        detail: `Gross Volume ${formatCurrency(data.amount || 2499)} (${data.error_code || "GATEWAY_TIMEOUT"})`,
+        detail: typeof data.amount === "number"
+          ? `Gross Volume ${formatCurrency(data.amount, "INR")} (${data.error_code || "GATEWAY_DECLINE"})`
+          : `Decline Recorded (${data.error_code || "GATEWAY_DECLINE"})`,
       };
     case "OpportunityDetected":
       return {
         tag: "OPPORTUNITY_DETECTED",
         tagColor: "text-[var(--status-info-text)] bg-[var(--status-info-subtle)] border-[var(--status-info-border)]",
-        detail: `Recovery Priority: ${data.priority || "HIGH"} (Score: 89/100)`,
+        detail: `Recovery Priority: ${data.priority || "HIGH"}${data.detected_window_minutes ? ` (Window: ${data.detected_window_minutes}m)` : ""}`,
       };
     case "PredictionCreated":
       return {
         tag: "ML_PREDICTION",
         tagColor: "text-[var(--brand-primary-hover)] bg-[var(--brand-primary-muted)] border-[var(--brand-primary-ring)]",
-        detail: data.recovery_score != null
-          ? `Recovery Score: ${data.recovery_score}${data.recovery_probability != null ? ` | Prob: ${(data.recovery_probability * 100).toFixed(1)}%` : ""}`
-          : "Prediction data pending",
+        detail: data.recovery_probability != null
+          ? `Recovery Likelihood: ${(data.recovery_probability * 100).toFixed(1)}%${data.risk_score != null ? ` (Risk: ${(data.risk_score * 100).toFixed(0)}/100)` : ""}`
+          : "Confidence Scored",
       };
     case "DiagnosisCreated":
       return {
         tag: "AI_DIAGNOSIS",
         tagColor: "text-[var(--brand-primary-hover)] bg-[var(--brand-primary-muted)] border-[var(--brand-primary-ring)]",
         detail: data.failure_category
-          ? `Category: ${data.failure_category}${data.confidence != null ? ` (${(data.confidence * 100).toFixed(0)}% Conf)` : ""}`
-          : "Diagnosis data pending",
+          ? `Root Cause: ${data.failure_category}${data.confidence != null ? ` (${(data.confidence * 100).toFixed(0)}% Conf)` : ""}`
+          : "Root Cause Diagnosed",
       };
     case "RecoveryPlanned":
       return {
         tag: "RECOVERY_RECOMMENDED",
         tagColor: "text-[var(--fg-primary)] bg-[var(--bg-raised)] border-[var(--border-default)]",
-        detail: `Action: ${data.recommended_action || "RETRY_PAYMENT"} (Reason: ${data.reason_code || "TRANSIENT_DROP"})`,
+        detail: `Strategy: ${data.recommended_action || "RETRY_PAYMENT"}${data.channel ? ` via ${data.channel}` : ""}`,
       };
     case "PolicyEvaluated":
       return {
-        tag: data.decision === "APPROVED" ? "POLICY_APPROVED" : "POLICY_BLOCKED",
+        tag: data.decision === "APPROVED" ? "POLICY_APPROVED" : data.decision === "REVIEW" ? "POLICY_REVIEW" : "POLICY_BLOCKED",
         tagColor: data.decision === "APPROVED"
           ? "text-[var(--status-success-text)] bg-[var(--status-success-subtle)] border-[var(--status-success-border)]"
+          : data.decision === "REVIEW"
+          ? "text-[var(--status-review-text)] bg-[var(--status-review-subtle)] border-[var(--status-review-border)]"
           : "text-[var(--status-warning-text)] bg-[var(--status-warning-subtle)] border-[var(--status-warning-border)]",
-        detail: `Gate Rule: ${data.reason_code || "WITHIN_RETRY_LIMIT"} (Decision: ${data.decision || "APPROVED"})`,
+        detail: `Rule Check: ${data.decision || "APPROVED"}${data.reason ? ` (${data.reason})` : ""}`,
       };
     case "RecoveryExecuted":
       return {
         tag: "ACTION_EXECUTED",
         tagColor: "text-[var(--status-info-text)] bg-[var(--status-info-subtle)] border-[var(--status-info-border)]",
-        detail: `Adapter: Simulation Mode (Idempotency Key Reserved)`,
+        detail: `Adapter: Simulation Mode (Idempotency Key Active)`,
       };
     case "RecoverySucceeded":
       return {
         tag: "PAYMENT_RECOVERED",
         tagColor: "text-[var(--status-success-text)] bg-[var(--status-success-subtle)] border-[var(--status-success-border)] font-bold",
-        detail: `Capital Settled ${formatCurrency(data.amount || 2499)} (Zero fee leakage)`,
+        detail: typeof data.amount === "number"
+          ? `Capital Settled ${formatCurrency(data.amount, "INR")} (Verified capture)`
+          : "Capital Settled to Ledger",
       };
     case "ManualReviewCreated":
       return {
         tag: "MANUAL_REVIEW_CREATED",
         tagColor: "text-[var(--status-danger-text)] bg-[var(--status-danger-subtle)] border-[var(--status-danger-border)] font-bold",
-        detail: `Outcome Unknown. Automatic retry blocked to prevent double-recovery.`,
+        detail: data.reason || "Outcome Unknown. Blind retry blocked to prevent duplicate billing.",
       };
     default:
       return {
         tag: evt.event_type.toUpperCase(),
         tagColor: "text-[var(--fg-secondary)] bg-[var(--bg-raised)] border-[var(--border-subtle)]",
-        detail: JSON.stringify(data),
+        detail: data.message || "Audit trail state recorded",
       };
   }
 }

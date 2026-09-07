@@ -49,54 +49,6 @@ const fadeUp: Variants = {
   }),
 };
 
-/* ── 3D Tilt Card Wrapper ─────────────────────────────────────────────────*/
-function TiltCard({
-  children, className, intensity = 6, style, onClick
-}: {
-  children: React.ReactNode; className?: string; intensity?: number; style?: React.CSSProperties; onClick?: () => void;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const rotX = useMotionValue(0);
-  const rotY = useMotionValue(0);
-  const springX = useMotionSpring(rotX, { stiffness: 220, damping: 22 });
-  const springY = useMotionSpring(rotY, { stiffness: 220, damping: 22 });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);
-    const dy = (e.clientY - cy) / (rect.height / 2);
-    rotX.set(-dy * intensity);
-    rotY.set(dx * intensity);
-  }, [rotX, rotY, intensity]);
-
-  const handleMouseLeave = useCallback(() => {
-    rotX.set(0);
-    rotY.set(0);
-  }, [rotX, rotY]);
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-      style={{
-        ...style,
-        rotateX: springX,
-        rotateY: springY,
-        transformStyle: "preserve-3d",
-        transformPerspective: 800,
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 /* ── Case state → badge variant ───────────────────────────────────────────*/
 function caseVariant(state: string): "success" | "info" | "warning" | "danger" | "neutral" {
   const s = state.toUpperCase();
@@ -107,12 +59,12 @@ function caseVariant(state: string): "success" | "info" | "warning" | "danger" |
   return "neutral";
 }
 
-/* ── Metric KPI card with tilt and click navigation ───────────────────────*/
+/* ── Metric KPI card with clean enterprise styling and click navigation ─────*/
 function MetricKPI({
-  title, value, formatType, icon: Icon, color, borderColor, description, index, href, onClick
+  title, value, formatType, icon: Icon, color, description, index, onClick
 }: {
   title: string; value: number; formatType: "currency" | "percent" | "integer";
-  icon: React.ComponentType<{ className?: string }>; color: string; borderColor: string;
+  icon: React.ComponentType<{ className?: string }>; color: string;
   description: string; index: number; href: string; onClick: () => void;
 }) {
   return (
@@ -123,55 +75,42 @@ function MetricKPI({
       viewport={{ once: true, margin: "-20px" }}
       variants={fadeUp}
     >
-      <TiltCard
-        intensity={4}
+      <div
         onClick={onClick}
-        className="relative rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 overflow-hidden group cursor-pointer h-full transition-all duration-200 hover:border-white/20 hover:shadow-[var(--shadow-md)]"
+        className="relative rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 sm:p-5 cursor-pointer h-full transition-all duration-150 hover:border-[var(--border-strong)] hover:bg-[var(--bg-surface-alt)]/60 flex flex-col justify-between group"
       >
-        {/* Top accent bar */}
-        <div className="absolute top-0 inset-x-0 h-[2.5px]" style={{ background: color, opacity: 0.85 }} />
-
-        {/* Hover ambient glow */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[var(--radius-xl)]"
-          style={{ background: `radial-gradient(ellipse at 50% -20%, color-mix(in srgb, ${color} 12%, transparent) 0%, transparent 65%)` }}
-        />
-
-        <div className="relative z-10 flex flex-col justify-between h-full">
-          <div>
-            {/* Icon row */}
-            <div className="flex items-center justify-between mb-4">
-              <div
-                className="w-8 h-8 rounded-[var(--radius-md)] flex items-center justify-center transition-transform group-hover:scale-110 duration-300"
-                style={{
-                  background: `color-mix(in srgb, ${color} 14%, transparent)`,
-                  border: `1px solid color-mix(in srgb, ${color} 24%, transparent)`,
-                  boxShadow: `0 0 10px color-mix(in srgb, ${color} 20%, transparent)`,
-                }}
-              >
-                <span style={{ color }}><Icon className="w-4 h-4" /></span>
-              </div>
-              <div className="flex items-center gap-1 text-[11px] font-mono text-[var(--fg-tertiary)] group-hover:text-[var(--brand-primary-light)] transition-colors">
-                <span className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-semibold">Inspect</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[var(--fg-quaternary)] group-hover:text-[var(--brand-primary-light)] transition-colors" />
-              </div>
+        <div>
+          {/* Icon & inspect indicator */}
+          <div className="flex items-center justify-between mb-3">
+            <div
+              className="w-7 h-7 rounded-[var(--radius-sm)] flex items-center justify-center transition-colors"
+              style={{
+                background: `color-mix(in srgb, ${color} 12%, transparent)`,
+                border: `1px solid color-mix(in srgb, ${color} 22%, transparent)`,
+              }}
+            >
+              <span style={{ color }}><Icon className="w-3.5 h-3.5" /></span>
             </div>
-
-            {/* Value */}
-            <div className="mb-1">
-              <span className="text-2xl sm:text-3xl font-bold font-mono tabular-nums text-[var(--fg-primary)] leading-none">
-                <AnimatedNumber value={value} formatType={formatType} currency="INR" />
-              </span>
+            <div className="flex items-center gap-1 text-[11px] font-mono text-[var(--fg-quaternary)] group-hover:text-[var(--brand-primary-light)] transition-colors">
+              <span className="text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">Inspect</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
-
-            {/* Label */}
-            <div className="text-[11px] font-bold uppercase tracking-[0.09em] text-[var(--fg-tertiary)] mb-1">{title}</div>
           </div>
 
-          {/* Description */}
-          <p className="text-[11px] text-[var(--fg-quaternary)] leading-relaxed mt-2">{description}</p>
+          {/* Value */}
+          <div className="mb-1">
+            <span className="text-2xl font-bold font-mono tabular-nums text-[var(--fg-primary)] leading-none">
+              <AnimatedNumber value={value} formatType={formatType} currency="INR" />
+            </span>
+          </div>
+
+          {/* Label */}
+          <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--fg-tertiary)] mb-1">{title}</div>
         </div>
-      </TiltCard>
+
+        {/* Description */}
+        <p className="text-[11px] text-[var(--fg-secondary)] leading-relaxed mt-2 pt-2 border-t border-[var(--border-subtle)]">{description}</p>
+      </div>
     </motion.div>
   );
 }
@@ -192,11 +131,6 @@ function OverviewContent() {
   const [error, setError] = useState<unknown>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [activePipelineStage, setActivePipelineStage] = useState(0);
-
-  // Parallax scroll tracking for hero
-  const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 500], [0, 60]);
-  const heroOpacity = useTransform(scrollY, [0, 450], [1, 0.25]);
 
   const fetchData = async (isManual = false) => {
     if (!merchantId) return;
@@ -291,8 +225,8 @@ function OverviewContent() {
       icon: CreditCard,
       color: "var(--status-danger)",
       stat: formatCurrency(financial.total_failed_amount || leak_map.failed || 0, "INR"),
-      desc: "Raw transaction drop-off ingested via Razorpay webhook",
-      actionText: "Inspect Failed Transactions →",
+      desc: "Raw transaction drop-off ingested via Razorpay webhook stream",
+      actionText: "Inspect Transactions →",
       actionHref: "/transactions",
     },
     {
@@ -320,20 +254,20 @@ function OverviewContent() {
       label: "Recovery Planned",
       icon: Map,
       color: "var(--status-review)",
-      stat: `${recovery.cases_pending} Active Inventions`,
+      stat: `${recovery.cases_pending} Active Interventions`,
       desc: "Autonomous reasoning formulation across retries and nudges",
-      actionText: "Inspect Agent Decisions →",
-      actionHref: "/command-center",
+      actionText: "Inspect Planned Cases →",
+      actionHref: "/recovery?state=PLANNED",
     },
     {
       id: "policy",
-      label: "Policy Approved",
+      label: "Policy Check",
       icon: ShieldCheck,
       color: "var(--status-warning)",
       stat: `${recovery.cases_pending || recovery.total_cases} Gates Cleared`,
       desc: "Deterministic safety constraints and idempotency keys verified",
-      actionText: "Inspect Safety Gates →",
-      actionHref: "/command-center",
+      actionText: "Inspect Policy Gates →",
+      actionHref: "/recovery?state=POLICY_CHECK",
     },
     {
       id: "recover",
@@ -439,235 +373,123 @@ function OverviewContent() {
   ];
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-28">
+    <div className="space-y-12 sm:space-y-16 pb-20">
       {/* ══════════════════════════════════════════════════════════════════
-          SECTION 1 — CINEMATIC HERO with PARALLAX & RELIABLE SVG CORE
+          SECTION 1 — HIGH-PRECISION HERO WITH ARCHITECTURE CORE
           ══════════════════════════════════════════════════════════════════ */}
       <section className="relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Left: Headline and Working Actions */}
-          <motion.div
-            style={{ y: heroY, opacity: heroOpacity }}
-            className="lg:col-span-7 space-y-6"
-          >
-            {/* Status Pills */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: SPRING_EASE }}
-              className="flex items-center gap-2 flex-wrap"
-            >
-              <span
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--radius-xs)] text-[10px] font-mono font-bold tracking-[0.09em] uppercase"
-                style={{
-                  background: "var(--brand-primary-muted)",
-                  border: "1px solid var(--brand-primary-ring)",
-                  color: "var(--brand-primary-light)",
-                }}
-              >
-                <Sparkles className="w-3 h-3" />
-                AI REVENUE RECOVERY OPERATING SYSTEM
-              </span>
-              <div
-                className="inline-flex items-center gap-1.5 px-2 py-1 rounded-[var(--radius-xs)] text-[10px] font-mono font-semibold"
-                style={{
-                  background: "var(--status-success-subtle)",
-                  border: "1px solid var(--status-success-border)",
-                  color: "var(--status-success-text)",
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--status-success)] animate-pulse inline-block" />
-                ENGINE LIVE
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          {/* Left: Headline, Value Proposition, and Primary Actions */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              {/* Status Badges */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--radius-xs)] text-[11px] font-mono font-bold tracking-wider uppercase bg-[var(--brand-primary-muted)] border border-[var(--brand-primary-ring)] text-[var(--brand-primary-light)]">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  RECOVERAI ENGINE v3.2
+                </span>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--radius-xs)] text-[11px] font-mono font-semibold bg-[var(--status-success-subtle)] border border-[var(--status-success-border)] text-[var(--status-success-text)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--status-success)] inline-block" />
+                  LIVE WEBHOOK STREAM
+                </div>
               </div>
-            </motion.div>
 
-            {/* Headline */}
-            <div>
-              <motion.h1
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.08, ease: SPRING_EASE }}
-                className="font-black tracking-tight text-[var(--fg-primary)] leading-[1.04]"
-                style={{ fontSize: "clamp(2.3rem, 5.2vw, 4.0rem)", letterSpacing: "-0.04em" }}
-              >
-                Recover revenue{" "}
-                <motion.span
-                  className="block"
-                  style={{
-                    background: "linear-gradient(135deg, var(--brand-primary-light) 0%, #60A5FA 45%, var(--status-success-light) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    backgroundSize: "200% 100%",
-                  }}
-                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                >
-                  before it disappears.
-                </motion.span>
-              </motion.h1>
+              {/* High-Contrast Headline */}
+              <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold tracking-tight text-[var(--fg-primary)] leading-[1.15]">
+                Autonomous revenue recovery for Razorpay payments.
+              </h1>
+
+              {/* Narrative copy */}
+              <p className="text-sm sm:text-base text-[var(--fg-secondary)] max-w-xl leading-relaxed">
+                RecoverAI continuously monitors failed payment webhooks, predicts recovery probability with calibrated gradient-boosted trees, diagnoses bank downtimes with AI agents, and executes deterministic, idempotent recovery interventions.
+              </p>
             </div>
 
-            {/* Narrative copy */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.16, ease: SPRING_EASE }}
-              className="text-sm sm:text-base text-[var(--fg-secondary)] max-w-xl leading-relaxed"
-            >
-              RecoverAI continuously monitors failed Razorpay payments, predicts recovery probability with calibrated ML, diagnoses transient bank downtimes with AI agents, and executes safe, idempotent recovery interventions.
-            </motion.p>
-
-            {/* Working Action Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.24, ease: SPRING_EASE }}
-              className="flex items-center gap-3 flex-wrap"
-            >
-              <Link
-                href="/simulator?scenario=A"
-                className="inline-flex items-center gap-2 h-10 px-5 rounded-[var(--radius-md)] text-sm font-bold text-white transition-all shadow-sm"
-                style={{ background: "var(--brand-primary)", boxShadow: "var(--glow-brand)" }}
-              >
-                <Play className="w-3.5 h-3.5 fill-current" />
-                Launch Simulator
-              </Link>
-              <Link
-                href="/recovery?priority=HIGH"
-                className="inline-flex items-center gap-2 h-10 px-4 rounded-[var(--radius-md)] text-sm font-bold text-[var(--fg-primary)] border border-[var(--border-default)] hover:bg-[var(--bg-raised)] transition-colors"
-              >
-                Inspect Active Cases
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-              <button
-                onClick={() => fetchData(true)}
-                disabled={isRefreshing}
-                title="Synchronize real-time telemetry from database"
-                className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-[var(--radius-md)] text-sm font-semibold text-[var(--fg-secondary)] border border-[var(--border-subtle)] hover:bg-[var(--bg-raised)] transition-colors disabled:opacity-50"
-              >
-                <RefreshCw className={cn("w-3.5 h-3.5", isRefreshing && "animate-spin text-[var(--brand-primary)]")} />
-                <span className="hidden sm:inline">{isRefreshing ? "Syncing…" : "Sync"}</span>
-              </button>
-            </motion.div>
-
-            {/* Mini Summary Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.32 }}
-              className="flex items-center gap-6 pt-2 flex-wrap"
-            >
-              {[
-                { label: "Total Cases", value: recovery.total_cases || 0 },
-                { label: "Recovered", value: recovery.cases_recovered || 0 },
-                { label: "Pending", value: recovery.cases_pending || 0 },
-              ].map(({ label, value }, i) => (
-                <div key={label}>
-                  <div className="text-lg font-black font-mono text-[var(--fg-primary)] tabular-nums">
-                    {value.toLocaleString()}
-                  </div>
-                  <div className="text-[10px] font-bold uppercase tracking-[0.09em] text-[var(--fg-quaternary)]">
-                    {label}
-                  </div>
-                </div>
-              ))}
-              {lastUpdated && (
-                <div className="text-[10px] font-mono text-[var(--fg-quaternary)] flex items-center gap-1 ml-auto">
-                  <Clock className="w-3 h-3" />
-                  <span>Synced {formatRelativeTime(lastUpdated.toISOString())}</span>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-
-          {/* Right: Polished SVG Recovery Intelligence Core */}
-          <motion.div
-            className="lg:col-span-5"
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.12, ease: SPRING_EASE }}
-          >
-            <TiltCard intensity={5}>
-              <div
-                className="relative rounded-[var(--radius-2xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden p-6"
-                style={{ boxShadow: "var(--shadow-xl), 0 0 50px rgba(99,102,241,0.12)" }}
-              >
-                {/* Header inside card */}
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <div className="text-[10px] font-mono font-bold tracking-[0.09em] uppercase text-[var(--status-success-text)]">
-                      Recovery Intelligence Core
-                    </div>
-                    <div className="text-2xl font-black font-mono tabular-nums text-[var(--fg-primary)] mt-0.5">
-                      <AnimatedNumber
-                        value={financial.total_recovered_amount || 0}
-                        formatType="currency"
-                        currency="INR"
-                      />
-                    </div>
-                  </div>
-                  <CheckCircle2 className="w-5 h-5 text-[var(--status-success)] animate-pulse" />
-                </div>
-
-                {/* SVG Visual Component */}
-                <div className="h-64 sm:h-72 w-full">
-                  <RecoveryIntelligenceCore
-                    recovered={financial.total_recovered_amount || 0}
-                    rate={recovery.recovery_rate || 0}
-                  />
-                </div>
-
-                {/* Card Sub-stats */}
-                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[var(--border-subtle)] font-mono">
-                  <div>
-                    <div className="text-[10px] text-[var(--fg-tertiary)] uppercase font-bold tracking-wider">
-                      Recovery Rate
-                    </div>
-                    <div className="text-base font-bold text-[var(--fg-primary)] mt-0.5">
-                      {formatPercent(recovery.recovery_rate || 0)}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-[var(--fg-tertiary)] uppercase font-bold tracking-wider">
-                      Net Impact
-                    </div>
-                    <div className="text-base font-bold text-[var(--status-success-text)] mt-0.5">
-                      {formatCurrency(financial.net_revenue_impact || 0, "INR")}
-                    </div>
-                  </div>
-                </div>
+            {/* Action Row */}
+            <div className="space-y-4 pt-2">
+              <div className="flex items-center gap-3 flex-wrap">
+                <Link
+                  href="/simulator?scenario=A"
+                  className="inline-flex items-center gap-2 h-9 px-4 rounded-[var(--radius-md)] text-xs font-bold text-white transition-all bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] shadow-sm"
+                >
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  Launch Recovery Simulator
+                </Link>
+                <Link
+                  href="/recovery?priority=HIGH"
+                  className="inline-flex items-center gap-2 h-9 px-3.5 rounded-[var(--radius-md)] text-xs font-bold text-[var(--fg-primary)] border border-[var(--border-default)] hover:bg-[var(--bg-raised)] transition-colors"
+                >
+                  Inspect Active Cases
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                <button
+                  onClick={() => fetchData(true)}
+                  disabled={isRefreshing}
+                  title="Synchronize real-time telemetry from database"
+                  className="inline-flex items-center gap-1.5 h-9 px-3 rounded-[var(--radius-md)] text-xs font-semibold text-[var(--fg-secondary)] border border-[var(--border-subtle)] hover:bg-[var(--bg-raised)] transition-colors disabled:opacity-50"
+                >
+                  <RefreshCw className={cn("w-3.5 h-3.5", isRefreshing && "animate-spin text-[var(--brand-primary)]")} />
+                  <span>{isRefreshing ? "Syncing…" : "Sync"}</span>
+                </button>
               </div>
-            </TiltCard>
-          </motion.div>
+
+              {/* Mini Summary Stats */}
+              <div className="flex items-center gap-6 pt-3 border-t border-[var(--border-subtle)] flex-wrap">
+                {[
+                  { label: "Total Cases", value: recovery.total_cases || 0 },
+                  { label: "Recovered", value: recovery.cases_recovered || 0 },
+                  { label: "Pending", value: recovery.cases_pending || 0 },
+                ].map(({ label, value }) => (
+                  <div key={label}>
+                    <div className="text-base font-bold font-mono text-[var(--fg-primary)] tabular-nums">
+                      {value.toLocaleString()}
+                    </div>
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--fg-tertiary)]">
+                      {label}
+                    </div>
+                  </div>
+                ))}
+                {lastUpdated && (
+                  <div className="text-[10px] font-mono text-[var(--fg-quaternary)] flex items-center gap-1 ml-auto">
+                    <Clock className="w-3 h-3" />
+                    <span>Synced {formatRelativeTime(lastUpdated.toISOString())}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Operational Architecture Monitor */}
+          <div className="lg:col-span-5 flex flex-col">
+            <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden h-full flex flex-col justify-between shadow-[var(--shadow-sm)]">
+              <RecoveryIntelligenceCore
+                recovered={financial.total_recovered_amount || 0}
+                rate={recovery.recovery_rate || 0}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
           SECTION 2 — LIVE INTERACTIVE METRICS (KPI Cards)
           ══════════════════════════════════════════════════════════════════ */}
-      <section className="space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-30px" }}
-          transition={{ duration: 0.45, ease: SPRING_EASE }}
-          className="flex items-center justify-between flex-wrap gap-2"
-        >
+      <section className="space-y-4">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
-            <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-1">
-              LIVE METRICS
+            <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-0.5">
+              OPERATIONAL PERFORMANCE
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--fg-primary)] tracking-tight">
-              Operational Recovery Yield
+            <h2 className="text-lg sm:text-xl font-bold text-[var(--fg-primary)] tracking-tight">
+              Recovery Yield & Revenue Protection
             </h2>
           </div>
           <span className="text-xs text-[var(--fg-tertiary)] font-mono">
-            Click any KPI card to inspect telemetry →
+            Click any KPI card to inspect module →
           </span>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
           <MetricKPI
             index={0}
             title="Revenue Recovered"
@@ -675,7 +497,6 @@ function OverviewContent() {
             formatType="currency"
             icon={CheckCircle2}
             color="var(--status-success)"
-            borderColor="var(--status-success-border)"
             description="Verified capital settled via automated retry routing"
             href="/analytics"
             onClick={() => router.push("/analytics")}
@@ -687,7 +508,6 @@ function OverviewContent() {
             formatType="currency"
             icon={AlertCircle}
             color="var(--status-danger)"
-            borderColor="var(--status-danger-border)"
             description="Unrecovered failed amount still within recovery window"
             href="/intelligence"
             onClick={() => router.push("/intelligence")}
@@ -699,7 +519,6 @@ function OverviewContent() {
             formatType="integer"
             icon={ShieldAlert}
             color="var(--status-warning)"
-            borderColor="var(--status-warning-border)"
             description="Eligible failed payments admitted into recovery pipeline"
             href="/recovery"
             onClick={() => router.push("/recovery")}
@@ -711,7 +530,6 @@ function OverviewContent() {
             formatType="integer"
             icon={TrendingUp}
             color="var(--status-info)"
-            borderColor="var(--status-info-border)"
             description="Fully resolved transactions with zero chargeback rate"
             href="/recovery?state=RECOVERED"
             onClick={() => router.push("/recovery?state=RECOVERED")}
@@ -723,7 +541,6 @@ function OverviewContent() {
             formatType="percent"
             icon={Percent}
             color="var(--brand-primary)"
-            borderColor="var(--brand-primary-ring)"
             description="Success conversion across all executed retry interventions"
             href="/analytics"
             onClick={() => router.push("/analytics")}
@@ -734,32 +551,23 @@ function OverviewContent() {
       {/* ══════════════════════════════════════════════════════════════════
           SECTION 3 — AUTONOMOUS PIPELINE FLOW (Live Application States)
           ══════════════════════════════════════════════════════════════════ */}
-      <section className="space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-30px" }}
-          transition={{ duration: 0.45, ease: SPRING_EASE }}
-          className="flex items-center justify-between flex-wrap gap-2"
-        >
+      <section className="space-y-4">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
-            <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-1">
+            <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-0.5">
               AUTONOMOUS PIPELINE
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--fg-primary)] tracking-tight">
-              AI Recovery Lifecycle
+            <h2 className="text-lg sm:text-xl font-bold text-[var(--fg-primary)] tracking-tight">
+              Recovery Lifecycle State Flow
             </h2>
           </div>
           <div className="flex items-center gap-1.5 text-[11px] font-mono text-[var(--status-success-text)]">
-            <div className="w-1.5 h-1.5 rounded-full bg-[var(--status-success)] animate-pulse" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--status-success)]" />
             LIVE TELEMETRY ACTIVE
           </div>
-        </motion.div>
+        </div>
 
-        <div
-          className="rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 overflow-hidden"
-          style={{ boxShadow: "var(--shadow-md)" }}
-        >
+        <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 overflow-hidden shadow-[var(--shadow-xs)]">
           {/* Stage Progress Tracker */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3">
             {PIPELINE_STAGES.map((s, i) => {
@@ -775,16 +583,16 @@ function OverviewContent() {
                   >
                     <div
                       className={cn(
-                        "w-10 h-10 rounded-[var(--radius-lg)] flex items-center justify-center transition-all duration-300",
+                        "w-9 h-9 rounded-[var(--radius-md)] flex items-center justify-center transition-all duration-150",
                         current
                           ? "ring-2 ring-offset-2 ring-offset-[var(--bg-surface)]"
-                          : "hover:scale-105"
+                          : "hover:border-[var(--border-strong)]"
                       )}
                       style={{
                         background: current || done
-                          ? `color-mix(in srgb, ${s.color} 18%, transparent)`
-                          : "var(--bg-raised)",
-                        border: `1.5px solid ${current ? s.color : done ? `color-mix(in srgb, ${s.color} 40%, transparent)` : "var(--border-subtle)"}`,
+                          ? `color-mix(in srgb, ${s.color} 14%, transparent)`
+                          : "var(--bg-surface-alt)",
+                        border: `1px solid ${current ? s.color : done ? `color-mix(in srgb, ${s.color} 40%, transparent)` : "var(--border-subtle)"}`,
                         color: current || done ? s.color : "var(--fg-tertiary)",
                       }}
                     >
@@ -792,7 +600,7 @@ function OverviewContent() {
                     </div>
                     <span
                       className={cn(
-                        "text-[9px] font-bold text-center leading-tight max-w-[72px] transition-colors",
+                        "text-[10px] font-semibold text-center leading-tight max-w-[80px] transition-colors",
                         current ? "text-[var(--fg-primary)]" : "text-[var(--fg-tertiary)]"
                       )}
                     >
@@ -802,9 +610,9 @@ function OverviewContent() {
 
                   {/* Connecting Track Line */}
                   {i < PIPELINE_STAGES.length - 1 && (
-                    <div className="flex-1 min-w-[24px] h-1 rounded-full bg-[var(--bg-raised)] overflow-hidden">
+                    <div className="flex-1 min-w-[20px] h-0.5 rounded-full bg-[var(--border-subtle)] overflow-hidden">
                       <div
-                        className="h-full rounded-full transition-all duration-500"
+                        className="h-full rounded-full transition-all duration-300"
                         style={{
                           background: s.color,
                           width: i < activePipelineStage ? "100%" : "0%",
@@ -817,72 +625,65 @@ function OverviewContent() {
             })}
           </div>
 
-          {/* Active Stage Deep Detail Card */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStage.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="mt-5 p-5 rounded-[var(--radius-lg)] border flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-              style={{
-                borderColor: `color-mix(in srgb, ${currentStage.color} 28%, transparent)`,
-                background: `color-mix(in srgb, ${currentStage.color} 7%, var(--bg-surface-alt))`,
-              }}
-            >
-              <div className="flex items-center gap-4">
-                <div
-                  className="w-10 h-10 rounded-[var(--radius-md)] flex items-center justify-center shrink-0"
-                  style={{ background: `color-mix(in srgb, ${currentStage.color} 20%, transparent)` }}
-                >
-                  <currentStage.icon className="w-5 h-5" style={{ color: currentStage.color }} />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold text-[var(--fg-primary)]">{currentStage.label}</h3>
-                    <span
-                      className="text-[10px] font-mono font-bold px-2 py-0.5 rounded"
-                      style={{
-                        color: currentStage.color,
-                        background: `color-mix(in srgb, ${currentStage.color} 14%, transparent)`,
-                        border: `1px solid color-mix(in srgb, ${currentStage.color} 30%, transparent)`,
-                      }}
-                    >
-                      {currentStage.stat}
-                    </span>
-                  </div>
-                  <p className="text-xs text-[var(--fg-secondary)] mt-1">{currentStage.desc}</p>
-                </div>
-              </div>
-
-              <Link
-                href={currentStage.actionHref}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[var(--radius-md)] text-xs font-bold text-white transition-all shrink-0 self-start sm:self-center"
-                style={{ background: currentStage.color }}
+          {/* Active Stage Detail Card */}
+          <div
+            className="mt-4 p-4 rounded-[var(--radius-md)] border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors"
+            style={{
+              borderColor: `color-mix(in srgb, ${currentStage.color} 24%, transparent)`,
+              background: `color-mix(in srgb, ${currentStage.color} 5%, var(--bg-surface-alt))`,
+            }}
+          >
+            <div className="flex items-center gap-3.5">
+              <div
+                className="w-9 h-9 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0"
+                style={{ background: `color-mix(in srgb, ${currentStage.color} 18%, transparent)` }}
               >
-                <span>{currentStage.actionText}</span>
-              </Link>
-            </motion.div>
-          </AnimatePresence>
+                <currentStage.icon className="w-4 h-4" style={{ color: currentStage.color }} />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-bold text-[var(--fg-primary)]">{currentStage.label}</h3>
+                  <span
+                    className="text-[10px] font-mono font-bold px-2 py-0.2 rounded"
+                    style={{
+                      color: currentStage.color,
+                      background: `color-mix(in srgb, ${currentStage.color} 12%, transparent)`,
+                      border: `1px solid color-mix(in srgb, ${currentStage.color} 25%, transparent)`,
+                    }}
+                  >
+                    {currentStage.stat}
+                  </span>
+                </div>
+                <p className="text-xs text-[var(--fg-secondary)] mt-0.5">{currentStage.desc}</p>
+              </div>
+            </div>
+
+            <Link
+              href={currentStage.actionHref}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[var(--radius-sm)] text-xs font-bold text-white transition-opacity shrink-0 self-start sm:self-center hover:opacity-90"
+              style={{ background: currentStage.color }}
+            >
+              <span>{currentStage.actionText}</span>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
-          SECTION 4 — TOP RECOVERY OPPORTUNITIES (Requirement 4)
+          SECTION 4 — TOP RECOVERY OPPORTUNITIES
           ══════════════════════════════════════════════════════════════════ */}
-      <section className="space-y-5">
+      <section className="space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <div className="flex items-center gap-2">
               <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)]">
-                ACTIVE QUEUE
+                ACTIVE PIPELINE QUEUE
               </div>
-              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[var(--status-warning-subtle)] text-[var(--status-warning-text)] border border-[var(--status-warning-border)]">
+              <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-[var(--status-warning-subtle)] text-[var(--status-warning-text)] border border-[var(--status-warning-border)]">
                 HIGH PRIORITY
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--fg-primary)] tracking-tight mt-1">
+            <h2 className="text-lg sm:text-xl font-bold text-[var(--fg-primary)] tracking-tight mt-0.5">
               Top Recovery Opportunities
             </h2>
           </div>
@@ -891,28 +692,27 @@ function OverviewContent() {
             href="/recovery"
             className="inline-flex items-center gap-1 text-xs font-bold text-[var(--brand-primary)] hover:text-[var(--brand-primary-light)] transition-colors"
           >
-            <span>View All Recovery Cases</span>
+            <span>View All Cases</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         {displayOpportunities.length === 0 ? (
-          <div className="rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 text-center">
+          <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 text-center">
             <ShieldCheck className="w-8 h-8 text-[var(--status-success)] mx-auto mb-2" />
             <p className="text-sm font-semibold text-[var(--fg-primary)]">All Recovery Cases Resolved</p>
             <p className="text-xs text-[var(--fg-tertiary)] mt-1">No active drop-offs currently require intervention.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {displayOpportunities.slice(0, 4).map((opp, idx) => (
-              <TiltCard
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {displayOpportunities.slice(0, 4).map((opp) => (
+              <div
                 key={opp.id}
-                intensity={5}
-                className="rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 flex flex-col justify-between group hover:border-[var(--brand-primary-ring)] transition-all"
+                className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 flex flex-col justify-between transition-colors hover:border-[var(--border-strong)]"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-mono text-[var(--fg-secondary)] font-semibold">
+                    <span className="text-xs font-mono text-[var(--fg-secondary)] font-semibold">
                       {truncateId(opp.id, 10)}
                     </span>
                     <StatusBadge
@@ -926,9 +726,9 @@ function OverviewContent() {
 
                   <div className="space-y-2 mb-4">
                     <div>
-                      <div className="text-[10px] uppercase font-mono text-[var(--fg-quaternary)]">Confidence</div>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <div className="flex-1 h-1.5 rounded-full bg-[var(--bg-raised)] overflow-hidden">
+                      <div className="text-[10px] uppercase font-mono text-[var(--fg-tertiary)]">Confidence Score</div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className="flex-1 h-1.5 rounded-full bg-[var(--bg-surface-alt)] overflow-hidden">
                           <div
                             className="h-full rounded-full bg-[var(--brand-primary)]"
                             style={{ width: `${((opp.confidence ?? 0.8) * 100).toFixed(0)}%` }}
@@ -941,7 +741,7 @@ function OverviewContent() {
                     </div>
 
                     <div>
-                      <div className="text-[10px] uppercase font-mono text-[var(--fg-quaternary)]">Recovery Window</div>
+                      <div className="text-[10px] uppercase font-mono text-[var(--fg-tertiary)]">Recovery Window</div>
                       <div className="text-xs font-mono text-[var(--fg-secondary)] mt-0.5">
                         {opp.recovery_window_ends_at ? formatRelativeTime(opp.recovery_window_ends_at) : "Active"}
                       </div>
@@ -952,18 +752,18 @@ function OverviewContent() {
                 <div className="pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between gap-2">
                   <Link
                     href={`/recovery?caseId=${opp.id}`}
-                    className="text-[11px] font-bold text-[var(--brand-primary)] hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-[var(--brand-primary)] hover:underline flex items-center gap-1"
                   >
                     Inspect <ArrowRight className="w-3 h-3" />
                   </Link>
                   <Link
                     href={`/simulator?caseId=${opp.id}&scenario=A`}
-                    className="text-[10px] font-mono px-2 py-1 rounded bg-[var(--bg-raised)] border border-[var(--border-subtle)] text-[var(--fg-secondary)] hover:text-[var(--fg-primary)] transition-colors"
+                    className="text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--bg-surface-alt)] border border-[var(--border-subtle)] text-[var(--fg-secondary)] hover:text-[var(--fg-primary)] transition-colors"
                   >
                     Simulate
                   </Link>
                 </div>
-              </TiltCard>
+              </div>
             ))}
           </div>
         )}
@@ -972,99 +772,79 @@ function OverviewContent() {
       {/* ══════════════════════════════════════════════════════════════════
           SECTION 5 — AI & ML ARCHITECTURE (Real Agent Telemetry)
           ══════════════════════════════════════════════════════════════════ */}
-      <section className="space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-30px" }}
-          transition={{ duration: 0.45, ease: SPRING_EASE }}
-        >
-          <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-1">
+      <section className="space-y-4">
+        <div>
+          <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-0.5">
             INTELLIGENCE STACK
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-[var(--fg-primary)] tracking-tight">
+          <h2 className="text-lg sm:text-xl font-bold text-[var(--fg-primary)] tracking-tight">
             AI & ML Architecture Telemetry
           </h2>
-          <p className="text-sm text-[var(--fg-secondary)] mt-1.5">
+          <p className="text-xs text-[var(--fg-secondary)] mt-1">
             Five autonomous engine layers executing safe, deterministic interventions.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-          {INTELLIGENCE_MODULES.map((m, i) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+          {INTELLIGENCE_MODULES.map((m) => {
             const Icon = m.icon;
             return (
-              <motion.div
+              <div
                 key={m.id}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-20px" }}
-                variants={fadeUp}
+                className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4 flex flex-col justify-between transition-colors hover:border-[var(--border-strong)]"
               >
-                <TiltCard
-                  intensity={6}
-                  className="relative rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 group overflow-hidden cursor-default h-full flex flex-col justify-between"
-                >
-                  {/* Top accent glow */}
-                  <div
-                    className="absolute top-0 inset-x-0 h-[2px]"
-                    style={{ background: m.color, opacity: 0.8 }}
-                  />
-
-                  <div>
-                    <div className="flex items-start justify-between gap-2 mb-3">
-                      <div
-                        className="w-9 h-9 rounded-[var(--radius-md)] flex items-center justify-center shrink-0"
-                        style={{
-                          background: `color-mix(in srgb, ${m.color} 15%, transparent)`,
-                          border: `1px solid color-mix(in srgb, ${m.color} 28%, transparent)`,
-                        }}
-                      >
-                        <Icon className="w-4 h-4" style={{ color: m.color }} />
-                      </div>
-                      <div className="flex flex-col items-end">
-                        <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-[var(--status-success-subtle)] text-[var(--status-success-text)] border border-[var(--status-success-border)]">
-                          LIVE
-                        </span>
-                        <span className="text-[10px] font-mono text-[var(--fg-tertiary)] mt-0.5">{m.latency}</span>
-                      </div>
-                    </div>
-
+                <div>
+                  <div className="flex items-start justify-between gap-2 mb-2.5">
                     <div
-                      className="text-[9px] font-mono font-bold tracking-[0.09em] uppercase mb-0.5"
-                      style={{ color: m.color }}
+                      className="w-8 h-8 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0"
+                      style={{
+                        background: `color-mix(in srgb, ${m.color} 14%, transparent)`,
+                        border: `1px solid color-mix(in srgb, ${m.color} 24%, transparent)`,
+                      }}
                     >
-                      {m.type}
+                      <Icon className="w-4 h-4" style={{ color: m.color }} />
                     </div>
-                    <h4 className="text-sm font-bold text-[var(--fg-primary)] leading-tight">{m.name}</h4>
-                    <p className="text-xs font-semibold text-[var(--fg-secondary)] italic mt-1.5 leading-snug">
-                      "{m.tagline}"
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-2 mt-3 pt-2 border-t border-[var(--border-subtle)] font-mono text-[10px]">
-                      <div>
-                        <span className="text-[var(--fg-quaternary)] uppercase">Executions: </span>
-                        <strong className="text-[var(--fg-primary)]">{m.runs}</strong>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-[var(--fg-quaternary)] uppercase">Yield: </span>
-                        <strong className="text-[var(--status-success-text)]">{m.successRate}</strong>
-                      </div>
+                    <div className="flex flex-col items-end">
+                      <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-[var(--status-success-subtle)] text-[var(--status-success-text)] border border-[var(--status-success-border)]">
+                        ONLINE
+                      </span>
+                      <span className="text-[10px] font-mono text-[var(--fg-tertiary)] mt-0.5">{m.latency}</span>
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-[var(--border-subtle)] mt-3 flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-[var(--fg-quaternary)]">{m.version}</span>
-                    <Link
-                      href={m.href}
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[var(--brand-primary)] hover:text-[var(--brand-primary-light)] transition-colors"
-                    >
-                      Inspect <ArrowRight className="w-3 h-3" />
-                    </Link>
+                  <div
+                    className="text-[9px] font-mono font-bold tracking-wider uppercase mb-0.5"
+                    style={{ color: m.color }}
+                  >
+                    {m.type}
                   </div>
-                </TiltCard>
-              </motion.div>
+                  <h4 className="text-xs font-bold text-[var(--fg-primary)] leading-tight">{m.name}</h4>
+                  <p className="text-[11px] font-medium text-[var(--fg-secondary)] italic mt-1 leading-snug">
+                    &ldquo;{m.tagline}&rdquo;
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-2 mt-2.5 pt-2 border-t border-[var(--border-subtle)] font-mono text-[10px]">
+                    <div>
+                      <span className="text-[var(--fg-quaternary)] uppercase">Runs: </span>
+                      <strong className="text-[var(--fg-primary)]">{m.runs}</strong>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[var(--fg-quaternary)] uppercase">Yield: </span>
+                      <strong className="text-[var(--status-success-text)]">{m.successRate}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2.5 border-t border-[var(--border-subtle)] mt-2.5 flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-[var(--fg-quaternary)]">{m.version}</span>
+                  <Link
+                    href={m.href}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[var(--brand-primary)] hover:text-[var(--brand-primary-light)] transition-colors"
+                  >
+                    Inspect <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
             );
           })}
         </div>
@@ -1073,13 +853,13 @@ function OverviewContent() {
       {/* ══════════════════════════════════════════════════════════════════
           SECTION 6 — RECOVERY ACTIVITY (Real Ledger Activity)
           ══════════════════════════════════════════════════════════════════ */}
-      <section className="space-y-5">
+      <section className="space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
-            <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-1">
-              LIVE FEED
+            <div className="text-[10px] font-mono font-bold tracking-[0.1em] uppercase text-[var(--brand-primary)] mb-0.5">
+              OPERATIONAL LOG
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--fg-primary)] tracking-tight">
+            <h2 className="text-lg sm:text-xl font-bold text-[var(--fg-primary)] tracking-tight">
               Recent Recovery Activity
             </h2>
           </div>
@@ -1093,21 +873,18 @@ function OverviewContent() {
         </div>
 
         {cases.length === 0 ? (
-          <div className="rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-10 text-center">
-            <ShieldAlert className="w-8 h-8 text-[var(--fg-quaternary)] mx-auto mb-3" />
-            <p className="text-sm text-[var(--fg-tertiary)]">
+          <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 text-center">
+            <ShieldAlert className="w-7 h-7 text-[var(--fg-quaternary)] mx-auto mb-2" />
+            <p className="text-xs text-[var(--fg-tertiary)]">
               No recovery cases found for active merchant workspace.
             </p>
           </div>
         ) : (
-          <div
-            className="rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden"
-            style={{ boxShadow: "var(--shadow-md)" }}
-          >
+          <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] overflow-hidden shadow-[var(--shadow-xs)]">
             <div className="overflow-x-auto no-scrollbar">
               <div className="min-w-[720px]">
                 {/* Header */}
-                <div className="grid grid-cols-12 gap-4 px-5 py-3 border-b border-[var(--border-subtle)] bg-[var(--bg-surface-alt)]/60 text-[11px] font-semibold uppercase tracking-wider text-[var(--fg-tertiary)]">
+                <div className="grid grid-cols-12 gap-4 px-5 py-2.5 border-b border-[var(--border-subtle)] bg-[var(--bg-surface-alt)] text-[11px] font-semibold uppercase tracking-wider text-[var(--fg-tertiary)]">
                   <div className="col-span-3">CASE ID</div>
                   <div className="col-span-2">STATE</div>
                   <div className="col-span-2">CONFIDENCE</div>
@@ -1117,26 +894,15 @@ function OverviewContent() {
 
                 {/* Rows */}
                 <div className="divide-y divide-[var(--border-subtle)]">
-                  {cases.slice(0, 8).map((c, idx) => (
-                    <motion.div
+                  {cases.slice(0, 8).map((c) => (
+                    <div
                       key={c.id}
-                      custom={idx}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      variants={fadeUp}
-                      whileHover={{ backgroundColor: "var(--bg-surface-alt)" }}
-                      className="grid grid-cols-12 gap-4 px-5 py-3.5 transition-colors duration-150 cursor-pointer group"
+                      className="grid grid-cols-12 gap-4 px-5 py-3 transition-colors duration-100 cursor-pointer hover:bg-[var(--bg-surface-alt)]/60 group"
                       onClick={() => router.push(`/recovery?caseId=${c.id}`)}
                     >
                       {/* Case ID */}
                       <div className="col-span-3 flex items-center gap-2 min-w-0">
-                        <div
-                          className="w-6 h-6 rounded-[var(--radius-sm)] flex items-center justify-center shrink-0"
-                          style={{ background: "var(--bg-raised)", border: "1px solid var(--border-subtle)" }}
-                        >
-                          <ShieldCheck className="w-3 h-3 text-[var(--brand-primary-light)]" />
-                        </div>
+                        <ShieldCheck className="w-3.5 h-3.5 text-[var(--brand-primary-light)] shrink-0" />
                         <span className="text-xs font-mono text-[var(--fg-secondary)] truncate group-hover:text-[var(--brand-primary-light)] transition-colors">
                           {truncateId(c.id, 12)}
                         </span>
@@ -1157,7 +923,7 @@ function OverviewContent() {
                       <div className="col-span-2 flex items-center">
                         {c.confidence != null ? (
                           <div className="flex items-center gap-2">
-                            <div className="w-12 h-1.5 rounded-full bg-[var(--bg-raised)] overflow-hidden">
+                            <div className="w-12 h-1.5 rounded-full bg-[var(--bg-surface-alt)] overflow-hidden">
                               <div
                                 className="h-full rounded-full"
                                 style={{
@@ -1189,14 +955,14 @@ function OverviewContent() {
                         <span>{truncateId(c.correlation_id, 8)}</span>
                         <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
 
             {/* Table Footer */}
-            <div className="px-5 py-3 border-t border-[var(--border-subtle)] bg-[var(--bg-surface-alt)]/40 flex items-center justify-between text-[11px] font-mono text-[var(--fg-tertiary)]">
+            <div className="px-5 py-2.5 border-t border-[var(--border-subtle)] bg-[var(--bg-surface-alt)]/50 flex items-center justify-between text-[11px] font-mono text-[var(--fg-tertiary)]">
               <span>
                 Showing {Math.min(cases.length, 8)} of {recovery.total_cases} recovery cases
               </span>
@@ -1212,54 +978,39 @@ function OverviewContent() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
-          SECTION 7 — EXECUTIVE PRODUCT STATEMENT & ACTIONS
+          SECTION 7 — DEVELOPER & OPS COMMAND BAR
           ══════════════════════════════════════════════════════════════════ */}
-      <section
-        className="relative rounded-[var(--radius-2xl)] overflow-hidden text-white p-8 sm:p-12 lg:p-14"
-        style={{
-          background: "linear-gradient(145deg, #0B1118 0%, #0F1620 50%, #0B1118 100%)",
-          border: "1px solid rgba(99,102,241,0.2)",
-          boxShadow: "var(--glow-brand), 0 0 60px rgba(99,102,241,0.08)",
-        }}
-      >
-        <div className="relative z-10 max-w-2xl mx-auto text-center space-y-5">
-          <span
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-[var(--radius-full)] text-[11px] font-mono font-semibold"
-            style={{
-              background: "rgba(255,255,255,0.07)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "var(--brand-primary-light)",
-            }}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            AUTONOMOUS FINTECH RECOVERY
-          </span>
-
-          <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight text-[var(--fg-primary)]">
-            "Every failed payment is a recovery opportunity."
-          </h2>
-
-          <p className="text-sm text-[var(--fg-secondary)] leading-relaxed">
-            Eliminate revenue leakage from transient gateway drop-offs and customer bank latencies with sub-second ML calibration and deterministic policy guarantees.
-          </p>
-
-          <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <Link
-              href="/simulator"
-              className="h-10 px-5 rounded-[var(--radius-md)] text-sm font-bold text-white flex items-center gap-2 transition-all shadow-sm"
-              style={{ background: "var(--brand-primary)", boxShadow: "var(--glow-brand)" }}
-            >
-              <Play className="w-3.5 h-3.5 fill-current" />
-              Simulate Recovery Pipeline
-            </Link>
-            <Link
-              href="/command-center"
-              className="h-10 px-5 rounded-[var(--radius-md)] text-sm font-bold text-[var(--fg-primary)] flex items-center gap-2 transition-colors border border-[var(--border-strong)] hover:bg-[var(--bg-raised)]"
-            >
-              <Terminal className="w-3.5 h-3.5" />
-              AI Command Center
-            </Link>
+      <section className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-[var(--shadow-xs)]">
+        <div className="space-y-1.5 max-w-xl">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[var(--status-success)]" />
+            <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-[var(--status-success-text)]">
+              DETERMINISTIC RECOVERY ENGINE
+            </span>
           </div>
+          <h3 className="text-lg font-bold text-[var(--fg-primary)] tracking-tight">
+            Ready to test autonomous recovery against real payment scenarios?
+          </h3>
+          <p className="text-xs text-[var(--fg-secondary)] leading-relaxed">
+            Execute all 6 calibrated recovery scenarios, test Policy Engine circuit breakers, and trace SHA-256 idempotency locks without touching live production settlement.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0 flex-wrap">
+          <Link
+            href="/simulator"
+            className="h-9 px-4 rounded-[var(--radius-md)] text-xs font-bold text-white flex items-center gap-2 transition-all bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] shadow-sm"
+          >
+            <Play className="w-3.5 h-3.5 fill-current" />
+            Run Simulator
+          </Link>
+          <Link
+            href="/command-center"
+            className="h-9 px-4 rounded-[var(--radius-md)] text-xs font-bold text-[var(--fg-primary)] flex items-center gap-2 transition-colors border border-[var(--border-default)] hover:bg-[var(--bg-surface-alt)]"
+          >
+            <Terminal className="w-3.5 h-3.5" />
+            Command Center
+          </Link>
         </div>
       </section>
     </div>
@@ -1279,3 +1030,4 @@ export default function OverviewPage() {
     </Suspense>
   );
 }
+

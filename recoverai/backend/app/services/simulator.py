@@ -63,8 +63,12 @@ class SimulatorService:
             except Exception:
                 pass
 
-        # Scenario-specific dataset filtering
-        if scenario == "A":
+        # Scenario-specific normalization and dataset filtering
+        raw_scenario = (scenario or "A").strip()
+        norm_scenario = raw_scenario.upper()
+
+        if norm_scenario in ["A", "NORMAL_RECOVERY", "RETRY_PAYMENT_3X", "NORMAL"]:
+            canonical_scenario = "A"
             # Normal Recovery: Transient failure, amount <= 1000, low risk, within retry limit
             df_eligible = df_sample[
                 (df_sample["transaction_amount"] <= 1000.00) &
@@ -75,14 +79,30 @@ class SimulatorService:
                 df_eligible = df_sample[df_sample["transaction_amount"] <= 1000.00]
             df_sample = df_eligible.sample(n=min(sample_size, len(df_eligible)), random_state=actual_seed)
 
-        elif scenario == "B":
+        elif norm_scenario in ["F", "TEMPORARY_FAILURE", "TEMP_FAILURE", "TRANSIENT_FAILURE", "NETWORK_RESILIENCE"]:
+            canonical_scenario = "F"
+            # Temporary Failure: Network / bank gateway temporary drop-off
+            df_eligible = df_sample[
+                (df_sample["customer_risk_score"] < 0.5) &
+                (df_sample["failure_code"].str.contains("timeout|network|gateway|temporary|processing", case=False, na=False) |
+                 ~df_sample["failure_code"].isin(["stolen_card", "lost_card", "fraud_suspected", "account_closed"]))
+            ]
+            if df_eligible.empty:
+                df_eligible = df_sample[df_sample["customer_risk_score"] < 0.5]
+            if df_eligible.empty:
+                df_eligible = df_sample
+            df_sample = df_eligible.sample(n=min(sample_size, len(df_eligible)), random_state=actual_seed)
+
+        elif norm_scenario in ["B", "HIGH_RISK", "HIGH_RISK_CUSTOMER", "HIGH_RISK_TRANSACTION", "RISK_GATE"]:
+            canonical_scenario = "B"
             # High-Risk Customer: Risk score > 0.75 / 0.8 triggering PolicyEngine REVIEW gate
             df_eligible = df_sample[df_sample["customer_risk_score"] > 0.75]
             if df_eligible.empty:
                 df_eligible = df_sample[df_sample["customer_risk_score"] > 0.6]
             df_sample = df_eligible.sample(n=min(sample_size, len(df_eligible)), random_state=actual_seed)
 
-        elif scenario == "C":
+        elif norm_scenario in ["C", "TIMEOUT", "TIMEOUT_UNKNOWN", "UNKNOWN_OUTCOME", "API_TIMEOUT"]:
+            canonical_scenario = "C"
             # API Timeout & Unknown Outcome: Normal transaction approved by policy, but gateway times out
             df_eligible = df_sample[
                 (df_sample["transaction_amount"] <= 1000.00) &
@@ -91,14 +111,16 @@ class SimulatorService:
             ]
             df_sample = df_eligible.sample(n=min(sample_size, len(df_eligible)), random_state=actual_seed)
 
-        elif scenario == "D":
+        elif norm_scenario in ["D", "HIGH_OPPORTUNITY", "HIGH_VALUE", "HIGH_VALUE_OPPORTUNITY", "HIGH_RECOVERY_OPPORTUNITY"]:
+            canonical_scenario = "D"
             # High-Value Opportunity / Insufficient Funds: Intent switch & timing optimization
             df_eligible = df_sample[df_sample["failure_code"] == "insufficient_funds"]
             if df_eligible.empty:
                 df_eligible = df_sample
             df_sample = df_eligible.sample(n=min(sample_size, len(df_eligible)), random_state=actual_seed)
 
-        elif scenario == "E":
+        elif norm_scenario in ["E", "POLICY_HEAVY", "POLICY_CONSTRAINTS", "POLICY_BLOCKED", "POLICY_BATCH", "POLICY_HEAVY_BATCH"]:
+            canonical_scenario = "E"
             # Policy Heavy Constraints: Attempt budget exceeded (attempt_count >= 3)
             df_eligible = df_sample[
                 ~df_sample["failure_code"].isin(["stolen_card", "lost_card", "fraud_suspected", "account_closed"])
@@ -106,20 +128,21 @@ class SimulatorService:
             df_sample = df_eligible.sample(n=min(sample_size, len(df_eligible)), random_state=actual_seed)
 
         else:
+            canonical_scenario = raw_scenario
             df_sample = df_sample.sample(n=min(sample_size, len(df_sample)), random_state=actual_seed)
 
         # Calibrate with target case if available
         if target_transaction and not df_sample.empty:
             first_idx = df_sample.index[0]
-            if scenario == "A" and float(target_transaction.amount) <= 1000.0:
+            if canonical_scenario in ["A", "F"] and float(target_transaction.amount) <= 1000.0:
                 df_sample.loc[first_idx, "transaction_amount"] = float(target_transaction.amount)
-            elif scenario in ["C", "D", "E"] and target_transaction.status:
+            elif canonical_scenario in ["C", "D", "E"] and target_transaction.status:
                 df_sample.loc[first_idx, "failure_code"] = target_transaction.status
 
         # Fetch or create the merchant (tenant)
         merchant = db.query(Merchant).filter_by(id=merchant_id).first()
         if not merchant:
-            merchant = Merchant(id=merchant_id, name=f"Simulation Merchant {scenario}")
+            merchant = Merchant(id=merchant_id, name=f"Simulation Merchant {canonical_scenario}")
             db.add(merchant)
             db.flush()
 
@@ -133,7 +156,7 @@ class SimulatorService:
         simulation_run = SimulationRun(
             id=uuid.uuid4(),
             merchant_id=merchant_id,
-            scenario=scenario,
+            scenario=canonical_scenario,
             execution_mode=ExecutionMode.SIMULATION,
             status="RUNNING",
             started_at=datetime.now(timezone.utc)
@@ -142,7 +165,7 @@ class SimulatorService:
         db.flush()
 
         # Injected outcome configuration
-        if scenario == "C":
+        if canonical_scenario == "C":
             SimulationAdapter.set_injected_outcome(AdapterOutcome.UNKNOWN)
         else:
             SimulationAdapter.set_injected_outcome(AdapterOutcome.SUCCESS)
@@ -231,8 +254,8 @@ class SimulatorService:
                 timestamp=t_opp,
                 event_data={
                     "actor": "FailureManager",
-                    "priority": "HIGH" if scenario in ["A", "D"] else "MEDIUM",
-                    "is_recoverable": scenario != "E",
+                    "priority": "HIGH" if canonical_scenario in ["A", "D", "F"] else "MEDIUM",
+                    "is_recoverable": canonical_scenario != "E",
                     "detected_window_minutes": 120,
                 }
             ))
@@ -243,7 +266,7 @@ class SimulatorService:
             action_code = plan.recommended_action
 
             # Calibrated prediction confidence score
-            recovery_prob = 0.92 if scenario == "A" else 0.42 if scenario == "B" else 0.88 if scenario == "C" else 0.74 if scenario == "D" else 0.15
+            recovery_prob = 0.92 if canonical_scenario in ["A", "F"] else 0.42 if canonical_scenario == "B" else 0.88 if canonical_scenario == "C" else 0.74 if canonical_scenario == "D" else 0.15
             case.confidence = recovery_prob
 
             # 3. AuditEvent: PredictionCreated
@@ -294,13 +317,13 @@ class SimulatorService:
                     "recommended_action": plan.recommended_action,
                     "priority": plan.priority,
                     "reason_code": plan.reason_code,
-                    "channel": "API_RETRY" if scenario in ["A", "C"] else "CUSTOMER_INTERVENTION",
+                    "channel": "API_RETRY" if canonical_scenario in ["A", "C", "F"] else "CUSTOMER_INTERVENTION",
                 }
             ))
 
             # Policy Evaluation
-            attempt_count = 5 if scenario == "E" else int(row.get("previous_attempt_count", 0))
-            risk_level = "HIGH" if (scenario == "B" or float(row.get("customer_risk_score", 0.2)) > 0.75) else "LOW"
+            attempt_count = 5 if canonical_scenario == "E" else int(row.get("previous_attempt_count", 0))
+            risk_level = "HIGH" if (canonical_scenario == "B" or float(row.get("customer_risk_score", 0.2)) > 0.75) else "LOW"
 
             eval_result = PolicyEngine.evaluate(
                 case=case,
@@ -494,7 +517,7 @@ class SimulatorService:
         db.commit()
         return {
             "simulation_id": str(simulation_run.id),
-            "scenario": scenario,
+            "scenario": canonical_scenario,
             "metrics": metrics,
             "generated_cases": generated_case_ids
         }

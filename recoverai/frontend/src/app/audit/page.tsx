@@ -19,8 +19,7 @@ import {
   Layers, ArrowRight, Lock, CheckCircle2, Clock
 } from "lucide-react";
 import {
-  motion, AnimatePresence, useMotionValue,
-  useSpring as useMotionSpring, Variants
+  motion, AnimatePresence, Variants
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -30,52 +29,6 @@ import {
    ──────────────────────────────────────────────────────────────────────────── */
 
 const SPRING_EASE = [0.16, 1, 0.3, 1] as const;
-
-function TiltCard({
-  children, className, intensity = 6, style
-}: {
-  children: React.ReactNode; className?: string; intensity?: number; style?: React.CSSProperties;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const rotX = useMotionValue(0);
-  const rotY = useMotionValue(0);
-  const springX = useMotionSpring(rotX, { stiffness: 220, damping: 22 });
-  const springY = useMotionSpring(rotY, { stiffness: 220, damping: 22 });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);
-    const dy = (e.clientY - cy) / (rect.height / 2);
-    rotX.set(-dy * intensity);
-    rotY.set(dx * intensity);
-  }, [rotX, rotY, intensity]);
-
-  const handleMouseLeave = useCallback(() => {
-    rotX.set(0);
-    rotY.set(0);
-  }, [rotX, rotY]);
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        ...style,
-        rotateX: springX,
-        rotateY: springY,
-        transformStyle: "preserve-3d",
-        transformPerspective: 800,
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 function inferEventActor(item: AuditEventOut): string {
   if (item.event_data && typeof item.event_data === "object" && item.event_data.actor) {
@@ -277,7 +230,7 @@ function AuditContent() {
       </div>
 
       {/* ──────────────────────────────────────────────────────────────────────────
-          2. AUDIT INTEGRITY KPIS (TiltCard)
+          2. AUDIT INTEGRITY KPIS (Enterprise Cards)
           ────────────────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
@@ -316,15 +269,14 @@ function AuditContent() {
         ].map((kpi) => {
           const Icon = kpi.icon;
           return (
-            <TiltCard
+            <div
               key={kpi.title}
-              intensity={3}
-              className="relative rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 overflow-hidden group cursor-default h-full transition-all duration-200 hover:border-white/20 hover:shadow-[var(--shadow-md)]"
+              className="relative rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 overflow-hidden transition-all duration-200 hover:border-white/20 hover:shadow-[var(--shadow-sm)]"
             >
-              <div className="absolute top-0 inset-x-0 h-[2.5px]" style={{ background: kpi.color, opacity: 0.85 }} />
+              <div className="absolute top-0 inset-x-0 h-[2px]" style={{ background: kpi.color, opacity: 0.85 }} />
               <div className="flex items-center justify-between mb-3">
                 <div
-                  className="w-8 h-8 rounded-[var(--radius-md)] flex items-center justify-center transition-transform group-hover:scale-110"
+                  className="w-8 h-8 rounded-[var(--radius-md)] flex items-center justify-center"
                   style={{
                     background: `color-mix(in srgb, ${kpi.color} 14%, transparent)`,
                     border: `1px solid color-mix(in srgb, ${kpi.color} 24%, transparent)`,
@@ -332,12 +284,12 @@ function AuditContent() {
                 >
                   <Icon className="w-4 h-4" style={{ color: kpi.color }} />
                 </div>
-                <span className="text-[10px] font-mono text-[var(--fg-tertiary)]">AUDIT</span>
+                <span className="text-[10px] font-mono text-[var(--fg-tertiary)] uppercase tracking-wider">Audit</span>
               </div>
-              <div className="text-2xl font-black font-mono text-[var(--fg-primary)]">{kpi.value}</div>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--fg-tertiary)] mt-1">{kpi.title}</div>
+              <div className="text-2xl font-bold font-mono text-[var(--fg-primary)] tabular-nums">{kpi.value}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--fg-tertiary)] mt-1.5">{kpi.title}</div>
               <p className="text-[11px] text-[var(--fg-quaternary)] mt-1">{kpi.sub}</p>
-            </TiltCard>
+            </div>
           );
         })}
       </div>

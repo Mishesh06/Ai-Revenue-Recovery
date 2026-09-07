@@ -36,6 +36,16 @@ export const SCENARIOS: ScenarioDefinition[] = [
     expectedOutcome: "Recovery Succeeded (₹ Recovered)",
   },
   {
+    id: "F",
+    code: "Scenario F",
+    name: "Temporary Failure",
+    tag: "RESILIENCE",
+    tagVariant: "info",
+    description: "Transient bank gateway drop-off calibrated for immediate automated retry recovery.",
+    demonstrationGoal: "Demonstrates network resilience and transient fault absorption.",
+    expectedOutcome: "Immediate Automated Retry (Recovered)",
+  },
+  {
     id: "B",
     code: "Scenario B",
     name: "High-Risk Customer",
@@ -70,7 +80,7 @@ export const SCENARIOS: ScenarioDefinition[] = [
     code: "Scenario E",
     name: "Policy Heavy Constraints",
     tag: "GOVERNANCE",
-    tagVariant: "info",
+    tagVariant: "warning",
     description: "Multiple prior attempts exceed merchant configured retry budget and trigger hard block.",
     demonstrationGoal: "Demonstrates deterministic rule compliance and fatigue prevention.",
     expectedOutcome: "Policy Blocked (Budget Exceeded)",
@@ -104,8 +114,8 @@ export function ScenarioCardSelector({
         </span>
       </div>
 
-      {/* Grid of 5 Scenario Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      {/* Grid of 6 Scenario Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {SCENARIOS.map((sc) => {
           const isSelected = selectedScenario === sc.id;
 

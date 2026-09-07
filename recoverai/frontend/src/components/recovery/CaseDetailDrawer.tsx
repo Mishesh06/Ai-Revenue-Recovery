@@ -73,12 +73,23 @@ export function CaseDetailDrawer({
     mode: string;
   } | null>(null);
   const [executionError, setExecutionError] = useState<string | null>(null);
+  const [transaction, setTransaction] = useState<TransactionOut | null>(null);
 
   // Reset execution result when inspecting a different case
   useEffect(() => {
     setExecutionResult(null);
     setExecutionError(null);
   }, [selectedCase?.id]);
+
+  useEffect(() => {
+    if (!selectedCase?.transaction_id || !selectedCase?.merchant_id) {
+      setTransaction(null);
+      return;
+    }
+    getTransaction(selectedCase.merchant_id, selectedCase.transaction_id)
+      .then(setTransaction)
+      .catch(() => setTransaction(null));
+  }, [selectedCase?.id, selectedCase?.transaction_id, selectedCase?.merchant_id]);
 
   if (!selectedCase) return null;
 
@@ -102,10 +113,7 @@ export function CaseDetailDrawer({
 
   // Recovery Window Rules
   const isWindowExpired =
-    selectedCase.state === "RECOVERY_WINDOW_EXPIRED" ||
-    (selectedCase.recovery_window_ends_at
-      ? new Date(selectedCase.recovery_window_ends_at).getTime() < Date.now()
-      : false);
+    selectedCase.state === "RECOVERY_WINDOW_EXPIRED";
 
   const isRecovered = selectedCase.state === "RECOVERED" || selectedCase.state === "CLOSED";
   const isReviewRequired =
@@ -117,15 +125,6 @@ export function CaseDetailDrawer({
     plan?.event_data?.recovery_action_id ||
     policy?.event_data?.action_id ||
     execution?.event_data?.id) as string | undefined;
-
-  const [transaction, setTransaction] = useState<TransactionOut | null>(null);
-
-  useEffect(() => {
-    if (!selectedCase?.transaction_id || !selectedCase?.merchant_id) return;
-    getTransaction(selectedCase.merchant_id, selectedCase.transaction_id)
-      .then(setTransaction)
-      .catch(() => setTransaction(null));
-  }, [selectedCase?.id, selectedCase?.transaction_id, selectedCase?.merchant_id]);
 
   // Real financial value from transaction, fallback if transaction query fails
   const caseAmount = transaction?.amount ?? null; // Only use real transaction amount from backend

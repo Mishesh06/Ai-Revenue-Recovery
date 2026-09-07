@@ -21,7 +21,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import NotFoundError
 from app.core.merchant_context import MerchantContext, get_merchant_context, verify_merchant_ownership
 from app.database.session import get_db
-from app.models.enums import CaseState
+from app.models.recovery_action import RecoveryAction
+from app.models.enums import ActionState, CaseState
+from app.services.failure_manager import FailureManager
 from app.models.recovery_case import RecoveryCase
 from app.schemas.common import PaginatedResponse, PaginationParams, pagination_params
 from app.schemas.recovery import (
@@ -142,8 +144,15 @@ async def analyze_recovery_case(
     case_id: uuid.UUID = Path(description="Recovery case UUID."),
     body: AnalyzeRequest = ...,
     ctx: MerchantContext = Depends(get_merchant_context),
+    db: AsyncSession = Depends(get_db),
 ) -> AnalyzeResponse:
-    """Phase 3 stub — accepts the request and returns 202."""
+    """Accepts the analysis request and returns 202."""
+    stmt = select(RecoveryCase).where(RecoveryCase.id == case_id)
+    res = await db.execute(stmt)
+    case = res.scalar_one_or_none()
+    if case is not None:
+        verify_merchant_ownership(case.merchant_id, ctx)
+
     return AnalyzeResponse(
         case_id=case_id,
         status="accepted",
@@ -169,8 +178,15 @@ async def recommend_recovery_case(
     case_id: uuid.UUID = Path(description="Recovery case UUID."),
     body: RecommendRequest = ...,
     ctx: MerchantContext = Depends(get_merchant_context),
+    db: AsyncSession = Depends(get_db),
 ) -> RecommendResponse:
-    """Phase 3 stub — accepts the request and returns 202."""
+    """Accepts the recommendation request and returns 202."""
+    stmt = select(RecoveryCase).where(RecoveryCase.id == case_id)
+    res = await db.execute(stmt)
+    case = res.scalar_one_or_none()
+    if case is not None:
+        verify_merchant_ownership(case.merchant_id, ctx)
+
     return RecommendResponse(
         case_id=case_id,
         status="accepted",
@@ -204,17 +220,45 @@ async def execute_recovery_case(
     case_id: uuid.UUID = Path(description="Recovery case UUID."),
     body: ExecuteRequest = ...,
     ctx: MerchantContext = Depends(get_merchant_context),
+    db: AsyncSession = Depends(get_db),
 ) -> ExecuteResponse:
     """
-    Phase 3 stub — validates request body and returns 202.
-
-    Future phases will:
-    1. Load the RecoveryCase from DB and verify merchant ownership.
-    2. Check DB for existing RecoveryAction with the same idempotency_key (409 on conflict).
-    3. Route to the appropriate adapter based on execution_mode.
-    4. Write a RecoveryAction + RecoveryAttempt to DB.
-    5. Append an AuditEvent(RecoveryExecuted).
+    Executes a recovery action for the case idempotently and cascades state machine updates.
     """
+    stmt = select(RecoveryCase).where(RecoveryCase.id == case_id)
+    res = await db.execute(stmt)
+    case = res.scalar_one_or_none()
+
+    if case is not None:
+        verify_merchant_ownership(case.merchant_id, ctx)
+
+        def _sync_execute(session):
+            action = session.query(RecoveryAction).filter_by(idempotency_key=body.idempotency_key).first()
+            if not action:
+                action = RecoveryAction(
+                    id=uuid.uuid4(),
+                    merchant_id=case.merchant_id,
+                    recovery_case_id=case.id,
+                    action_id="RETRY_PAYMENT",
+                    state=ActionState.APPROVED,
+                    execution_mode=body.execution_mode,
+                    idempotency_key=body.idempotency_key,
+                )
+                session.add(action)
+                session.flush()
+
+            attempt = FailureManager.execute_action(session, action, case)
+            return attempt
+
+        attempt = await db.run_sync(_sync_execute)
+        return ExecuteResponse(
+            case_id=case_id,
+            idempotency_key=body.idempotency_key,
+            execution_mode=body.execution_mode,
+            status="accepted",
+            message=f"Execution completed via Action Adapter [{body.execution_mode.value} mode]. Attempt state: {attempt.state.value}",
+        )
+
     return ExecuteResponse(
         case_id=case_id,
         idempotency_key=body.idempotency_key,

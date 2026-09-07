@@ -127,7 +127,7 @@ export interface PolicyOut {
   merchant_id: string;
   name: string;
   description?: string;
-  rules: Record<string, unknown>;
+  rules: Record<string, any>;
   is_active: boolean;
   created_at: string;
 }
@@ -149,7 +149,7 @@ export interface AgentRunOut {
   agent_name: string;
   agent_version: string;
   input_reference?: string | null;
-  output?: Record<string, unknown> | null;
+  output?: Record<string, any> | null;
   status: string;
   latency?: number | null;
   timestamp?: string;
@@ -205,7 +205,7 @@ export interface SimulationMetricsOut {
 export interface SimulationCreateRequest {
   scenario: string;
   execution_mode?: "LIVE" | "SIMULATION";
-  configuration?: Record<string, unknown>;
+  configuration?: Record<string, any>;
 }
 
 export interface SimulationCreateResponse {
@@ -256,7 +256,7 @@ export interface AuditEventOut {
   transaction_id?: string;
   correlation_id: string;
   event_type: string;
-  event_data: any;
+  event_data: Record<string, any> | null;
   timestamp: string;
 }
 

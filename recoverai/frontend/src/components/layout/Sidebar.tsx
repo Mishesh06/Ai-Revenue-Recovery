@@ -48,7 +48,7 @@ const PRIMARY_SECTIONS: { title: string; items: NavSectionItem[] }[] = [
     items: [
       { name: "Revenue Intelligence", href: "/intelligence", icon: LineChart },
       { name: "AI Command Center", href: "/command-center", icon: Terminal },
-      { name: "Human Review", href: "/review", icon: Users, badge: "2" },
+      { name: "Human Review", href: "/review", icon: Users },
     ],
   },
   {

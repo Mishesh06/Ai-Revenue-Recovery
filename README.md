@@ -9,7 +9,7 @@ RecoverAI is an open-source payment failure recovery system built with FastAPI, 
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.0+-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-563%20Passing-success?style=flat-square&logo=pytest&logoColor=white)](https://github.com/Mishesh06/Ai-Revenue-Recovery)
+[![Tests Passing](https://img.shields.io/badge/Tests-572%20Passing-success?style=flat-square&logo=pytest&logoColor=white)](https://github.com/Mishesh06/Ai-Revenue-Recovery)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 ---
@@ -33,9 +33,9 @@ To maintain engineering transparency, the table below distinguishes what is genu
 * **Multi-Tenant Scoping**: Row-level merchant partitioning via `merchant_id` foreign keys with `RESTRICT` on delete and middleware validation via `X-Merchant-ID`.
 * **Append-Only Audit Logging (`app/services/audit_service.py`)**: Immutable chronological logging of state changes, provider references, and action outcomes into `audit_events`.
 * **ML Predictive Pipeline (`ml/`)**: Scikit-Learn `RandomForestClassifier` trained on a synthetic feature dataset (`ml/data/dataset.csv`), with a versioned registry (`registry.json`) and prediction endpoint (`ml/predict.py`).
-* **Simulation Sandbox (`app/services/simulator.py`)**: Executes end-to-end recovery scenarios (Scenarios A–E) against sampled data, evaluating policies, updating state machines, and generating audit streams without external side effects.
-* **Next.js 15 Frontend (`recoverai/frontend/`)**: 12 route views featuring dark glassmorphic UI, live API data loading, interactive simulation scrubber, decision trace inspector, and manual review modal workflows.
-* **Comprehensive Test Suite**: 563 backend pytest test cases and 5 ML pipeline tests verifying schema integrity, tenant isolation, idempotency, and state machine transitions.
+* **Simulation Sandbox (`app/services/simulator.py`)**: Executes end-to-end recovery scenarios (Scenarios A–F) against sampled data, evaluating policies, updating state machines, and generating audit streams without external side effects.
+* **Next.js 16 Frontend (`recoverai/frontend/`)**: 12 route views featuring dark high-contrast fintech UI, live API data loading, interactive simulation scrubber, decision trace inspector, and manual review modal workflows.
+* **Comprehensive Test Suite**: 572 backend pytest test cases and 5 ML pipeline tests verifying schema integrity, tenant isolation, idempotency, and state machine transitions.
 
 ---
 
@@ -216,7 +216,7 @@ make test
 ```
 
 ### Individual Test Suites
-* **Backend Unit & Integration Tests (563 Tests)**:
+* **Backend Unit & Integration Tests (572 Tests)**:
   ```bash
   cd recoverai/backend && source .venv/bin/activate && pytest -v
   ```
@@ -237,9 +237,10 @@ The simulator allows testing state machine transitions and policy evaluations ag
 
 * **Scenario A (Normal Recovery)**: Transient decline (amount ≤ 1000, risk < 0.5) → Policy approved → SimulationAdapter succeeds → Case recovered and closed.
 * **Scenario B (High-Risk Escalation)**: Risk score > 0.75 → Policy blocks automated retry → Case routed to `ManualReview` queue.
-* **Scenario C (Gateway Timeout)**: Approved by policy → SimulationAdapter injects `UNKNOWN` outcome → `RecoveryAction` set to `OUTCOME_UNKNOWN` → Case routed to `ManualReview` queue.
+* **Scenario C (Gateway Timeout)**: Approved by policy → SimulationAdapter injects `UNKNOWN` outcome → `RecoveryAction` set to `OUTCOME_UNKNOWN` → Idempotency hold without blind retry → Case routed to `ManualReview` queue.
 * **Scenario D (Insufficient Funds)**: Triggers intent/delay recommendation → Policy evaluation.
 * **Scenario E (Exceeded Attempts)**: Previous attempt count ≥ 3 → Policy strictly BLOCKS execution (`RETRY_LIMIT_EXCEEDED`).
+* **Scenario F (Network Resilience / Temporary Downtime)**: Transient network drop-off → Immediate exponential backoff retry execution.
 
 ---
 

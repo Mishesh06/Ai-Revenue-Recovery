@@ -1,135 +1,135 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RecoverAI Design System — Premium Dark Fintech Theme
-   Visual Language: Futuristic · Intelligent · Calm · Trustworthy · Premium · Cinematic · Technical · Financial
-   Inspired by: Linear, Apple Pro, Stripe Dashboard Dark, Vercel Dark — tailored for Autonomous AI Revenue Recovery.
+   RecoverAI Design System — High-Precision Financial Operations Theme
+   Visual Language: Crisp · Developer-Grade · Trustworthy · High-Contrast · Technical
+   Tailored for Autonomous AI Revenue Recovery for Razorpay Merchants.
    ──────────────────────────────────────────────────────────────────────────── */
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* ── 1. SOPHISTICATED NEUTRAL FOUNDATION ───────────────────────────────── */
-  --neutral-black:        #03050A;   /* Pure abyss */
-  --neutral-charcoal-dark:#070B12;   /* Deep canvas */
-  --neutral-charcoal:     #0B1118;   /* Primary surface */
-  --neutral-charcoal-alt: #0F1620;   /* Elevated surface */
-  --neutral-graphite:     #151E2D;   /* Card background */
-  --neutral-graphite-light:#1C2740;  /* Raised card */
-  --neutral-slate:        #243047;   /* Border / divider */
-  --neutral-muted:        #364155;   /* Muted border */
+  /* ── 1. HIGH-CONTRAST FINTECH SLATE FOUNDATION ──────────────────────────── */
+  --neutral-black:        #050810;   /* Deepest abyss */
+  --neutral-charcoal-dark:#080C14;   /* Canvas background */
+  --neutral-charcoal:     #0D131F;   /* Card & panel surface */
+  --neutral-charcoal-alt: #121B2B;   /* Elevated surface / row hover */
+  --neutral-graphite:     #172338;   /* Raised container / active pills */
+  --neutral-graphite-light:#1E2D48;  /* Dropdown / popover overlay */
+  --neutral-slate:        #283955;   /* Active border */
+  --neutral-muted:        #3B4E70;   /* Muted border */
 
-  --neutral-soft-gray:    #64748B;   /* Slate 500 — dim labels */
-  --neutral-silver:       #94A3B8;   /* Slate 400 — metadata */
-  --neutral-cloud:        #CBD5E1;   /* Slate 300 — secondary text */
-  --neutral-offwhite:     #F0F4FF;   /* Near white — primary text */
+  --neutral-soft-gray:    #64748B;   /* Slate 500 — captions */
+  --neutral-silver:       #94A3B8;   /* Slate 400 — secondary body */
+  --neutral-cloud:        #CBD5E1;   /* Slate 300 — high-legibility text */
+  --neutral-offwhite:     #F1F5F9;   /* Slate 100 — primary text */
   --neutral-purewhite:    #FFFFFF;   /* Pure white */
 
   /* ── 2. BACKGROUND HIERARCHY ───────────────────────────────────────────── */
-  --bg-canvas:       #070B12;   /* Deepest outermost backdrop */
-  --bg-base:         #070B12;
-  --bg-surface:      #0B1118;   /* Cards, panels */
-  --bg-surface-alt:  #0F1620;   /* Secondary rows, subtle alternation */
-  --bg-raised:       #151E2D;   /* Hover states, active pills */
-  --bg-overlay:      #0F1620;   /* Modals, sheets, tooltips */
-  --bg-input:        #0F1620;   /* Input fields */
+  --bg-canvas:       #080C14;   /* Base backdrop */
+  --bg-base:         #080C14;
+  --bg-surface:      #0D131F;   /* Cards, panels, tables */
+  --bg-surface-alt:  #121B2B;   /* Secondary rows, headers */
+  --bg-raised:       #172338;   /* Hover states, active tabs */
+  --bg-overlay:      #121B2B;   /* Modals, sheets, drawers */
+  --bg-input:        #0A0F1A;   /* Input fields */
 
-  /* Dark Surface Hierarchy (consistent — no split light/dark any more) */
-  --bg-dark-base:    #03050A;
-  --bg-dark-surface: #0B1118;
-  --bg-dark-raised:  #151E2D;
-  --bg-dark-overlay: #0F1620;
+  /* Surface Hierarchy */
+  --bg-dark-base:    #050810;
+  --bg-dark-surface: #0D131F;
+  --bg-dark-raised:  #172338;
+  --bg-dark-overlay: #121B2B;
 
   /* Navigation Tokens */
-  --bg-nav:                 #070B12;
+  --bg-nav:                 #080C14;
   --bg-nav-item:            transparent;
   --bg-nav-item-hover:      rgba(255, 255, 255, 0.04);
-  --bg-nav-item-active:     rgba(99, 102, 241, 0.14);
-  --border-nav:             rgba(255, 255, 255, 0.07);
-  --border-nav-active:      rgba(99, 102, 241, 0.3);
+  --bg-nav-item-active:     rgba(99, 102, 241, 0.12);
+  --border-nav:             rgba(255, 255, 255, 0.08);
+  --border-nav-active:      rgba(99, 102, 241, 0.4);
 
-  /* Legacy sidebar tokens (kept for compat) */
-  --bg-sidebar:             #070B12;
-  --bg-sidebar-section:     #070B12;
+  /* Sidebar Tokens */
+  --bg-sidebar:             #080C14;
+  --bg-sidebar-section:     #080C14;
   --bg-sidebar-item:        transparent;
   --bg-sidebar-item-hover:  rgba(255, 255, 255, 0.04);
-  --bg-sidebar-item-active: rgba(99, 102, 241, 0.14);
-  --bg-sidebar-header:      #04080E;
-  --border-sidebar:         rgba(255, 255, 255, 0.07);
-  --border-sidebar-active:  rgba(99, 102, 241, 0.3);
+  --bg-sidebar-item-active: rgba(99, 102, 241, 0.12);
+  --bg-sidebar-header:      #060910;
+  --border-sidebar:         rgba(255, 255, 255, 0.08);
+  --border-sidebar-active:  rgba(99, 102, 241, 0.4);
 
   /* ── 3. SURFACE BORDERS & SHEEN ────────────────────────────────────────── */
-  --border-subtle:   rgba(255, 255, 255, 0.07);  /* Default card border */
-  --border-default:  rgba(255, 255, 255, 0.11);  /* Input / table divider */
-  --border-strong:   rgba(255, 255, 255, 0.18);  /* Emphasized boundaries */
-  --border-sheen:    rgba(255, 255, 255, 0.12);  /* Glass edge highlight */
+  --border-subtle:   rgba(255, 255, 255, 0.08);  /* Clean 1px card border */
+  --border-default:  rgba(255, 255, 255, 0.13);  /* Input / active border */
+  --border-strong:   rgba(255, 255, 255, 0.20);  /* Focus / modal boundary */
+  --border-sheen:    rgba(255, 255, 255, 0.10);
   --border-dark:     rgba(255, 255, 255, 0.06);
 
   /* ── 4. FOREGROUND & TYPOGRAPHY TOKENS ─────────────────────────────────── */
-  --fg-primary:     #F0F4FF;   /* Primary text — crisp near-white */
-  --fg-secondary:   #94A3B8;   /* Slate 400 secondary body */
-  --fg-tertiary:    #64748B;   /* Slate 500 captions */
-  --fg-quaternary:  #475569;   /* Slate 600 micro-meta */
+  --fg-primary:     #F1F5F9;   /* Primary text — crisp slate 100 */
+  --fg-secondary:   #94A3B8;   /* Secondary body — slate 400 */
+  --fg-tertiary:    #64748B;   /* Muted captions — slate 500 */
+  --fg-quaternary:  #475569;   /* Micro-metadata — slate 600 */
   --fg-placeholder: #475569;   /* Input placeholder */
   --fg-inverse:     #090D14;   /* Text on light surfaces */
   --fg-inverse-muted: #334155;
 
   --fg-sidebar-default: #64748B;
-  --fg-sidebar-active:  #F0F4FF;
+  --fg-sidebar-active:  #F1F5F9;
   --fg-sidebar-muted:   #334155;
 
-  /* ── 5. BRAND ACCENT — ELECTRIC INDIGO ─────────────────────────────────── */
-  --brand-primary:       #6366F1;   /* Indigo 500 — brighter on dark */
+  /* ── 5. BRAND ACCENT — TECHNICAL INDIGO ────────────────────────────────── */
+  --brand-primary:       #6366F1;   /* Indigo 500 */
   --brand-primary-hover: #4F46E5;   /* Indigo 600 */
-  --brand-primary-light: #818CF8;   /* Indigo 400 — active glow */
+  --brand-primary-light: #818CF8;   /* Indigo 400 */
   --brand-primary-muted: rgba(99, 102, 241, 0.12);
-  --brand-primary-ring:  rgba(99, 102, 241, 0.25);
-  --brand-glow:          rgba(99, 102, 241, 0.22);
+  --brand-primary-ring:  rgba(99, 102, 241, 0.30);
+  --brand-glow:          0 1px 3px rgba(0, 0, 0, 0.3);
 
   /* ── 6. SEMANTIC FINTECH STATUS COLORS ─────────────────────────────────── */
-  /* Success */
+  /* Success / Settled / Recovered */
   --status-success:         #10B981;
   --status-success-light:   #34D399;
   --status-success-subtle:  rgba(16, 185, 129, 0.10);
-  --status-success-border:  rgba(16, 185, 129, 0.22);
-  --status-success-text:    #6EE7B7;
-  --status-success-glow:    rgba(16, 185, 129, 0.20);
+  --status-success-border:  rgba(16, 185, 129, 0.25);
+  --status-success-text:    #34D399;
+  --status-success-glow:    rgba(16, 185, 129, 0.15);
 
-  /* Warning */
+  /* Warning / Pending / Review */
   --status-warning:         #F59E0B;
-  --status-warning-light:   #FCD34D;
+  --status-warning-light:   #FBBF24;
   --status-warning-subtle:  rgba(245, 158, 11, 0.10);
-  --status-warning-border:  rgba(245, 158, 11, 0.22);
-  --status-warning-text:    #FCD34D;
-  --status-warning-glow:    rgba(245, 158, 11, 0.20);
+  --status-warning-border:  rgba(245, 158, 11, 0.25);
+  --status-warning-text:    #FBBF24;
+  --status-warning-glow:    rgba(245, 158, 11, 0.15);
 
-  /* Danger */
+  /* Danger / Failed / Blocked */
   --status-danger:          #EF4444;
   --status-danger-light:    #F87171;
   --status-danger-subtle:   rgba(239, 68, 68, 0.10);
-  --status-danger-border:   rgba(239, 68, 68, 0.22);
-  --status-danger-text:     #FCA5A5;
-  --status-danger-glow:     rgba(239, 68, 68, 0.20);
+  --status-danger-border:   rgba(239, 68, 68, 0.25);
+  --status-danger-text:     #F87171;
+  --status-danger-glow:     rgba(239, 68, 68, 0.15);
 
-  /* Review / Purple */
+  /* Review / Operator Escalation */
   --status-review:          #8B5CF6;
   --status-review-light:    #A78BFA;
   --status-review-subtle:   rgba(139, 92, 246, 0.10);
-  --status-review-border:   rgba(139, 92, 246, 0.22);
-  --status-review-text:     #C4B5FD;
-  --status-review-glow:     rgba(139, 92, 246, 0.20);
+  --status-review-border:   rgba(139, 92, 246, 0.25);
+  --status-review-text:     #A78BFA;
+  --status-review-glow:     rgba(139, 92, 246, 0.15);
 
-  /* Information */
+  /* Information / Processing / In-Flight */
   --status-info:            #3B82F6;
   --status-info-light:      #60A5FA;
   --status-info-subtle:     rgba(59, 130, 246, 0.10);
-  --status-info-border:     rgba(59, 130, 246, 0.22);
-  --status-info-text:       #93C5FD;
-  --status-info-glow:       rgba(59, 130, 246, 0.20);
+  --status-info-border:     rgba(59, 130, 246, 0.25);
+  --status-info-text:       #60A5FA;
+  --status-info-glow:       rgba(59, 130, 246, 0.15);
 
-  /* Neutral */
+  /* Neutral / Closed / System */
   --status-neutral:         #475569;
-  --status-neutral-subtle:  rgba(71, 85, 105, 0.15);
+  --status-neutral-subtle:  rgba(71, 85, 105, 0.14);
   --status-neutral-border:  rgba(71, 85, 105, 0.25);
   --status-neutral-text:    #94A3B8;
 
@@ -142,31 +142,29 @@
   --chart-info:     #3B82F6;
   --chart-cyan:     #06B6D4;
   --chart-grid:     rgba(255, 255, 255, 0.05);
-  --chart-axis:     #475569;
+  --chart-axis:     #64748B;
 
   /* ── 8. ELEVATION & SHADOW SYSTEM ──────────────────────────────────────── */
-  /* Dark mode shadows rely on inset glow rather than drop shadows */
-  --shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm:     0 2px 8px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.04);
-  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.05);
-  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.06);
-  --shadow-xl:     0 16px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.07);
-  --shadow-glass:  0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm:     0 2px 4px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-md:     0 4px 12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --shadow-lg:     0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --shadow-xl:     0 16px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.09);
+  --shadow-glass:  0 4px 16px rgba(0, 0, 0, 0.35);
 
-  /* Precise Colored Glows — Restrained, subtle micro-glows */
-  --glow-brand:    0 0 0 1px rgba(99, 102, 241, 0.20), 0 2px 12px rgba(99, 102, 241, 0.08);
-  --glow-success:  0 0 0 1px rgba(16, 185, 129, 0.20), 0 2px 12px rgba(16, 185, 129, 0.08);
-  --glow-danger:   0 0 0 1px rgba(239, 68, 68, 0.20), 0 2px 12px rgba(239, 68, 68, 0.08);
-  --glow-warning:  0 0 0 1px rgba(245, 158, 11, 0.20), 0 2px 12px rgba(245, 158, 11, 0.08);
-  --glow-review:   0 0 0 1px rgba(139, 92, 246, 0.20), 0 2px 12px rgba(139, 92, 246, 0.08);
+  --glow-brand:    0 0 0 1px rgba(99, 102, 241, 0.25);
+  --glow-success:  0 0 0 1px rgba(16, 185, 129, 0.25);
+  --glow-danger:   0 0 0 1px rgba(239, 68, 68, 0.25);
+  --glow-warning:  0 0 0 1px rgba(245, 158, 11, 0.25);
+  --glow-review:   0 0 0 1px rgba(139, 92, 246, 0.25);
 
-  /* ── 9. GEOMETRY & RADIUS ──────────────────────────────────────────────── */
-  --radius-xs:   4px;
-  --radius-sm:   6px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   16px;
-  --radius-2xl:  20px;
+  /* ── 9. GEOMETRY & RADIUS (Clean Enterprise Densities) ─────────────────── */
+  --radius-xs:   3px;
+  --radius-sm:   5px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-xl:   10px;
+  --radius-2xl:  12px;
   --radius-full: 9999px;
 
   /* ── 10. TYPOGRAPHY SCALE ──────────────────────────────────────────────── */
@@ -174,11 +172,11 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* ── 11. TIMING & MOTION ───────────────────────────────────────────────── */
-  --duration-instant:  50ms;
-  --duration-fast:     120ms;
-  --duration-normal:   200ms;
-  --duration-base:     200ms;
-  --duration-emphasis: 350ms;
+  --duration-instant:  40ms;
+  --duration-fast:     100ms;
+  --duration-normal:   150ms;
+  --duration-base:     150ms;
+  --duration-emphasis: 250ms;
   --ease-spring:       cubic-bezier(0.16, 1, 0.3, 1);
 
   /* ── 12. SHADCN COMPATIBILITY LAYER ────────────────────────────────────── */
@@ -327,34 +325,30 @@ code, kbd, pre, .font-mono {
   color: var(--brand-primary-light);
 }
 
-/* ── GLASS UTILITIES ─────────────────────────────────────────────────────── */
+/* ── SURFACE UTILITIES ─────────────────────────────────────────────────── */
 .glass-panel {
-  background: rgba(15, 22, 32, 0.80);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: var(--shadow-glass);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
 }
 
 .glass-panel-light {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-subtle);
 }
 
-/* Dark gradient mesh — subtle cinematic depth */
+/* Subtle clean mesh background */
 .gradient-mesh {
+  background-color: var(--bg-canvas);
   background-image:
-    radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.10) 0px, transparent 55%),
-    radial-gradient(at 85% 15%, rgba(59, 130, 246, 0.07) 0px, transparent 50%),
-    radial-gradient(at 50% 95%, rgba(16, 185, 129, 0.05) 0px, transparent 55%);
+    radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.04) 0px, transparent 45%),
+    radial-gradient(at 85% 15%, rgba(59, 130, 246, 0.03) 0px, transparent 40%);
 }
 
 /* ── STATUS INDICATOR DOTS ──────────────────────────────────────────────── */
 .status-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: var(--radius-full);
   flex-shrink: 0;
   display: inline-block;
@@ -362,96 +356,47 @@ code, kbd, pre, .font-mono {
 
 .status-dot.ok {
   background: var(--status-success);
-  box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
 }
 
 .status-dot.error {
   background: var(--status-danger);
-  box-shadow: 0 0 4px rgba(239, 68, 68, 0.4);
 }
 
 .status-dot.warning {
   background: var(--status-warning);
-  box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);
 }
 
 .status-dot.review {
   background: var(--status-review);
-  box-shadow: 0 0 4px rgba(139, 92, 246, 0.4);
 }
 
 .status-dot.info {
   background: var(--status-info);
-  box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
 }
 
 .status-dot.brand {
   background: var(--brand-primary);
-  box-shadow: 0 0 4px rgba(99, 102, 241, 0.4);
 }
 
 .status-dot.unknown {
   background: var(--status-neutral);
 }
 
-/* ── ANIMATIONS ─────────────────────────────────────────────────────────── */
-@keyframes status-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.45; transform: scale(0.9); }
-}
-
+/* ── SKELETON LOADER ────────────────────────────────────────────────────── */
 @keyframes skeleton-shimmer {
-  from { background-position: -600px 0; }
-  to   { background-position: 600px 0; }
-}
-
-@keyframes subtle-float {
-  0%, 100% { transform: translateY(0px); }
-  50%      { transform: translateY(-4px); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.6; }
-  50%       { opacity: 1; }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes scan-line {
-  0%   { transform: translateY(-100%); opacity: 0; }
-  10%  { opacity: 0.6; }
-  90%  { opacity: 0.6; }
-  100% { transform: translateY(400%); opacity: 0; }
-}
-
-.animate-status-pulse {
-  animation: status-pulse 2.2s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: subtle-float 4s ease-in-out infinite;
-}
-
-.animate-glow-pulse {
-  animation: glow-pulse 2.5s ease-in-out infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 12s linear infinite;
+  from { background-position: -400px 0; }
+  to   { background-position: 400px 0; }
 }
 
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.03) 0px,
-    rgba(255,255,255,0.07) 300px,
-    rgba(255,255,255,0.03) 600px
+    rgba(255,255,255,0.02) 0px,
+    rgba(255,255,255,0.06) 200px,
+    rgba(255,255,255,0.02) 400px
   );
-  background-size: 1200px 100%;
-  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
 /* ── SIDEBAR / NAV STYLES ───────────────────────────────────────────────── */

@@ -88,6 +88,34 @@ def test_scenario_e_policy_heavy(mock_db):
     # Exceeds max retries -> creates policy blocks
     assert result["metrics"]["policy_blocks"] > 0
 
+def test_scenario_f_temporary_failure(mock_db):
+    result = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "F", sample_size=10, seed=42)
+    assert result["scenario"] == "F"
+    assert result["metrics"]["transactions_analyzed"] > 0
+    assert result["metrics"]["successful_recoveries"] > 0
+
+def test_descriptive_scenario_names(mock_db):
+    # Test descriptive string aliases
+    res_a = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "normal_recovery", sample_size=1, seed=42)
+    assert res_a["scenario"] == "A"
+
+    res_f = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "temporary_failure", sample_size=1, seed=42)
+    assert res_f["scenario"] == "F"
+
+    res_c = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "timeout_unknown", sample_size=1, seed=42)
+    assert res_c["scenario"] == "C"
+    assert res_c["metrics"]["unknown_outcomes"] == 1
+
+    res_b = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "high_risk", sample_size=1, seed=42)
+    assert res_b["scenario"] == "B"
+
+    res_d = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "high_opportunity", sample_size=1, seed=42)
+    assert res_d["scenario"] == "D"
+
+    res_e = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "policy_heavy", sample_size=1, seed=42)
+    assert res_e["scenario"] == "E"
+    assert res_e["metrics"]["policy_blocks"] == 1
+
 def test_metrics_isolated_to_simulation_run(mock_db):
     # Run A
     res1 = SimulatorService.run_scenario(mock_db, uuid.uuid4(), "A", sample_size=5, seed=42)

@@ -106,34 +106,26 @@ export default function SystemHealthPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [pingTimes, setPingTimes] = useState<Record<string, number>>({});
 
-  const checkHealth = async (manual = false) => {
+  const checkHealth = React.useCallback(async (manual = false) => {
     if (manual) setIsRefreshing(true);
     const start = performance.now();
     try {
-      const [sysRes, baseHealth] = await Promise.all([
-        fetchApi<Record<string, string>>("/system/health"),
-        fetch("http://localhost:8001/health").then((r) => r.json()).catch(() => null),
-      ]);
-      const elapsed = Math.round(performance.now() - start);
+      const sysRes = await fetchApi<Record<string, string>>("/system/health");
+      const elapsed = Math.max(1, Math.round(performance.now() - start));
 
-      const merged: Record<string, string> = { ...sysRes };
-      if (baseHealth?.database && baseHealth.database !== "connected") {
-        merged.database = "DEGRADED";
-      }
-
-      setHealth(merged);
+      setHealth(sysRes);
       setError(null);
       setLastChecked(new Date());
 
-      // Assign actual elapsed pings around elapsed response time
+      // Assign measured roundtrip latencies
       const pings: Record<string, number> = {};
-      Object.keys(merged).forEach((k, i) => {
-        pings[k] = Math.max(1, Math.round(elapsed / 4) + (i * 2));
+      Object.keys(sysRes).forEach((k) => {
+        pings[k] = elapsed;
       });
       setPingTimes(pings);
 
       if (manual) {
-        toast.success("Health Ping Complete", "Infrastructure service health verified.");
+        toast.success("Health Ping Complete", `Infrastructure verified in ${elapsed}ms.`);
       }
     } catch (err) {
       console.error("Health check failed", err);
@@ -154,13 +146,13 @@ export default function SystemHealthPage() {
       setLoading(false);
       if (manual) setIsRefreshing(false);
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     checkHealth();
     const interval = setInterval(() => checkHealth(), 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [checkHealth]);
 
   const totalServices = SERVICES.length;
   const operationalCount = health

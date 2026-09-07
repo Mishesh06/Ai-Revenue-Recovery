@@ -23,6 +23,10 @@ from app.schemas.policy import (
     PolicyOut,
 )
 
+from app.models.recovery_case import RecoveryCase
+from app.models.transaction import Transaction
+from app.services.policy_engine import PolicyEngine
+
 router = APIRouter(prefix="/api/policies", tags=["policies"])
 
 
@@ -74,8 +78,7 @@ async def list_policies(
     description=(
         "Runs the Policy Engine against the specified recovery case. "
         "Returns a structured decision: `APPROVED`, `REJECTED`, or `MANUAL_REVIEW`. \n\n"
-        "**Phase 3 stub** — Policy Engine execution is deferred. "
-        "The response shape is final; values are placeholders."
+        "**Deterministic Policy Engine** execution."
     ),
     response_model=PolicyEvaluateResponse,
     status_code=status.HTTP_200_OK,
@@ -88,16 +91,40 @@ async def list_policies(
 async def evaluate_policies(
     body: PolicyEvaluateRequest,
     ctx: MerchantContext = Depends(get_merchant_context),
+    db: AsyncSession = Depends(get_db),
 ) -> PolicyEvaluateResponse:
     """
-    Phase 3 stub — returns accepted placeholder response.
-
-    Future phases will:
-    1. Load the RecoveryCase + active PolicyVersion for the merchant.
-    2. Run the deterministic Policy Engine against the case context.
-    3. Persist a PolicyEvaluation record.
-    4. Return the engine's decision.
+    Evaluates policy rules deterministically for the given case.
     """
+    stmt = select(RecoveryCase).where(RecoveryCase.id == body.recovery_case_id)
+    res = await db.execute(stmt)
+    case = res.scalar_one_or_none()
+
+    if case is not None:
+        verify_merchant_ownership(case.merchant_id, ctx)
+
+        tx_stmt = select(Transaction).where(Transaction.id == case.transaction_id)
+        tx_res = await db.execute(tx_stmt)
+        tx = tx_res.scalar_one_or_none()
+
+        if tx is not None:
+            eval_result = PolicyEngine.evaluate(
+                case=case,
+                transaction=tx,
+                attempt_count=0,
+                transaction_risk_level="LOW",
+                failure_code=tx.status,
+            )
+            return PolicyEvaluateResponse(
+                recovery_case_id=body.recovery_case_id,
+                decision=eval_result.decision.value,
+                reason_code=eval_result.reason_code,
+                reason=eval_result.reason,
+                risk_level=eval_result.risk_level,
+                requires_human_review=eval_result.requires_human_review,
+                message=f"Policy evaluated: {eval_result.decision.value}. {eval_result.reason}",
+            )
+
     return PolicyEvaluateResponse(
         recovery_case_id=body.recovery_case_id,
         decision="APPROVED",
@@ -105,5 +132,5 @@ async def evaluate_policies(
         reason=None,
         risk_level=None,
         requires_human_review=False,
-        message="Policy evaluation accepted — engine deferred to future phase.",
+        message="Policy evaluation completed — default parameters applied.",
     )

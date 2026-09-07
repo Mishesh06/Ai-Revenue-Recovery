@@ -51,8 +51,23 @@ function SimulatorContent() {
 
   // Synchronize URL parameters
   useEffect(() => {
-    if (urlScenario && ["A", "B", "C", "D", "E"].includes(urlScenario.toUpperCase())) {
-      setSelectedScenario(urlScenario.toUpperCase());
+    if (urlScenario) {
+      const u = urlScenario.toUpperCase();
+      if (["A", "B", "C", "D", "E", "F"].includes(u)) {
+        setSelectedScenario(u);
+      } else if (u.includes("TEMP") || u.includes("NETWORK")) {
+        setSelectedScenario("F");
+      } else if (u.includes("TIMEOUT") || u.includes("UNKNOWN")) {
+        setSelectedScenario("C");
+      } else if (u.includes("RISK")) {
+        setSelectedScenario("B");
+      } else if (u.includes("OPPORTUNITY") || u.includes("VALUE")) {
+        setSelectedScenario("D");
+      } else if (u.includes("POLICY") || u.includes("HEAVY") || u.includes("BLOCK")) {
+        setSelectedScenario("E");
+      } else if (u.includes("NORMAL") || u.includes("RETRY")) {
+        setSelectedScenario("A");
+      }
     }
     if (urlCaseId) {
       setTargetCaseId(urlCaseId);
@@ -121,7 +136,7 @@ function SimulatorContent() {
 
   // Trigger Simulation via real backend API
   const startSimulation = async () => {
-    if (!merchantId) return;
+    if (!merchantId || isLoading || isPlaying) return;
 
     setIsLoading(true);
     setError(null);
@@ -213,33 +228,47 @@ function SimulatorContent() {
     const timer = setTimeout(() => {
       let newState: StageState = "completed";
 
+      const policyEvt = auditEvents.find((e) => e.event_type === "PolicyEvaluated");
+      const dec = policyEvt?.event_data?.decision;
+
       if (currentStage.id === "POLICY_CHECK") {
-        const policyEvt = auditEvents.find((e) => e.event_type === "PolicyEvaluated");
-        const dec = policyEvt?.event_data?.decision;
-        if (dec === "BLOCKED" || selectedScenario === "E") {
+        if (dec === "BLOCKED" || (simulationMetrics?.policy_blocks ?? 0) > 0 || selectedScenario === "E") {
           newState = "blocked";
         } else {
           newState = "completed";
         }
       } else if (currentStage.id === "EXECUTING") {
-        if (selectedScenario === "B" || selectedScenario === "E") {
+        if (dec === "REVIEW" || dec === "BLOCKED" || selectedScenario === "B" || selectedScenario === "E") {
           newState = "blocked";
         } else {
           newState = "completed";
         }
       } else if (currentStage.id === "OUTCOME") {
         if (
+          (simulationMetrics?.unknown_outcomes ?? 0) > 0 ||
           selectedScenario === "C" ||
           auditEvents.some(
             (e) =>
-              e.event_type === "ManualReviewCreated" &&
-              (e.event_data?.outcome === "UNKNOWN" || e.event_data?.previous_state === "EXECUTING")
+              e.event_type === "AttemptUnknown" ||
+              e.event_type === "ActionOutcomeUnknown" ||
+              (e.event_type === "ManualReviewCreated" &&
+                (e.event_data?.outcome === "UNKNOWN" || e.event_data?.previous_state === "EXECUTING"))
           )
         ) {
           newState = "unknown";
-        } else if (selectedScenario === "B" || auditEvents.some((e) => e.event_type === "ManualReviewCreated")) {
+        } else if (
+          dec === "REVIEW" ||
+          (simulationMetrics?.manual_reviews ?? 0) > 0 ||
+          selectedScenario === "B" ||
+          auditEvents.some((e) => e.event_type === "ManualReviewCreated")
+        ) {
           newState = "blocked";
-        } else if (selectedScenario === "E" || auditEvents.some((e) => e.event_type === "RecoveryFailed")) {
+        } else if (
+          dec === "BLOCKED" ||
+          (simulationMetrics?.policy_blocks ?? 0) > 0 ||
+          selectedScenario === "E" ||
+          auditEvents.some((e) => e.event_type === "RecoveryFailed")
+        ) {
           newState = "failed";
         } else {
           newState = "completed";
@@ -262,12 +291,12 @@ function SimulatorContent() {
             "Safe Failover Triggered",
             "Gateway timeout encountered. Blind retry blocked by idempotency lock."
           );
-        } else if (selectedScenario === "B") {
+        } else if (selectedScenario === "B" || dec === "REVIEW") {
           toast.info(
             "Policy Review Gated",
             "High customer risk score flagged. Escalated to Operator Review Queue."
           );
-        } else if (selectedScenario === "E") {
+        } else if (selectedScenario === "E" || dec === "BLOCKED") {
           toast.warning(
             "Policy Constraints Enforced",
             "Maximum retry limit exceeded. Intervention halted safely."
@@ -282,7 +311,7 @@ function SimulatorContent() {
     }, 450);
 
     return () => clearTimeout(timer);
-  }, [isPlaying, activeStageIdx, auditEvents, selectedScenario]);
+  }, [isPlaying, activeStageIdx, auditEvents, selectedScenario, simulationMetrics]);
 
   if (!merchantId) {
     return (
@@ -311,43 +340,61 @@ function SimulatorContent() {
   ) as "APPROVED" | "REVIEW" | "BLOCKED";
   const policyReason = policyEvent?.event_data?.reason || null;
 
-  const recoveryOutcome =
-    selectedScenario === "A" || selectedScenario === "D"
-      ? "SUCCEEDED"
-      : selectedScenario === "B"
-      ? "REVIEW_REQUIRED"
-      : selectedScenario === "C"
-      ? "TIMEOUT_LOCKED"
-      : "BLOCKED";
+  const isSuccess =
+    (simulationMetrics?.successful_recoveries ?? 0) > 0 ||
+    auditEvents.some((e) => e.event_type === "RecoverySucceeded");
 
-  const actionTaken =
-    selectedScenario === "A"
-      ? "Scheduled Exponential Retry (Window: 120s)"
-      : selectedScenario === "B"
-      ? "Intervention Diverted to Human Review"
-      : selectedScenario === "C"
-      ? "Idempotency Failover Lock Reserved"
-      : selectedScenario === "D"
+  const isUnknown =
+    (simulationMetrics?.unknown_outcomes ?? 0) > 0 ||
+    selectedScenario === "C" ||
+    auditEvents.some(
+      (e) =>
+        e.event_type === "AttemptUnknown" ||
+        e.event_type === "ActionOutcomeUnknown" ||
+        (e.event_type === "ManualReviewCreated" && (e.event_data?.outcome === "UNKNOWN" || e.event_data?.decision === "UNKNOWN"))
+    );
+
+  const isReview =
+    !isUnknown &&
+    ((simulationMetrics?.manual_reviews ?? 0) > 0 ||
+      policyDecision === "REVIEW" ||
+      auditEvents.some((e) => e.event_type === "ManualReviewCreated"));
+
+  const recoveryOutcome = isSuccess
+    ? "SUCCEEDED"
+    : isReview
+    ? "REVIEW_REQUIRED"
+    : isUnknown
+    ? "TIMEOUT_LOCKED"
+    : "BLOCKED";
+
+  const actionTaken = isSuccess
+    ? selectedScenario === "D"
       ? "Intent Window Optimization & Retry"
-      : "Intervention Blocked by Policy Constraint";
+      : selectedScenario === "F"
+      ? "Immediate Automated Network Retry"
+      : "Scheduled Exponential Retry (Window: 120s)"
+    : isReview
+    ? "Intervention Diverted to Human Review"
+    : isUnknown
+    ? "Idempotency Failover Lock Reserved"
+    : "Intervention Blocked by Policy Constraint";
 
-  const attemptOutcome =
-    selectedScenario === "A" || selectedScenario === "D"
-      ? "Capital Successfully Settled to Merchant"
-      : selectedScenario === "B"
-      ? "Pending Human Review Decision"
-      : selectedScenario === "C"
-      ? "Gateway Timeout — Lock Preserved (Zero Blind Retries)"
-      : "Attempt Threshold Exceeded (3 of 3 Attempts)";
+  const attemptOutcome = isSuccess
+    ? "Capital Successfully Settled to Merchant"
+    : isReview
+    ? "Pending Human Review Decision"
+    : isUnknown
+    ? "Gateway Timeout — Lock Preserved (Zero Blind Retries)"
+    : "Attempt Threshold Exceeded (3 of 3 Attempts)";
 
-  const finalCaseState =
-    selectedScenario === "A" || selectedScenario === "D"
-      ? "CLOSED"
-      : selectedScenario === "B"
-      ? "POLICY_CHECK"
-      : selectedScenario === "C"
-      ? "RECOVERING"
-      : "RECOVERY_WINDOW_EXPIRED";
+  const finalCaseState = isSuccess
+    ? "CLOSED"
+    : isReview
+    ? "POLICY_CHECK"
+    : isUnknown
+    ? "RECOVERING"
+    : "RECOVERY_WINDOW_EXPIRED";
 
   return (
     <div className="space-y-8 pb-20">
@@ -445,13 +492,13 @@ function SimulatorContent() {
             value:
               simulationMetrics?.revenue_recovered !== undefined
                 ? formatCurrency(simulationMetrics.revenue_recovered, "INR")
-                : isOutcomeReached && (selectedScenario === "A" || selectedScenario === "D")
+                : isOutcomeReached && isSuccess
                 ? formatCurrency(originalAmount || 0, "INR")
                 : "₹0.00",
-            sub: isOutcomeReached ? "Settlement ledger verified" : "Awaiting execution trigger",
+            sub: isOutcomeReached ? (isSuccess ? "Settlement ledger verified" : "Zero capital at risk") : "Awaiting execution trigger",
             icon: CheckCircle2,
-            color: "var(--status-success)",
-            borderColor: "var(--status-success-border)",
+            color: isSuccess ? "var(--status-success)" : "var(--fg-tertiary)",
+            borderColor: isSuccess ? "var(--status-success-border)" : "var(--border-subtle)",
           },
           {
             title: "Idempotency Safety",

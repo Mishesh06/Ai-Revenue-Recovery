@@ -124,7 +124,7 @@ export function SystemHealth() {
   const [lastChecked, setLastChecked] = useState<Date | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const checkHealth = async (manual = false) => {
+  const checkHealth = React.useCallback(async (manual = false) => {
     if (manual) setIsRefreshing(true);
     try {
       const res = await fetchApi<Record<string, string>>("/system/health");
@@ -136,13 +136,31 @@ export function SystemHealth() {
       setLoading(false);
       if (manual) setIsRefreshing(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    checkHealth();
+    let isSubscribed = true;
+    fetchApi<Record<string, string>>("/system/health")
+      .then((res) => {
+        if (isSubscribed) {
+          setHealth(res);
+          setLastChecked(new Date());
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (isSubscribed) {
+          console.error("Health check failed", err);
+          setLoading(false);
+        }
+      });
+
     const interval = setInterval(() => checkHealth(), 30000);
-    return () => clearInterval(interval);
-  }, []);
+    return () => {
+      isSubscribed = false;
+      clearInterval(interval);
+    };
+  }, [checkHealth]);
 
   return (
     <div
