@@ -68,28 +68,28 @@ graph TD
     classDef warning fill:#1e1e2e,stroke:#f9e2af,stroke-width:2px,color:#f9e2af;
     classDef info fill:#1e1e2e,stroke:#89dceb,stroke-width:2px,color:#89dceb;
 
-    TX[Failed Transaction Record / Webhook]:::info --> Ingest[FastAPI Ingestion Layer]:::primary
-    Ingest --> DB[(PostgreSQL 15 Database)]:::primary
+    TX["Failed Transaction Record / Webhook"]:::info --> Ingest["FastAPI Ingestion Layer"]:::primary
+    Ingest --> DB[("PostgreSQL 15 Database")]:::primary
     
-    subgraph Decision Layer
-        Ingest --> ML[ML Scoring Model (RandomForest)]:::info
-        ML --> Diag[Diagnosis Agent (Mock/Rule Fallback)]:::warning
-        Diag --> Plan[Planner Agent (Mock/Rule Fallback)]:::warning
-        Plan --> Policy[Deterministic Policy Engine]:::success
+    subgraph DecisionLayer ["Decision Layer"]
+        Ingest --> ML["ML Scoring Model (RandomForest)"]:::info
+        ML --> Diag["Diagnosis Agent (Mock/Rule Fallback)"]:::warning
+        Diag --> Plan["Planner Agent (Mock/Rule Fallback)"]:::warning
+        Plan --> Policy["Deterministic Policy Engine"]:::success
     end
 
-    subgraph Execution Adapters (Offline / Mock)
-        Policy -->|Approved| Adapter[RazorpayTestAdapter / SimulationAdapter]:::warning
-        Policy -->|Review / High Risk| ManualQueue[Human Review Queue]:::warning
-        Adapter --> Outcome{Adapter Outcome}:::info
-        Outcome -->|SUCCESS| Recovered[Case Closed & Succeeded]:::success
-        Outcome -->|TEMPORARY_FAILURE| RetrySM[Retry Handling]:::warning
+    subgraph ExecutionAdapters ["Execution Adapters (Offline / Mock)"]
+        Policy -->|Approved| Adapter["RazorpayTestAdapter / SimulationAdapter"]:::warning
+        Policy -->|Review / High Risk| ManualQueue["Human Review Queue"]:::warning
+        Adapter --> Outcome{"Adapter Outcome"}:::info
+        Outcome -->|SUCCESS| Recovered["Case Closed & Succeeded"]:::success
+        Outcome -->|TEMPORARY_FAILURE| RetrySM["Retry Handling"]:::warning
         Outcome -->|UNKNOWN| ManualQueue
     end
 
-    subgraph Observability
-        DB --> Audit[Append-Only Audit Stream]:::primary
-        Audit --> UI[Next.js 15 Command Center]:::primary
+    subgraph ObservabilityGroup ["Observability"]
+        DB --> Audit["Append-Only Audit Stream"]:::primary
+        Audit --> UI["Next.js 16 Command Center"]:::primary
         ManualQueue --> UI
     end
 ```

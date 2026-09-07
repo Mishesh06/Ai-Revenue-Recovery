@@ -24,28 +24,28 @@ Welcome to the technical documentation hub for **RecoverAI v3.2** — Payment Fa
 
 ```mermaid
 graph TD
-    User([End Customer / Merchant]) --> Ingest[FastAPI Ingestion & Idempotency Layer]
-    Ingest --> DB[(PostgreSQL Database)]
+    User(["End Customer / Merchant"]) --> Ingest["FastAPI Ingestion & Idempotency Layer"]
+    Ingest --> DB[("PostgreSQL Database")]
     
-    subgraph Decision Layer
-        Ingest --> ML[ML Recovery Scoring Model]
-        ML --> DiagAgent[Diagnosis Agent (Mock/Rule Fallback)]
-        DiagAgent --> PlanAgent[Planner Agent (Mock/Rule Fallback)]
-        PlanAgent --> Policy[Deterministic Policy Engine]
+    subgraph DecisionLayer ["Decision Layer"]
+        Ingest --> ML["ML Recovery Scoring Model"]
+        ML --> DiagAgent["Diagnosis Agent (Mock/Rule Fallback)"]
+        DiagAgent --> PlanAgent["Planner Agent (Mock/Rule Fallback)"]
+        PlanAgent --> Policy["Deterministic Policy Engine"]
     end
     
-    subgraph Execution & Adaptation
-        Policy -->|Approved| Adapter[Gateway Adapter (Simulation / Test Mock)]
-        Policy -->|Blocked / High Risk| Review[Human-in-the-Loop Review Queue]
-        Adapter --> Outcome{Attempt Outcome}
-        Outcome -->|Success| Recovered[Case Recovered & Closed]
-        Outcome -->|Failed| Retry[Retry State Machine]
+    subgraph ExecutionAdaptation ["Execution & Adaptation"]
+        Policy -->|Approved| Adapter["Gateway Adapter (Simulation / Test Mock)"]
+        Policy -->|Blocked / High Risk| Review["Human-in-the-Loop Review Queue"]
+        Adapter --> Outcome{"Attempt Outcome"}
+        Outcome -->|Success| Recovered["Case Recovered & Closed"]
+        Outcome -->|Failed| Retry["Retry State Machine"]
         Outcome -->|Timeout / Unknown| Review
     end
     
-    subgraph Observability & UI
-        DB --> Audit[Append-Only Audit Event Log]
-        Audit --> UI[Next.js 15 Glassmorphic Command Center]
+    subgraph ObservabilityUI ["Observability & UI"]
+        DB --> Audit["Append-Only Audit Event Log"]
+        Audit --> UI["Next.js 16 High-Contrast Command Center"]
     end
 ```
 
