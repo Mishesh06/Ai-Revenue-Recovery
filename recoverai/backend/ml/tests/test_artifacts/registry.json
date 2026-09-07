@@ -1,0 +1,20 @@
+[
+  {
+    "model_version": "v1_fd53748a",
+    "model_name": "Model_A",
+    "training_dataset_path": "dummy_path",
+    "metrics": {
+      "f1": 0.5
+    },
+    "created_at": "2026-09-07T06:11:39.924900+00:00"
+  },
+  {
+    "model_version": "v2_8c328a45",
+    "model_name": "Model_B",
+    "training_dataset_path": "dummy_path",
+    "metrics": {
+      "f1": 0.6
+    },
+    "created_at": "2026-09-07T06:11:39.925071+00:00"
+  }
+]

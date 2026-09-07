@@ -1,0 +1,505 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RecoverAI Design System — Premium Dark Fintech Theme
+   Visual Language: Futuristic · Intelligent · Calm · Trustworthy · Premium · Cinematic · Technical · Financial
+   Inspired by: Linear, Apple Pro, Stripe Dashboard Dark, Vercel Dark — tailored for Autonomous AI Revenue Recovery.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ── 1. SOPHISTICATED NEUTRAL FOUNDATION ───────────────────────────────── */
+  --neutral-black:        #03050A;   /* Pure abyss */
+  --neutral-charcoal-dark:#070B12;   /* Deep canvas */
+  --neutral-charcoal:     #0B1118;   /* Primary surface */
+  --neutral-charcoal-alt: #0F1620;   /* Elevated surface */
+  --neutral-graphite:     #151E2D;   /* Card background */
+  --neutral-graphite-light:#1C2740;  /* Raised card */
+  --neutral-slate:        #243047;   /* Border / divider */
+  --neutral-muted:        #364155;   /* Muted border */
+
+  --neutral-soft-gray:    #64748B;   /* Slate 500 — dim labels */
+  --neutral-silver:       #94A3B8;   /* Slate 400 — metadata */
+  --neutral-cloud:        #CBD5E1;   /* Slate 300 — secondary text */
+  --neutral-offwhite:     #F0F4FF;   /* Near white — primary text */
+  --neutral-purewhite:    #FFFFFF;   /* Pure white */
+
+  /* ── 2. BACKGROUND HIERARCHY ───────────────────────────────────────────── */
+  --bg-canvas:       #070B12;   /* Deepest outermost backdrop */
+  --bg-base:         #070B12;
+  --bg-surface:      #0B1118;   /* Cards, panels */
+  --bg-surface-alt:  #0F1620;   /* Secondary rows, subtle alternation */
+  --bg-raised:       #151E2D;   /* Hover states, active pills */
+  --bg-overlay:      #0F1620;   /* Modals, sheets, tooltips */
+  --bg-input:        #0F1620;   /* Input fields */
+
+  /* Dark Surface Hierarchy (consistent — no split light/dark any more) */
+  --bg-dark-base:    #03050A;
+  --bg-dark-surface: #0B1118;
+  --bg-dark-raised:  #151E2D;
+  --bg-dark-overlay: #0F1620;
+
+  /* Navigation Tokens */
+  --bg-nav:                 #070B12;
+  --bg-nav-item:            transparent;
+  --bg-nav-item-hover:      rgba(255, 255, 255, 0.04);
+  --bg-nav-item-active:     rgba(99, 102, 241, 0.14);
+  --border-nav:             rgba(255, 255, 255, 0.07);
+  --border-nav-active:      rgba(99, 102, 241, 0.3);
+
+  /* Legacy sidebar tokens (kept for compat) */
+  --bg-sidebar:             #070B12;
+  --bg-sidebar-section:     #070B12;
+  --bg-sidebar-item:        transparent;
+  --bg-sidebar-item-hover:  rgba(255, 255, 255, 0.04);
+  --bg-sidebar-item-active: rgba(99, 102, 241, 0.14);
+  --bg-sidebar-header:      #04080E;
+  --border-sidebar:         rgba(255, 255, 255, 0.07);
+  --border-sidebar-active:  rgba(99, 102, 241, 0.3);
+
+  /* ── 3. SURFACE BORDERS & SHEEN ────────────────────────────────────────── */
+  --border-subtle:   rgba(255, 255, 255, 0.07);  /* Default card border */
+  --border-default:  rgba(255, 255, 255, 0.11);  /* Input / table divider */
+  --border-strong:   rgba(255, 255, 255, 0.18);  /* Emphasized boundaries */
+  --border-sheen:    rgba(255, 255, 255, 0.12);  /* Glass edge highlight */
+  --border-dark:     rgba(255, 255, 255, 0.06);
+
+  /* ── 4. FOREGROUND & TYPOGRAPHY TOKENS ─────────────────────────────────── */
+  --fg-primary:     #F0F4FF;   /* Primary text — crisp near-white */
+  --fg-secondary:   #94A3B8;   /* Slate 400 secondary body */
+  --fg-tertiary:    #64748B;   /* Slate 500 captions */
+  --fg-quaternary:  #475569;   /* Slate 600 micro-meta */
+  --fg-placeholder: #475569;   /* Input placeholder */
+  --fg-inverse:     #090D14;   /* Text on light surfaces */
+  --fg-inverse-muted: #334155;
+
+  --fg-sidebar-default: #64748B;
+  --fg-sidebar-active:  #F0F4FF;
+  --fg-sidebar-muted:   #334155;
+
+  /* ── 5. BRAND ACCENT — ELECTRIC INDIGO ─────────────────────────────────── */
+  --brand-primary:       #6366F1;   /* Indigo 500 — brighter on dark */
+  --brand-primary-hover: #4F46E5;   /* Indigo 600 */
+  --brand-primary-light: #818CF8;   /* Indigo 400 — active glow */
+  --brand-primary-muted: rgba(99, 102, 241, 0.12);
+  --brand-primary-ring:  rgba(99, 102, 241, 0.25);
+  --brand-glow:          rgba(99, 102, 241, 0.22);
+
+  /* ── 6. SEMANTIC FINTECH STATUS COLORS ─────────────────────────────────── */
+  /* Success */
+  --status-success:         #10B981;
+  --status-success-light:   #34D399;
+  --status-success-subtle:  rgba(16, 185, 129, 0.10);
+  --status-success-border:  rgba(16, 185, 129, 0.22);
+  --status-success-text:    #6EE7B7;
+  --status-success-glow:    rgba(16, 185, 129, 0.20);
+
+  /* Warning */
+  --status-warning:         #F59E0B;
+  --status-warning-light:   #FCD34D;
+  --status-warning-subtle:  rgba(245, 158, 11, 0.10);
+  --status-warning-border:  rgba(245, 158, 11, 0.22);
+  --status-warning-text:    #FCD34D;
+  --status-warning-glow:    rgba(245, 158, 11, 0.20);
+
+  /* Danger */
+  --status-danger:          #EF4444;
+  --status-danger-light:    #F87171;
+  --status-danger-subtle:   rgba(239, 68, 68, 0.10);
+  --status-danger-border:   rgba(239, 68, 68, 0.22);
+  --status-danger-text:     #FCA5A5;
+  --status-danger-glow:     rgba(239, 68, 68, 0.20);
+
+  /* Review / Purple */
+  --status-review:          #8B5CF6;
+  --status-review-light:    #A78BFA;
+  --status-review-subtle:   rgba(139, 92, 246, 0.10);
+  --status-review-border:   rgba(139, 92, 246, 0.22);
+  --status-review-text:     #C4B5FD;
+  --status-review-glow:     rgba(139, 92, 246, 0.20);
+
+  /* Information */
+  --status-info:            #3B82F6;
+  --status-info-light:      #60A5FA;
+  --status-info-subtle:     rgba(59, 130, 246, 0.10);
+  --status-info-border:     rgba(59, 130, 246, 0.22);
+  --status-info-text:       #93C5FD;
+  --status-info-glow:       rgba(59, 130, 246, 0.20);
+
+  /* Neutral */
+  --status-neutral:         #475569;
+  --status-neutral-subtle:  rgba(71, 85, 105, 0.15);
+  --status-neutral-border:  rgba(71, 85, 105, 0.25);
+  --status-neutral-text:    #94A3B8;
+
+  /* ── 7. DATA VISUALIZATION PALETTE ─────────────────────────────────────── */
+  --chart-brand:    #6366F1;
+  --chart-success:  #10B981;
+  --chart-danger:   #EF4444;
+  --chart-warning:  #F59E0B;
+  --chart-review:   #8B5CF6;
+  --chart-info:     #3B82F6;
+  --chart-cyan:     #06B6D4;
+  --chart-grid:     rgba(255, 255, 255, 0.05);
+  --chart-axis:     #475569;
+
+  /* ── 8. ELEVATION & SHADOW SYSTEM ──────────────────────────────────────── */
+  /* Dark mode shadows rely on inset glow rather than drop shadows */
+  --shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm:     0 2px 8px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.06);
+  --shadow-xl:     0 16px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.07);
+  --shadow-glass:  0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Precise Colored Glows — Restrained, subtle micro-glows */
+  --glow-brand:    0 0 0 1px rgba(99, 102, 241, 0.20), 0 2px 12px rgba(99, 102, 241, 0.08);
+  --glow-success:  0 0 0 1px rgba(16, 185, 129, 0.20), 0 2px 12px rgba(16, 185, 129, 0.08);
+  --glow-danger:   0 0 0 1px rgba(239, 68, 68, 0.20), 0 2px 12px rgba(239, 68, 68, 0.08);
+  --glow-warning:  0 0 0 1px rgba(245, 158, 11, 0.20), 0 2px 12px rgba(245, 158, 11, 0.08);
+  --glow-review:   0 0 0 1px rgba(139, 92, 246, 0.20), 0 2px 12px rgba(139, 92, 246, 0.08);
+
+  /* ── 9. GEOMETRY & RADIUS ──────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  20px;
+  --radius-full: 9999px;
+
+  /* ── 10. TYPOGRAPHY SCALE ──────────────────────────────────────────────── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── 11. TIMING & MOTION ───────────────────────────────────────────────── */
+  --duration-instant:  50ms;
+  --duration-fast:     120ms;
+  --duration-normal:   200ms;
+  --duration-base:     200ms;
+  --duration-emphasis: 350ms;
+  --ease-spring:       cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── 12. SHADCN COMPATIBILITY LAYER ────────────────────────────────────── */
+  --background:        var(--bg-surface);
+  --foreground:        var(--fg-primary);
+  --card:              var(--bg-surface);
+  --card-foreground:   var(--fg-primary);
+  --border:            var(--border-subtle);
+  --input:             var(--border-default);
+  --ring:              var(--brand-primary);
+  --primary:           var(--brand-primary);
+  --primary-foreground:#FFFFFF;
+  --secondary:         var(--bg-surface-alt);
+  --secondary-foreground: var(--fg-secondary);
+  --muted:             var(--bg-surface-alt);
+  --muted-foreground:  var(--fg-tertiary);
+  --destructive:       var(--status-danger);
+  --radius:            var(--radius-md);
+  --accent:            var(--bg-raised);
+  --accent-foreground: var(--fg-primary);
+  --popover:           var(--bg-overlay);
+  --popover-foreground: var(--fg-primary);
+}
+
+/* ── BASE RESETS & TYPOGRAPHY HIERARCHY ──────────────────────────────────── */
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum" 1;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--fg-primary);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+}
+
+/* Financial Numbers: Tabular numbers with precise tracking */
+.text-financial, .tabular-nums {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Typography Hierarchy Classes */
+.text-display {
+  font-size: 2.5rem; /* 40px */
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+@media (min-width: 768px) {
+  .text-display {
+    font-size: 3.5rem; /* 56px */
+  }
+}
+
+@media (min-width: 1024px) {
+  .text-display {
+    font-size: 4.5rem; /* 72px */
+  }
+}
+
+.text-h1 {
+  font-size: 1.875rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.text-h2 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.text-h3 {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.text-label-caps {
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--fg-tertiary);
+}
+
+.text-metadata {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--fg-secondary);
+}
+
+/* Monospace */
+code, kbd, pre, .font-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "liga" 0;
+}
+
+/* ── SCROLLBAR ───────────────────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ── FOCUS RING ──────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── SELECTION ──────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--brand-primary-muted);
+  color: var(--brand-primary-light);
+}
+
+/* ── GLASS UTILITIES ─────────────────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(15, 22, 32, 0.80);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Dark gradient mesh — subtle cinematic depth */
+.gradient-mesh {
+  background-image:
+    radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.10) 0px, transparent 55%),
+    radial-gradient(at 85% 15%, rgba(59, 130, 246, 0.07) 0px, transparent 50%),
+    radial-gradient(at 50% 95%, rgba(16, 185, 129, 0.05) 0px, transparent 55%);
+}
+
+/* ── STATUS INDICATOR DOTS ──────────────────────────────────────────────── */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.status-dot.ok {
+  background: var(--status-success);
+  box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
+}
+
+.status-dot.error {
+  background: var(--status-danger);
+  box-shadow: 0 0 4px rgba(239, 68, 68, 0.4);
+}
+
+.status-dot.warning {
+  background: var(--status-warning);
+  box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);
+}
+
+.status-dot.review {
+  background: var(--status-review);
+  box-shadow: 0 0 4px rgba(139, 92, 246, 0.4);
+}
+
+.status-dot.info {
+  background: var(--status-info);
+  box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
+}
+
+.status-dot.brand {
+  background: var(--brand-primary);
+  box-shadow: 0 0 4px rgba(99, 102, 241, 0.4);
+}
+
+.status-dot.unknown {
+  background: var(--status-neutral);
+}
+
+/* ── ANIMATIONS ─────────────────────────────────────────────────────────── */
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(0.9); }
+}
+
+@keyframes skeleton-shimmer {
+  from { background-position: -600px 0; }
+  to   { background-position: 600px 0; }
+}
+
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-4px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes scan-line {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(400%); opacity: 0; }
+}
+
+.animate-status-pulse {
+  animation: status-pulse 2.2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: subtle-float 4s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 0px,
+    rgba(255,255,255,0.07) 300px,
+    rgba(255,255,255,0.03) 600px
+  );
+  background-size: 1200px 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+}
+
+/* ── SIDEBAR / NAV STYLES ───────────────────────────────────────────────── */
+.sidebar-section-label {
+  color: var(--fg-sidebar-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* ── CHART OVERRIDES ────────────────────────────────────────────────────── */
+.recharts-wrapper {
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: var(--chart-axis);
+  font-size: 11px;
+}
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--chart-grid);
+}
+
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(var(--shadow-lg));
+}
+
+/* ── NO-SCROLLBAR UTILITY ────────────────────────────────────────────────── */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── PREFERS REDUCED MOTION ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,35 @@
+name: Docker Build Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-docker:
+    name: Build & Validate Docker Containers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Backend Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./recoverai/backend
+          file: ./recoverai/backend/Dockerfile
+          push: false
+          tags: recoverai-backend:test
+
+      - name: Build Frontend Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./recoverai/frontend
+          file: ./recoverai/frontend/Dockerfile
+          push: false
+          tags: recoverai-frontend:test
