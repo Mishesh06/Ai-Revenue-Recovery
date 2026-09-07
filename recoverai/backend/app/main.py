@@ -6,6 +6,7 @@ Registers all route stubs and exception handlers.
 No AI/ML, agents, orchestration, or Razorpay integration in this phase.
 """
 
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -27,14 +28,28 @@ from app.core.errors import register_exception_handlers
 # Ensure all models are imported so Base.metadata is fully populated
 import app.models  # noqa: F401
 
+logger = logging.getLogger("recoverai.startup")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # ── Startup ───────────────────────────────────────────────────
-    # Phase 3: no startup tasks beyond configuration validation
+    # ── Startup Validation & Security Checks ──────────────────────
+    env_clean = settings.app_env.strip().lower()
+    if env_clean not in ("development", "dev", "local", "test"):
+        if settings.secret_key in ("change-this-in-production", "", "secret"):
+            logger.warning(
+                "SECURITY WARNING: Default or insecure SECRET_KEY is in use in non-development environment '%s'. "
+                "Set a secure SECRET_KEY environment variable before deploying to production.",
+                settings.app_env,
+            )
+        if settings.debug:
+            logger.warning(
+                "SECURITY WARNING: DEBUG mode is enabled in non-development environment '%s'. "
+                "API documentation routes and verbose error details may be exposed.",
+                settings.app_env,
+            )
     yield
     # ── Shutdown ──────────────────────────────────────────────────
-    # Phase 3: no cleanup tasks
 
 
 app = FastAPI(
@@ -52,6 +67,8 @@ app = FastAPI(
     lifespan=lifespan,
     docs_url="/docs" if settings.debug else None,
     redoc_url="/redoc" if settings.debug else None,
+    openapi_url="/openapi.json" if settings.debug else None,
+
     openapi_tags=[
         {
             "name": "health",

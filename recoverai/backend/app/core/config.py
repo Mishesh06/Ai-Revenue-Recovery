@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     app_name: str = "RecoverAI"
     app_version: str = "3.2.0"
     app_env: str = "development"
-    debug: bool = True
+    debug: bool = False
     secret_key: str = "change-this-in-production"
     host: str = "0.0.0.0"
     port: int = 8001
@@ -42,3 +42,4 @@ def get_settings() -> Settings:
 
 # Module-level singleton for convenience
 settings = get_settings()
+
