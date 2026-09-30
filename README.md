@@ -9,7 +9,7 @@ RecoverAI is an open-source payment failure recovery system built with FastAPI, 
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.0+-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Tests Passing](https://img.shields.io/badge/Tests-572%20Passing-success?style=flat-square&logo=pytest&logoColor=white)](https://github.com/Mishesh06/Ai-Revenue-Recovery)
+[![Tests Passing](https://img.shields.io/badge/Tests-577%20Passing-success?style=flat-square&logo=pytest&logoColor=white)](https://github.com/Mishesh06/Ai-Revenue-Recovery)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 ---
@@ -20,7 +20,8 @@ To maintain engineering transparency, the table below distinguishes what is genu
 
 ### ✅ Implemented Functionality
 
-* **PostgreSQL Relational Schema**: 21 tables managed with async SQLAlchemy 2.0 and Alembic migrations, covering tenants, customers, transactions, recovery cases, actions, attempts, policy evaluations, and audit events.
+* **PostgreSQL Relational Schema**: 22 tables managed with async SQLAlchemy 2.0 and Alembic migrations, covering users, tenants, customers, transactions, recovery cases, actions, attempts, policy evaluations, and audit events.
+* **Authentication & Authorization (`app/api/auth.py`)**: Multi-tenant JWT bearer authentication with bcrypt password hashing, session tokens, registration, and login endpoints with full Next.js client integration.
 * **Deterministic Policy Engine (`app/services/policy_engine.py`)**: Evaluates recovery actions against hard business rules:
   - Hard decline exclusions (`stolen_card`, `lost_card`, `fraud_suspected`, `account_closed`)
   - Maximum retry ceilings (`MAX_RETRIES = 3`)
@@ -34,8 +35,8 @@ To maintain engineering transparency, the table below distinguishes what is genu
 * **Append-Only Audit Logging (`app/services/audit_service.py`)**: Immutable chronological logging of state changes, provider references, and action outcomes into `audit_events`.
 * **ML Predictive Pipeline (`ml/`)**: Scikit-Learn `RandomForestClassifier` trained on a synthetic feature dataset (`ml/data/dataset.csv`), with a versioned registry (`registry.json`) and prediction endpoint (`ml/predict.py`).
 * **Simulation Sandbox (`app/services/simulator.py`)**: Executes end-to-end recovery scenarios (Scenarios A–F) against sampled data, evaluating policies, updating state machines, and generating audit streams without external side effects.
-* **Next.js 16 Frontend (`recoverai/frontend/`)**: 12 route views featuring dark high-contrast fintech UI, live API data loading, interactive simulation scrubber, decision trace inspector, and manual review modal workflows.
-* **Comprehensive Test Suite**: 572 backend pytest test cases and 5 ML pipeline tests verifying schema integrity, tenant isolation, idempotency, and state machine transitions.
+* **Next.js 15 Frontend (`recoverai/frontend/`)**: 14 route views featuring 3D ambient canvases, interactive pipeline visualizations, live API data loading, interactive simulation scrubber, decision trace inspector, and manual review modal workflows.
+* **Comprehensive Test Suite**: 577 backend pytest test cases and 5 ML pipeline tests verifying schema integrity, tenant isolation, idempotency, and state machine transitions.
 
 ---
 
