@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.api import (
+    auth_router,
     agents_router,
     analytics_router,
     audit_router,
@@ -128,6 +129,7 @@ register_exception_handlers(app)
 
 # ── Routers ───────────────────────────────────────────────────────
 app.include_router(health_router)
+app.include_router(auth_router)
 app.include_router(transactions_router)
 app.include_router(recovery_router)
 app.include_router(policies_router)

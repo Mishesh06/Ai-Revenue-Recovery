@@ -5,7 +5,7 @@ import { ShieldAlert, ShieldCheck, AlertTriangle, ShieldX } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RiskIndicator — RecoverAI Design System
+   RiskIndicator — PayRecover Design System
    Visualizes fintech risk thresholds, customer chargeback probability,
    and deterministic policy compliance levels.
    ──────────────────────────────────────────────────────────────────────────── */

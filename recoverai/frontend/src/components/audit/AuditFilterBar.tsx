@@ -5,7 +5,7 @@ import { Search, SlidersHorizontal, X, Filter, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AuditFilterBar — RecoverAI Design System
+   AuditFilterBar — PayRecover Design System
    Enterprise filter bar for the Audit Trail governance console.
    ──────────────────────────────────────────────────────────────────────────── */
 

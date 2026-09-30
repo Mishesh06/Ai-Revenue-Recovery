@@ -7,7 +7,7 @@ import { ShieldAlert, BrainCircuit, ShieldCheck, UserCheck, AlertCircle, Trendin
 import { formatCurrency, formatPercent } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RecoveryOpportunitySummary — RecoverAI Design System
+   RecoveryOpportunitySummary — PayRecover Design System
    Top KPI metric strip for the Recovery Center operational control room.
    ──────────────────────────────────────────────────────────────────────────── */
 

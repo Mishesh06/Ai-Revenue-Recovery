@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 import { MerchantProvider } from "@/context/MerchantContext";
 import { ToastProvider } from "@/context/ToastContext";
 import { AppShell } from "@/components/layout/AppShell";
@@ -20,9 +21,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RecoverAI — Operations Center",
-  description: "AI-powered revenue recovery operating system for Razorpay merchants. Monitor, analyze, and recover failed transactions in real-time.",
-  keywords: ["revenue recovery", "payment operations", "AI", "fintech", "Razorpay"],
+  title: "PayRecover — AI Revenue Recovery",
+  description: "PayRecover: Autonomous AI-powered payment recovery platform. Monitor failed transactions, recover lost revenue, and get actionable insights in real-time.",
+  keywords: ["revenue recovery", "payment recovery", "AI", "fintech", "failed payments", "PayRecover"],
 };
 
 export default function RootLayout({
@@ -35,9 +36,11 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <TooltipProvider>
           <ToastProvider>
-            <MerchantProvider>
-              <AppShell>{children}</AppShell>
-            </MerchantProvider>
+            <AuthProvider>
+              <MerchantProvider>
+                <AppShell>{children}</AppShell>
+              </MerchantProvider>
+            </AuthProvider>
           </ToastProvider>
         </TooltipProvider>
       </body>

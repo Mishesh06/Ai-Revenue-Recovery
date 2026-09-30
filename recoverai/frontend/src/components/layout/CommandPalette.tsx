@@ -15,7 +15,7 @@ import { modalVariants, backdropVariants } from "@/lib/motion";
 import { cn, truncateId } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CommandPalette — RecoverAI Global System Command & Search
+   CommandPalette — PayRecover Global System Command & Search
    Fast ⌘K palette for rapid route navigation, merchant workspace switching,
    and operational recovery shortcuts.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -344,7 +344,7 @@ export function CommandPalette({ isOpen, onClose, onToggleSidebar }: CommandPale
                   Execute
                 </span>
               </div>
-              <span className="font-mono text-[10px]">RecoverAI OS v3.2</span>
+              <span className="font-mono text-[10px]">PayRecover v1.0</span>
             </div>
           </motion.div>
         </div>

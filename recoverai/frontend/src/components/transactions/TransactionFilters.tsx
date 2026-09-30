@@ -5,7 +5,7 @@ import { Search, X, SlidersHorizontal, RotateCcw, Calendar, Filter } from "lucid
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   TransactionFilters — RecoverAI Design System
+   TransactionFilters — PayRecover Design System
    Comprehensive filtering panel for the Financial Transactions Ledger.
    ──────────────────────────────────────────────────────────────────────────── */
 

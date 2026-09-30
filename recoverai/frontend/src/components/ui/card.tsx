@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Card — RecoverAI Design System
+   Card — PayRecover Design System
    Fintech-grade card with subtle surface elevation, defined borders, and tokens.
    ──────────────────────────────────────────────────────────────────────────── */
 

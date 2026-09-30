@@ -24,7 +24,7 @@ import {
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AnalyticsPage — RecoverAI Financial Intelligence Terminal (/analytics)
+   AnalyticsPage — PayRecover Financial Intelligence Terminal (/analytics)
    Editorial data visualizations, unit economics, root-cause distributions,
    and empirical Recovery Intelligence trends.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -83,7 +83,7 @@ export default function AnalyticsPage() {
   }
 
   if (isLoading && !dashboard) {
-    return <LoadingSpinner message="Calculating RecoverAI Financial Intelligence…" />;
+    return <LoadingSpinner message="Calculating PayRecover Financial Intelligence…" />;
   }
 
   if (error && !dashboard) {

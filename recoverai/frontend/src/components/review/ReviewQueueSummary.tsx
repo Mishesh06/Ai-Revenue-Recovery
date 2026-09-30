@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   ReviewQueueSummary — RecoverAI Human-in-the-Loop Architecture
+   ReviewQueueSummary — PayRecover Human-in-the-Loop Architecture
    Communicates: "AI handles routine recovery. Humans handle exceptions."
    ──────────────────────────────────────────────────────────────────────────── */
 

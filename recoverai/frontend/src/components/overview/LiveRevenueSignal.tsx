@@ -24,7 +24,7 @@ import { formatCurrency, formatPercent, cn } from "@/lib/utils";
 import { FinancialSummary, RecoverySummary } from "@/types/api";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   LiveRevenueSignal — RecoverAI Overview Section 2
+   LiveRevenueSignal — PayRecover Overview Section 2
    Cinematic multi-layer telemetry visualization tracking failed volume,
    recovery opportunities, and settled recovered capital.
    ──────────────────────────────────────────────────────────────────────────── */

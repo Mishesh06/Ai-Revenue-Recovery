@@ -28,7 +28,7 @@ import { formatCurrency, formatPercent, cn } from "@/lib/utils";
 import { FinancialSummary, RecoverySummary } from "@/types/api";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RevenueRecoveredChart — RecoverAI Financial Intelligence
+   RevenueRecoveredChart — PayRecover Financial Intelligence
    Large editorial chart visualizing settled recovered revenue vs gross failed volume
    with multi-window timeframes and comparison overlay.
    ──────────────────────────────────────────────────────────────────────────── */

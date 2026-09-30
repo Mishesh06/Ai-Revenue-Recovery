@@ -6,7 +6,7 @@ import { staggerContainer, blurRevealVariants } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   MetricReveal — RecoverAI Design System
+   MetricReveal — PayRecover Design System
    Staggered animated container that orchestrates cinematic blur-in reveals
    for financial metric cards and KPI strips.
    ──────────────────────────────────────────────────────────────────────────── */

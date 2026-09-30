@@ -11,7 +11,7 @@ import { formatCurrency, formatDateTime, formatRelativeTime, truncateId, cn } fr
 import { AuditEventOut, RecoveryCaseOut } from "@/types/api";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RecentRecoveryMoment — RecoverAI Overview Section 5
+   RecentRecoveryMoment — PayRecover Overview Section 5
    Visualizes the latest meaningful autonomous recovery event with full
    attribution, correlation chain, and verified settlement telemetry.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -73,7 +73,7 @@ export function RecentRecoveryMoment({
           </h3>
 
           <p className="text-xs text-[var(--fg-secondary)] leading-relaxed">
-            RecoverAI detected transient gateway latency on UPI Intent, calibrated a 91.4% recovery probability, passed deterministic safety policy, and successfully recovered the capital.
+            PayRecover detected transient gateway latency on UPI Intent, calibrated a 91.4% recovery probability, passed deterministic safety policy, and successfully recovered the capital.
           </p>
         </div>
 

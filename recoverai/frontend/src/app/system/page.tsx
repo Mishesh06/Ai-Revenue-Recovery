@@ -15,7 +15,7 @@ import {
 import { motion } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SystemHealthPage — RecoverAI Infrastructure & Service Telemetry (/system)
+   SystemHealthPage — PayRecover Infrastructure & Service Telemetry (/system)
    Real-time monitoring of all 7 core engine components, latencies, and circuit breakers.
    ──────────────────────────────────────────────────────────────────────────── */
 
@@ -91,7 +91,7 @@ const SERVICES: ServiceInfo[] = [
     label: "Action Adapter",
     icon: Play,
     type: "EXECUTION",
-    role: "Razorpay payment retry adapter, token exchange, idempotency keying",
+    role: "payment gateway retry adapter, token exchange, idempotency keying",
     expectedLatency: "1.2ms",
     sla: "99.99%",
   },
@@ -228,7 +228,7 @@ export default function SystemHealthPage() {
             System Infrastructure Health
           </h1>
           <p className="text-sm text-[var(--fg-secondary)] mt-1 max-w-2xl">
-            Live health verification across the RecoverAI multi-layered architecture: API gateway, database persistence, inference engines, safety policy rules, and action adapters.
+            Live health verification across the PayRecover multi-layered architecture: API gateway, database persistence, inference engines, safety policy rules, and action adapters.
           </p>
         </div>
 
@@ -448,7 +448,7 @@ export default function SystemHealthPage() {
           <h3 className="text-sm font-bold text-[var(--fg-primary)]">Zero-Downtime Telemetry SLA</h3>
         </div>
         <p className="text-xs text-[var(--fg-secondary)] leading-relaxed">
-          RecoverAI separates probabilistic AI agents (Diagnosis Agent, Recovery Planner) from deterministic execution guardrails (Policy Engine, Action Adapter). If an LLM or ML component is slow or offline, the Policy Engine falls back to conservative retry heuristics without disrupting active transaction ingestion.
+          PayRecover separates probabilistic AI agents (Diagnosis Agent, Recovery Planner) from deterministic execution guardrails (Policy Engine, Action Adapter). If an LLM or ML component is slow or offline, the Policy Engine falls back to conservative retry heuristics without disrupting active transaction ingestion.
         </p>
       </div>
     </div>

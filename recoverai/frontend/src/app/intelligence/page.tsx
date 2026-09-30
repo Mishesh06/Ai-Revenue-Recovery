@@ -25,7 +25,7 @@ import {
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   IntelligencePage — RecoverAI Revenue Intelligence & Root-Cause Attribution
+   IntelligencePage — PayRecover Revenue Intelligence & Root-Cause Attribution
    Interactive ML predictions, failure categorization, bank issuer performance matrix,
    and calibrated recovery opportunity scoring.
    Connected to real backend recovery cases, transactions, and dashboard models.

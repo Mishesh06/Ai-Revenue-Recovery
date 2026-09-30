@@ -4,7 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   GradientMesh — RecoverAI Design System
+   GradientMesh — PayRecover Design System
    Cinematic ambient background mesh with subtle atmospheric gradients.
    Maintains deep neutral sophistication without random or childish colors.
    ──────────────────────────────────────────────────────────────────────────── */

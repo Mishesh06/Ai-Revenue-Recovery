@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, ArrowUpDown, Search, Filter } from "lucide-r
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   PremiumTable — RecoverAI Design System
+   PremiumTable — PayRecover Design System
    High-density fintech data table with sticky headers, subtle row hover elevation,
    sort indicators, and unified pagination controls.
    ──────────────────────────────────────────────────────────────────────────── */

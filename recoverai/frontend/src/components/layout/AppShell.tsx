@@ -8,16 +8,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { pageVariants } from "@/lib/motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AppShell — RecoverAI Global Operating System Shell
-   Horizontal-nav layout with sticky TopNav, full-height scrollable viewport,
-   ambient lighting mesh, and fluid page transitions.
+   AppShell — PayRecover Global Layout Shell
+   Light-mode layout with sticky TopNav, dot-grid ambient bg, and fluid
+   page transitions via framer-motion.
    ──────────────────────────────────────────────────────────────────────────── */
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const pathname = usePathname();
+  const isLoginPage = pathname === "/login";
 
-  // Global ⌘K and / shortcut listener
+  // Global ⌘K and / shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -43,34 +44,37 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className="flex flex-col min-h-screen overflow-x-clip antialiased select-auto relative"
-      style={{ background: "var(--bg-canvas)", color: "var(--fg-primary)" }}
+      className="flex flex-col min-h-screen overflow-x-clip antialiased select-auto relative dot-grid-bg"
     >
-      {/* Subtle atmospheric ambient mesh — restrained on dark bg */}
+      {/* Subtle ambient gradient overlays on dot grid */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
-        <div className="absolute -top-40 left-1/3 w-[800px] h-[400px] rounded-full bg-[var(--brand-primary)]/[0.04] blur-[160px]" />
-        <div className="absolute top-2/3 -right-32 w-[600px] h-[500px] rounded-full bg-[var(--status-info)]/[0.03] blur-[180px]" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[400px] rounded-full bg-[var(--status-success)]/[0.025] blur-[180px]" />
+        <div className="absolute -top-24 left-1/4 w-[500px] h-[320px] rounded-full blur-[100px]"
+          style={{ background: "radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)" }} />
+        <div className="absolute top-1/2 right-0 w-[350px] h-[350px] rounded-full blur-[80px]"
+          style={{ background: "radial-gradient(circle, rgba(10,37,64,0.05) 0%, transparent 70%)" }} />
       </div>
 
-      {/* Horizontal Top Navigation */}
-      <TopNav onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
+      {/* Horizontal Top Navigation — hidden on /login */}
+      {!isLoginPage && <TopNav onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />}
 
       {/* Scrollable Viewport */}
       <main className="flex-1 relative z-10">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {isLoginPage ? (
+          /* Login page renders full-screen with no padding */
           <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={pathname}
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
+            <motion.div key={pathname} variants={pageVariants} initial="initial" animate="animate" exit="exit">
               {children}
             </motion.div>
           </AnimatePresence>
-        </div>
+        ) : (
+          <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={pathname} variants={pageVariants} initial="initial" animate="animate" exit="exit">
+                {children}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        )}
       </main>
 
       {/* Global ⌘K Command Palette */}

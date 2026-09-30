@@ -9,7 +9,7 @@ import {
 import { cn, formatRelativeTime } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SystemHealth — RecoverAI Design System
+   SystemHealth — PayRecover Design System
    Real-time system component status with semantic status indicators.
    ──────────────────────────────────────────────────────────────────────────── */
 

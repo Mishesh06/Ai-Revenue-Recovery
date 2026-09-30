@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   ScenarioCardSelector — RecoverAI Design System
+   ScenarioCardSelector — PayRecover Design System
    Interactive scenario picker for the 5 demonstration scenarios.
    ──────────────────────────────────────────────────────────────────────────── */
 

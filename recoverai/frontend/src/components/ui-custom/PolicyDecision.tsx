@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { PolicyDecisionBadge } from "./StatusBadge";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   PolicyDecision — RecoverAI Design System
+   PolicyDecision — PayRecover Design System
    Displays policy engine validation output, risk level, rules evaluated,
    and whether human-in-the-loop review was triggered.
    ──────────────────────────────────────────────────────────────────────────── */

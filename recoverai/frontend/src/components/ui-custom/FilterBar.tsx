@@ -5,7 +5,7 @@ import { Search, X, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   FilterBar — RecoverAI Design System
+   FilterBar — PayRecover Design System
    Reusable filter form component for paginated data pages.
    Used in: Audit Trail (and future: Recovery Center, Transactions).
    ──────────────────────────────────────────────────────────────────────────── */

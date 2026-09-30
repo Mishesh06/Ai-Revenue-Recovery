@@ -6,7 +6,7 @@ import { Loader2, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   InteractiveButton — RecoverAI Design System
+   InteractiveButton — PayRecover Design System
    Micro-interaction enabled fintech button with hover elevation, press damping,
    loading spinner state, and success checkmark confirmation.
    ──────────────────────────────────────────────────────────────────────────── */

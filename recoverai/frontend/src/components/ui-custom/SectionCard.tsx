@@ -5,7 +5,7 @@ import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SectionCard — RecoverAI Design System
+   SectionCard — PayRecover Design System
    Reusable container for sheet drawers, inspection panels, and metadata blocks.
    ──────────────────────────────────────────────────────────────────────────── */
 

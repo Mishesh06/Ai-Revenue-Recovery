@@ -11,7 +11,7 @@ import { formatCurrency, formatPercent } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RevenueLeakMapCard — RecoverAI Design System
+   RevenueLeakMapCard — PayRecover Design System
    Fintech cashflow breakdown visualizing leak categorization and recovered yields.
    ──────────────────────────────────────────────────────────────────────────── */
 

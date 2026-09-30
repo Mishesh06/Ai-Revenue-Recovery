@@ -22,9 +22,9 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CaseDetailDrawer — RecoverAI Operational Console Case Inspection
+   CaseDetailDrawer — PayRecover Operational Console Case Inspection
    Interactive slide-out drawer with progressive state machine progress,
-   action UI, 'Why did RecoverAI do this?' tree, and audit telemetry.
+   action UI, 'Why did PayRecover do this?' tree, and audit telemetry.
    ──────────────────────────────────────────────────────────────────────────── */
 
 interface CaseDetailDrawerProps {
@@ -227,7 +227,7 @@ export function CaseDetailDrawer({
           <div className="flex items-center gap-1.5 pt-3 border-t border-[var(--border-subtle)] mt-3">
             {[
               { id: "overview", label: "Case Overview" },
-              { id: "trace", label: "Why did RecoverAI do this?" },
+              { id: "trace", label: "Why did PayRecover do this?" },
               { id: "audit", label: `Audit Log (${auditEvents.length})` },
             ].map((tab) => (
               <button

@@ -1,207 +1,156 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RecoverAI Design System — High-Precision Financial Operations Theme
-   Visual Language: Crisp · Developer-Grade · Trustworthy · High-Contrast · Technical
-   Tailored for Autonomous AI Revenue Recovery for Razorpay Merchants.
+   PayRecover Design System — Clean Light Fintech Theme
+   Visual Language: Clean · Minimal · Professional · 21st.dev Glassmorphism
    ──────────────────────────────────────────────────────────────────────────── */
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* ── 1. HIGH-CONTRAST FINTECH SLATE FOUNDATION ──────────────────────────── */
-  --neutral-black:        #050810;   /* Deepest abyss */
-  --neutral-charcoal-dark:#080C14;   /* Canvas background */
-  --neutral-charcoal:     #0D131F;   /* Card & panel surface */
-  --neutral-charcoal-alt: #121B2B;   /* Elevated surface / row hover */
-  --neutral-graphite:     #172338;   /* Raised container / active pills */
-  --neutral-graphite-light:#1E2D48;  /* Dropdown / popover overlay */
-  --neutral-slate:        #283955;   /* Active border */
-  --neutral-muted:        #3B4E70;   /* Muted border */
+  /* ── 1. LIGHT BACKGROUND HIERARCHY (WHITE & CORPORATE NAVY) ───────────── */
+  --bg-canvas:       #F8FAFC;   /* Slate 50 — clean canvas bg */
+  --bg-base:         #F8FAFC;
+  --bg-surface:      #FFFFFF;   /* Pure white cards, panels */
+  --bg-surface-alt:  #F1F5F9;   /* Secondary rows, table headers */
+  --bg-raised:       #E2E8F0;   /* Hover states */
+  --bg-overlay:      #FFFFFF;   /* Modals, sheets */
+  --bg-input:        #FFFFFF;   /* Input fields */
 
-  --neutral-soft-gray:    #64748B;   /* Slate 500 — captions */
-  --neutral-silver:       #94A3B8;   /* Slate 400 — secondary body */
-  --neutral-cloud:        #CBD5E1;   /* Slate 300 — high-legibility text */
-  --neutral-offwhite:     #F1F5F9;   /* Slate 100 — primary text */
-  --neutral-purewhite:    #FFFFFF;   /* Pure white */
-
-  /* ── 2. BACKGROUND HIERARCHY ───────────────────────────────────────────── */
-  --bg-canvas:       #080C14;   /* Base backdrop */
-  --bg-base:         #080C14;
-  --bg-surface:      #0D131F;   /* Cards, panels, tables */
-  --bg-surface-alt:  #121B2B;   /* Secondary rows, headers */
-  --bg-raised:       #172338;   /* Hover states, active tabs */
-  --bg-overlay:      #121B2B;   /* Modals, sheets, drawers */
-  --bg-input:        #0A0F1A;   /* Input fields */
-
-  /* Surface Hierarchy */
-  --bg-dark-base:    #050810;
-  --bg-dark-surface: #0D131F;
-  --bg-dark-raised:  #172338;
-  --bg-dark-overlay: #121B2B;
-
-  /* Navigation Tokens */
-  --bg-nav:                 #080C14;
+  /* Navigation Tokens (Deep Corporate Navy) */
+  --bg-nav:                 #0A2540;   /* Deep Navy */
   --bg-nav-item:            transparent;
-  --bg-nav-item-hover:      rgba(255, 255, 255, 0.04);
-  --bg-nav-item-active:     rgba(99, 102, 241, 0.12);
-  --border-nav:             rgba(255, 255, 255, 0.08);
-  --border-nav-active:      rgba(99, 102, 241, 0.4);
+  --bg-nav-item-hover:      rgba(255, 255, 255, 0.08);
+  --bg-nav-item-active:     rgba(255, 255, 255, 0.14);
+  --border-nav:             #0F2F57;
+  --border-nav-active:      #38BDF8;
 
-  /* Sidebar Tokens */
-  --bg-sidebar:             #080C14;
-  --bg-sidebar-section:     #080C14;
-  --bg-sidebar-item:        transparent;
-  --bg-sidebar-item-hover:  rgba(255, 255, 255, 0.04);
-  --bg-sidebar-item-active: rgba(99, 102, 241, 0.12);
-  --bg-sidebar-header:      #060910;
-  --border-sidebar:         rgba(255, 255, 255, 0.08);
-  --border-sidebar-active:  rgba(99, 102, 241, 0.4);
+  /* ── 2. SURFACE BORDERS ─────────────────────────────────────────────────── */
+  --border-subtle:   #E2E8F0;   /* Slate 200 — clean card border */
+  --border-default:  #CBD5E1;   /* Slate 300 — input / active border */
+  --border-strong:   #94A3B8;   /* Slate 400 — focus / modal boundary */
 
-  /* ── 3. SURFACE BORDERS & SHEEN ────────────────────────────────────────── */
-  --border-subtle:   rgba(255, 255, 255, 0.08);  /* Clean 1px card border */
-  --border-default:  rgba(255, 255, 255, 0.13);  /* Input / active border */
-  --border-strong:   rgba(255, 255, 255, 0.20);  /* Focus / modal boundary */
-  --border-sheen:    rgba(255, 255, 255, 0.10);
-  --border-dark:     rgba(255, 255, 255, 0.06);
+  /* ── 3. FOREGROUND & TYPOGRAPHY TOKENS ──────────────────────────────────── */
+  --fg-primary:     #0A2540;   /* Deep Corporate Navy / Slate 950 — primary text */
+  --fg-secondary:   #334155;   /* Slate 700 — secondary body */
+  --fg-tertiary:    #64748B;   /* Slate 500 — muted captions */
+  --fg-quaternary:  #94A3B8;   /* Slate 400 — micro-metadata */
+  --fg-placeholder: #94A3B8;
+  --fg-inverse:     #FFFFFF;
 
-  /* ── 4. FOREGROUND & TYPOGRAPHY TOKENS ─────────────────────────────────── */
-  --fg-primary:     #F1F5F9;   /* Primary text — crisp slate 100 */
-  --fg-secondary:   #94A3B8;   /* Secondary body — slate 400 */
-  --fg-tertiary:    #64748B;   /* Muted captions — slate 500 */
-  --fg-quaternary:  #475569;   /* Micro-metadata — slate 600 */
-  --fg-placeholder: #475569;   /* Input placeholder */
-  --fg-inverse:     #090D14;   /* Text on light surfaces */
-  --fg-inverse-muted: #334155;
+  /* ── 4. BRAND ACCENT — CORPORATE NAVY & COBALT ──────────────────────────── */
+  --brand-primary:       #0A2540;   /* Deep Navy */
+  --brand-primary-hover: #0F2F57;   /* Navy Dark */
+  --brand-primary-light: #1E3A8A;   /* Cobalt Navy */
+  --brand-primary-muted: rgba(10, 37, 64, 0.06);
+  --brand-primary-ring:  rgba(10, 37, 64, 0.25);
+  --brand-accent:        #2563EB;   /* Royal Blue */
+  --brand-cyan:          #0284C7;   /* Ocean Blue */
 
-  --fg-sidebar-default: #64748B;
-  --fg-sidebar-active:  #F1F5F9;
-  --fg-sidebar-muted:   #334155;
-
-  /* ── 5. BRAND ACCENT — TECHNICAL INDIGO ────────────────────────────────── */
-  --brand-primary:       #6366F1;   /* Indigo 500 */
-  --brand-primary-hover: #4F46E5;   /* Indigo 600 */
-  --brand-primary-light: #818CF8;   /* Indigo 400 */
-  --brand-primary-muted: rgba(99, 102, 241, 0.12);
-  --brand-primary-ring:  rgba(99, 102, 241, 0.30);
-  --brand-glow:          0 1px 3px rgba(0, 0, 0, 0.3);
-
-  /* ── 6. SEMANTIC FINTECH STATUS COLORS ─────────────────────────────────── */
-  /* Success / Settled / Recovered */
+  /* ── 5. SEMANTIC STATUS COLORS ──────────────────────────────────────────── */
+  /* Success */
   --status-success:         #10B981;
   --status-success-light:   #34D399;
-  --status-success-subtle:  rgba(16, 185, 129, 0.10);
-  --status-success-border:  rgba(16, 185, 129, 0.25);
-  --status-success-text:    #34D399;
-  --status-success-glow:    rgba(16, 185, 129, 0.15);
+  --status-success-subtle:  rgba(16, 185, 129, 0.08);
+  --status-success-border:  rgba(16, 185, 129, 0.20);
+  --status-success-text:    #059669;
 
-  /* Warning / Pending / Review */
+  /* Warning */
   --status-warning:         #F59E0B;
   --status-warning-light:   #FBBF24;
-  --status-warning-subtle:  rgba(245, 158, 11, 0.10);
-  --status-warning-border:  rgba(245, 158, 11, 0.25);
-  --status-warning-text:    #FBBF24;
-  --status-warning-glow:    rgba(245, 158, 11, 0.15);
+  --status-warning-subtle:  rgba(245, 158, 11, 0.08);
+  --status-warning-border:  rgba(245, 158, 11, 0.20);
+  --status-warning-text:    #D97706;
 
-  /* Danger / Failed / Blocked */
+  /* Danger */
   --status-danger:          #EF4444;
   --status-danger-light:    #F87171;
-  --status-danger-subtle:   rgba(239, 68, 68, 0.10);
-  --status-danger-border:   rgba(239, 68, 68, 0.25);
-  --status-danger-text:     #F87171;
-  --status-danger-glow:     rgba(239, 68, 68, 0.15);
+  --status-danger-subtle:   rgba(239, 68, 68, 0.08);
+  --status-danger-border:   rgba(239, 68, 68, 0.20);
+  --status-danger-text:     #DC2626;
 
-  /* Review / Operator Escalation */
+  /* Review */
   --status-review:          #8B5CF6;
   --status-review-light:    #A78BFA;
-  --status-review-subtle:   rgba(139, 92, 246, 0.10);
-  --status-review-border:   rgba(139, 92, 246, 0.25);
-  --status-review-text:     #A78BFA;
-  --status-review-glow:     rgba(139, 92, 246, 0.15);
+  --status-review-subtle:   rgba(139, 92, 246, 0.08);
+  --status-review-border:   rgba(139, 92, 246, 0.20);
+  --status-review-text:     #7C3AED;
 
-  /* Information / Processing / In-Flight */
+  /* Info */
   --status-info:            #3B82F6;
   --status-info-light:      #60A5FA;
-  --status-info-subtle:     rgba(59, 130, 246, 0.10);
-  --status-info-border:     rgba(59, 130, 246, 0.25);
-  --status-info-text:       #60A5FA;
-  --status-info-glow:       rgba(59, 130, 246, 0.15);
+  --status-info-subtle:     rgba(59, 130, 246, 0.08);
+  --status-info-border:     rgba(59, 130, 246, 0.20);
+  --status-info-text:       #2563EB;
 
-  /* Neutral / Closed / System */
-  --status-neutral:         #475569;
-  --status-neutral-subtle:  rgba(71, 85, 105, 0.14);
-  --status-neutral-border:  rgba(71, 85, 105, 0.25);
-  --status-neutral-text:    #94A3B8;
+  /* Neutral */
+  --status-neutral:         #94A3B8;
+  --status-neutral-subtle:  rgba(148, 163, 184, 0.10);
+  --status-neutral-border:  rgba(148, 163, 184, 0.25);
+  --status-neutral-text:    #64748B;
 
-  /* ── 7. DATA VISUALIZATION PALETTE ─────────────────────────────────────── */
+  /* ── 6. DATA VISUALIZATION ──────────────────────────────────────────────── */
   --chart-brand:    #6366F1;
   --chart-success:  #10B981;
   --chart-danger:   #EF4444;
   --chart-warning:  #F59E0B;
   --chart-review:   #8B5CF6;
   --chart-info:     #3B82F6;
-  --chart-cyan:     #06B6D4;
-  --chart-grid:     rgba(255, 255, 255, 0.05);
-  --chart-axis:     #64748B;
+  --chart-grid:     rgba(0, 0, 0, 0.05);
+  --chart-axis:     #94A3B8;
 
-  /* ── 8. ELEVATION & SHADOW SYSTEM ──────────────────────────────────────── */
-  --shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-sm:     0 2px 4px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
-  --shadow-md:     0 4px 12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.06);
-  --shadow-lg:     0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --shadow-xl:     0 16px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.09);
-  --shadow-glass:  0 4px 16px rgba(0, 0, 0, 0.35);
+  /* ── 7. ELEVATION & SHADOW SYSTEM ───────────────────────────────────────── */
+  --shadow-xs:     0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:     0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg:     0 10px 15px rgba(0, 0, 0, 0.07), 0 4px 6px rgba(0, 0, 0, 0.04);
+  --shadow-xl:     0 20px 25px rgba(0, 0, 0, 0.08), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --shadow-glass:  0 4px 24px rgba(99, 102, 241, 0.06), 0 1px 3px rgba(0,0,0,0.06);
 
-  --glow-brand:    0 0 0 1px rgba(99, 102, 241, 0.25);
-  --glow-success:  0 0 0 1px rgba(16, 185, 129, 0.25);
-  --glow-danger:   0 0 0 1px rgba(239, 68, 68, 0.25);
-  --glow-warning:  0 0 0 1px rgba(245, 158, 11, 0.25);
-  --glow-review:   0 0 0 1px rgba(139, 92, 246, 0.25);
+  --glow-brand:    0 0 0 3px rgba(99, 102, 241, 0.15);
 
-  /* ── 9. GEOMETRY & RADIUS (Clean Enterprise Densities) ─────────────────── */
-  --radius-xs:   3px;
-  --radius-sm:   5px;
-  --radius-md:   6px;
-  --radius-lg:   8px;
-  --radius-xl:   10px;
-  --radius-2xl:  12px;
+  /* ── 8. GEOMETRY & RADIUS ───────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  20px;
   --radius-full: 9999px;
 
-  /* ── 10. TYPOGRAPHY SCALE ──────────────────────────────────────────────── */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* ── 9. TYPOGRAPHY ──────────────────────────────────────────────────────── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* ── 11. TIMING & MOTION ───────────────────────────────────────────────── */
-  --duration-instant:  40ms;
+  /* ── 10. TIMING & MOTION ────────────────────────────────────────────────── */
   --duration-fast:     100ms;
   --duration-normal:   150ms;
-  --duration-base:     150ms;
   --duration-emphasis: 250ms;
   --ease-spring:       cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* ── 12. SHADCN COMPATIBILITY LAYER ────────────────────────────────────── */
-  --background:        var(--bg-surface);
-  --foreground:        var(--fg-primary);
-  --card:              var(--bg-surface);
-  --card-foreground:   var(--fg-primary);
-  --border:            var(--border-subtle);
-  --input:             var(--border-default);
-  --ring:              var(--brand-primary);
-  --primary:           var(--brand-primary);
+  /* ── 11. SHADCN COMPATIBILITY LAYER (Navy) ─────────────────────────────── */
+  --background:        #FFFFFF;
+  --foreground:        #0A2540;
+  --card:              #FFFFFF;
+  --card-foreground:   #0A2540;
+  --border:            #E2E8F0;
+  --input:             #E2E8F0;
+  --ring:              #0A2540;
+  --primary:           #0A2540;
   --primary-foreground:#FFFFFF;
-  --secondary:         var(--bg-surface-alt);
-  --secondary-foreground: var(--fg-secondary);
-  --muted:             var(--bg-surface-alt);
-  --muted-foreground:  var(--fg-tertiary);
-  --destructive:       var(--status-danger);
-  --radius:            var(--radius-md);
-  --accent:            var(--bg-raised);
-  --accent-foreground: var(--fg-primary);
-  --popover:           var(--bg-overlay);
-  --popover-foreground: var(--fg-primary);
+  --secondary:         #F1F5F9;
+  --secondary-foreground: #334155;
+  --muted:             #F1F5F9;
+  --muted-foreground:  #64748B;
+  --destructive:       #EF4444;
+  --radius:            8px;
+  --accent:            #EFF6FF;
+  --accent-foreground: #0A2540;
+  --popover:           #FFFFFF;
+  --popover-foreground: #0A2540;
 }
 
-/* ── BASE RESETS & TYPOGRAPHY HIERARCHY ──────────────────────────────────── */
+/* ── BASE RESETS & TYPOGRAPHY ─────────────────────────────────────────────── */
 html {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -213,70 +162,14 @@ html {
 body {
   background-color: var(--bg-canvas);
   color: var(--fg-primary);
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 
-/* Financial Numbers: Tabular numbers with precise tracking */
-.text-financial, .tabular-nums {
+/* Tabular numbers for financial data */
+.tabular-nums {
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-}
-
-/* Typography Hierarchy Classes */
-.text-display {
-  font-size: 2.5rem; /* 40px */
-  line-height: 1.08;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-}
-
-@media (min-width: 768px) {
-  .text-display {
-    font-size: 3.5rem; /* 56px */
-  }
-}
-
-@media (min-width: 1024px) {
-  .text-display {
-    font-size: 4.5rem; /* 72px */
-  }
-}
-
-.text-h1 {
-  font-size: 1.875rem;
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-}
-
-.text-h2 {
-  font-size: 1.375rem;
-  line-height: 1.3;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.text-h3 {
-  font-size: 1.0625rem;
-  line-height: 1.4;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-}
-
-.text-label-caps {
-  font-size: 0.6875rem; /* 11px */
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: var(--fg-tertiary);
-}
-
-.text-metadata {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: -0.01em;
-  color: var(--fg-secondary);
 }
 
 /* Monospace */
@@ -285,67 +178,58 @@ code, kbd, pre, .font-mono {
   font-feature-settings: "liga" 0;
 }
 
-/* ── SCROLLBAR ───────────────────────────────────────────────────────────── */
+/* ── SCROLLBAR ────────────────────────────────────────────────────────────── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.1) transparent;
+  scrollbar-color: rgba(0,0,0,0.12) transparent;
 }
 
-*::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+*::-webkit-scrollbar { width: 5px; height: 5px; }
+*::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.10);
   border-radius: var(--radius-full);
 }
-
-*::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
+*::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.18); }
 
 /* ── FOCUS RING ──────────────────────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--brand-primary);
   outline-offset: 2px;
 }
+:focus:not(:focus-visible) { outline: none; }
 
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* ── SELECTION ──────────────────────────────────────────────────────────── */
+/* ── SELECTION ───────────────────────────────────────────────────────────── */
 ::selection {
   background: var(--brand-primary-muted);
-  color: var(--brand-primary-light);
+  color: var(--brand-primary-hover);
 }
 
-/* ── SURFACE UTILITIES ─────────────────────────────────────────────────── */
+/* ── GLASS CARD ──────────────────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-glass);
+}
+
 .glass-panel {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-sm);
 }
 
-.glass-panel-light {
-  background: var(--bg-surface-alt);
-  border: 1px solid var(--border-subtle);
-}
-
-/* Subtle clean mesh background */
-.gradient-mesh {
-  background-color: var(--bg-canvas);
+/* ── CLEAN LINE GRID BACKGROUND (Institutional White & Navy) ────────────── */
+.dot-grid-bg {
+  background-color: #F8FAFC;
   background-image:
-    radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.04) 0px, transparent 45%),
-    radial-gradient(at 85% 15%, rgba(59, 130, 246, 0.03) 0px, transparent 40%);
+    linear-gradient(to right, rgba(203, 213, 225, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(203, 213, 225, 0.35) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* ── STATUS INDICATOR DOTS ──────────────────────────────────────────────── */
+/* ── STATUS DOTS ─────────────────────────────────────────────────────────── */
 .status-dot {
   width: 6px;
   height: 6px;
@@ -353,36 +237,12 @@ code, kbd, pre, .font-mono {
   flex-shrink: 0;
   display: inline-block;
 }
+.status-dot.ok      { background: var(--status-success); }
+.status-dot.error   { background: var(--status-danger); }
+.status-dot.warning { background: var(--status-warning); }
+.status-dot.info    { background: var(--status-info); }
 
-.status-dot.ok {
-  background: var(--status-success);
-}
-
-.status-dot.error {
-  background: var(--status-danger);
-}
-
-.status-dot.warning {
-  background: var(--status-warning);
-}
-
-.status-dot.review {
-  background: var(--status-review);
-}
-
-.status-dot.info {
-  background: var(--status-info);
-}
-
-.status-dot.brand {
-  background: var(--brand-primary);
-}
-
-.status-dot.unknown {
-  background: var(--status-neutral);
-}
-
-/* ── SKELETON LOADER ────────────────────────────────────────────────────── */
+/* ── SKELETON LOADER ──────────────────────────────────────────────────────── */
 @keyframes skeleton-shimmer {
   from { background-position: -400px 0; }
   to   { background-position: 400px 0; }
@@ -391,60 +251,49 @@ code, kbd, pre, .font-mono {
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.02) 0px,
-    rgba(255,255,255,0.06) 200px,
-    rgba(255,255,255,0.02) 400px
+    rgba(0,0,0,0.03) 0px,
+    rgba(0,0,0,0.06) 200px,
+    rgba(0,0,0,0.03) 400px
   );
   background-size: 800px 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
-/* ── SIDEBAR / NAV STYLES ───────────────────────────────────────────────── */
+/* ── RECHARTS OVERRIDES ──────────────────────────────────────────────────── */
+.recharts-wrapper {
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+.recharts-cartesian-axis-tick-value {
+  fill: var(--chart-axis);
+  font-size: 11px;
+}
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--chart-grid);
+}
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(var(--shadow-lg));
+}
+
+/* ── NO-SCROLLBAR ─────────────────────────────────────────────────────────── */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── SIDEBAR SECTION LABEL ────────────────────────────────────────────────── */
 .sidebar-section-label {
-  color: var(--fg-sidebar-muted);
+  color: var(--fg-tertiary);
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
-/* ── CHART OVERRIDES ────────────────────────────────────────────────────── */
-.recharts-wrapper {
-  font-family: var(--font-sans);
-  font-size: 12px;
-}
-
-.recharts-cartesian-axis-tick-value {
-  fill: var(--chart-axis);
-  font-size: 11px;
-}
-
-.recharts-cartesian-grid-horizontal line,
-.recharts-cartesian-grid-vertical line {
-  stroke: var(--chart-grid);
-}
-
-.recharts-tooltip-wrapper {
-  filter: drop-shadow(var(--shadow-lg));
-}
-
-/* ── NO-SCROLLBAR UTILITY ────────────────────────────────────────────────── */
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* ── PREFERS REDUCED MOTION ─────────────────────────────────────────────── */
+/* ── PREFERS REDUCED MOTION ───────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
+  *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

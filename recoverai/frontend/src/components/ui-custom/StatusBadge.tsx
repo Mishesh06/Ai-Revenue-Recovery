@@ -2,7 +2,7 @@ import React from "react";
 import { cn, formatStateLabel } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   StatusBadge — RecoverAI Design System
+   StatusBadge — PayRecover Design System
    Canonical component for all status, policy gate, and lifecycle states.
    ──────────────────────────────────────────────────────────────────────────── */
 

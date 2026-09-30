@@ -11,8 +11,8 @@ import { AuditEventOut, TransactionOut, RecoveryCaseOut } from "@/types/api";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   DecisionTraceTree — RecoverAI Explainability Engine
-   Visualizes "Why did RecoverAI do this?" using structured backend telemetry.
+   DecisionTraceTree — PayRecover Explainability Engine
+   Visualizes "Why did PayRecover do this?" using structured backend telemetry.
    Zero chain-of-thought exposure. Pure concise evidence, reason codes, and policy gates.
    ──────────────────────────────────────────────────────────────────────────── */
 
@@ -65,7 +65,7 @@ export function DecisionTraceTree({ auditEvents, transaction, selectedCase, clas
     confidence: prob,
     evidence: {
       error_code: rawErrorCode,
-      bank: "Razorpay / Bank Route",
+      bank: "PayRecover / Bank Route",
       network: transaction?.payment_method?.toUpperCase() || "UPI",
     },
   };
@@ -232,7 +232,7 @@ export function DecisionTraceTree({ auditEvents, transaction, selectedCase, clas
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-[var(--brand-primary)]" />
           <h4 className="text-xs font-bold text-[var(--fg-primary)] tracking-tight">
-            Why did RecoverAI do this?
+            Why did PayRecover do this?
           </h4>
         </div>
         <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-[var(--status-success-subtle)] text-[var(--status-success-text)] border border-[var(--status-success-border)]">

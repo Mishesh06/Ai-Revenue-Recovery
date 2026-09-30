@@ -20,7 +20,7 @@ import { useMerchant } from "@/context/MerchantContext";
 import { cn, truncateId } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Sidebar — RecoverAI Operating System Navigation
+   Sidebar — PayRecover Operating System Navigation
    Collapsible, responsive sidebar with smooth width transitions, active route
    indicators, tooltips in collapsed mode, and system status heartbeats.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -142,7 +142,7 @@ export function Sidebar({
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm font-bold text-white tracking-tight leading-none group-hover:text-[var(--brand-primary-light)] transition-colors truncate">
-                      RecoverAI
+                      PayRecover
                     </span>
                     <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-white/10 text-[var(--neutral-cloud)] font-semibold">
                       v3.2

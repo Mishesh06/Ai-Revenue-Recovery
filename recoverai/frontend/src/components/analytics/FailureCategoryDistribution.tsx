@@ -15,7 +15,7 @@ import { formatCurrency, formatPercent, cn } from "@/lib/utils";
 import { RevenueLeakMap } from "@/types/api";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   FailureCategoryDistribution — RecoverAI Financial Analytics
+   FailureCategoryDistribution — PayRecover Financial Analytics
    Restrained fintech visualization breaking down failure root causes
    and their respective autonomous recovery yields.
    ──────────────────────────────────────────────────────────────────────────── */

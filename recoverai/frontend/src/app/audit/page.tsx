@@ -23,9 +23,9 @@ import {
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AuditPage — RecoverAI Decision Governance & Audit Trail (/audit)
+   AuditPage — PayRecover Decision Governance & Audit Trail (/audit)
    Production-grade real-time audit stream communicating trust, traceability,
-   and financial safety: "Every important RecoverAI decision is traceable."
+   and financial safety: "Every important PayRecover decision is traceable."
    ──────────────────────────────────────────────────────────────────────────── */
 
 const SPRING_EASE = [0.16, 1, 0.3, 1] as const;

@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AIDecisionFlow — RecoverAI Overview Section 3
+   AIDecisionFlow — PayRecover Overview Section 3
    Interactive 8-stage visual storytelling sequence demonstrating autonomous
    decision architecture from payment failure ingestion to verified settlement.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -38,7 +38,7 @@ const DECISION_STAGES: DecisionStage[] = [
     kicker: "WEBHOOK INGESTION",
     question: "What happened at checkout?",
     icon: CreditCard,
-    actor: "Razorpay Gateway Webhook",
+    actor: "PayRecover Gateway Webhook",
     latency: "0.14ms",
     description: "Captures raw transaction failure payloads across UPI, Cards, and Netbanking with sub-second event ingestion.",
     telemetryEvidence: {
@@ -76,7 +76,7 @@ const DECISION_STAGES: DecisionStage[] = [
     icon: BrainCircuit,
     actor: "RecoveryPredictor v1.3 (GBDT)",
     latency: "44ms",
-    description: "Calculates recovery probability curves calibrated across 1M+ Razorpay payments based on bank latency and card BIN history.",
+    description: "Calculates recovery probability curves calibrated across 1M+ payment gateways based on bank latency and card BIN history.",
     telemetryEvidence: {
       recovery_probability: "91.4%",
       confidence_interval: "[0.88, 0.94]",
@@ -146,7 +146,7 @@ const DECISION_STAGES: DecisionStage[] = [
     kicker: "IDEMPOTENT EXECUTION",
     question: "How is the action dispatched?",
     icon: Play,
-    actor: "Razorpay Action Adapter",
+    actor: "PayRecover Action Adapter",
     latency: "86ms",
     description: "Dispatches atomic, idempotent retry payment call with idempotency locking to guarantee zero duplicate customer debits.",
     telemetryEvidence: {
@@ -209,7 +209,7 @@ export function AIDecisionFlow({ className }: { className?: string }) {
             Orchestration & Decision Lifecycle
           </h2>
           <p className="text-xs text-[var(--fg-tertiary)]">
-            How RecoverAI analyzes, diagnoses, authorizes, and recovers failed payments
+            How PayRecover analyzes, diagnoses, authorizes, and recovers failed payments
           </p>
         </div>
 

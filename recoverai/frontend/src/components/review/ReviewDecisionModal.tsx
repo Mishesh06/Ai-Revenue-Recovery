@@ -13,7 +13,7 @@ import { formatCurrency, formatDateTime, formatRelativeTime, truncateId, cn } fr
 import { useToast } from "@/context/ToastContext";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   ReviewDecisionModal — RecoverAI Deliberate Decision Interface
+   ReviewDecisionModal — PayRecover Deliberate Decision Interface
    Controlled human-in-the-loop exception handling with explicit consequence disclosure.
    ──────────────────────────────────────────────────────────────────────────── */
 
@@ -297,7 +297,7 @@ export function ReviewDecisionModal({
 
               <p className="text-[11px] text-[var(--fg-secondary)] leading-relaxed">
                 {confirmationAction === "APPROVED"
-                  ? "Authorizing will instruct the Action Adapter to immediately execute the recovery action via Razorpay API and deduct 1 attempt from the customer's retry budget."
+                  ? "Authorizing will instruct the Action Adapter to immediately execute the recovery action via payment gateway API and deduct 1 attempt from the customer's retry budget."
                   : "Rejecting will halt all further automated interventions for this transaction, release reserved idempotency keys, and mark the case as CLOSED."}
               </p>
 

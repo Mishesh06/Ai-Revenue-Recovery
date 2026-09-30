@@ -28,7 +28,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SimulatorPage — RecoverAI Interactive Simulation Workspace (/simulator)
+   SimulatorPage — PayRecover Interactive Simulation Workspace (/simulator)
    Deterministic test bench for simulating autonomous recovery orchestration,
    policy gates, safe idempotency locks, and operator reviews.
    ──────────────────────────────────────────────────────────────────────────── */

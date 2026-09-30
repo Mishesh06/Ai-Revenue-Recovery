@@ -16,7 +16,7 @@ import {
 import { formatCurrency, formatPercent, cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RecoveryIntelligenceSection — RecoverAI Financial Analytics
+   RecoveryIntelligenceSection — PayRecover Financial Analytics
    Section explaining trends, timing windows, channel attribution,
    and deterministic policy safety using structured backend metrics.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -55,7 +55,7 @@ export function RecoveryIntelligenceSection({ className }: RecoveryIntelligenceP
       stat: "0.0%",
       statLabel: "Dispute Rate",
       description: "Hard boundary cap of 3 retry attempts with customer fatigue limits guarantees zero duplicate debits and zero chargebacks.",
-      metricDetail: "100% compliant with RBI & Razorpay safety mandates",
+      metricDetail: "100% compliant with RBI & PayRecover safety mandates",
     },
   ];
 

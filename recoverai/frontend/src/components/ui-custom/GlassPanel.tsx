@@ -4,7 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   GlassPanel — RecoverAI Design System
+   GlassPanel — PayRecover Design System
    Sophisticated frosted glass panel with border sheen and calibrated backdrop blur.
    ──────────────────────────────────────────────────────────────────────────── */
 

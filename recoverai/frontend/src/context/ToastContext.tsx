@@ -6,7 +6,7 @@ import { CheckCircle2, AlertCircle, Info, AlertTriangle, X } from "lucide-react"
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Toast & Notification System — RecoverAI Design System
+   Toast & Notification System — PayRecover Design System
    Lightweight, accessible toast notifications with crisp Framer Motion entrance.
    ──────────────────────────────────────────────────────────────────────────── */
 

@@ -25,7 +25,7 @@ import {
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   TransactionsPage — RecoverAI Financial Transactions Ledger (/transactions)
+   TransactionsPage — PayRecover Financial Transactions Ledger (/transactions)
    High-density fintech ledger with sticky headers, multi-factor filtering,
    and visual integration with the autonomous recovery lifecycle.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -295,7 +295,7 @@ function TransactionsContent() {
             icon: CreditCard,
             color: "var(--brand-primary)",
             borderColor: "var(--brand-primary-ring)",
-            desc: "Ingested via Razorpay webhooks",
+            desc: "Ingested via payment gateway webhooks",
           },
           {
             title: "Revenue at Risk",

@@ -11,7 +11,7 @@ import { activeNodePulse, transitions } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   StateProgressGauge — RecoverAI Design System
+   StateProgressGauge — PayRecover Design System
    State Machine visualization tracking the formal case lifecycle:
    DETECTED → ANALYZING → PREDICTED → DIAGNOSED → PLANNED → POLICY_CHECK → RECOVERING → RECOVERED/CLOSED
    ──────────────────────────────────────────────────────────────────────────── */

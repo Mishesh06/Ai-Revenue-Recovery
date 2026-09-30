@@ -14,7 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Header — RecoverAI Global System Header
+   Header — PayRecover Global System Header
    Top operating system bar with animated breadcrumbs, instant ⌘K command trigger,
    live telemetry heartbeat, multi-tenant merchant switcher, and notification stream.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -211,7 +211,7 @@ export function Header({ onMenuClick, onOpenCommandPalette }: HeaderProps) {
           {/* Quick Settings */}
           <button
             onClick={() => {
-              toast.info("Operating System Settings", "RecoverAI Architecture v3.2 configuration active.");
+              toast.info("Operating System Settings", "PayRecover Architecture v3.2 configuration active.");
             }}
             className="p-1.5 text-[var(--fg-tertiary)] hover:text-[var(--fg-primary)] rounded-[var(--radius-md)] hover:bg-[var(--bg-raised)] transition-colors"
             title="System Configuration"

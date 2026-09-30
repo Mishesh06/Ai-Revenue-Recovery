@@ -6,7 +6,7 @@ import { hoverElevationVariants } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   PremiumCard — RecoverAI Design System
+   PremiumCard — PayRecover Design System
    Sophisticated fintech card with subtle border sheen, optional glass finish,
    hover micro-elevation, and asymmetric accent headers.
    ──────────────────────────────────────────────────────────────────────────── */

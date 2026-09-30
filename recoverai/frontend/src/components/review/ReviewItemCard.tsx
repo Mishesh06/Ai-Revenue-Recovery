@@ -13,7 +13,7 @@ import { formatCurrency, formatDateTime, formatRelativeTime, truncateId, cn } fr
 import { useToast } from "@/context/ToastContext";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   ReviewItemCard — RecoverAI Design System
+   ReviewItemCard — PayRecover Design System
    High-density exception item card with clear justification and deliberate decision trigger.
    ──────────────────────────────────────────────────────────────────────────── */
 

@@ -5,7 +5,7 @@ import { Search, X, SlidersHorizontal, Command } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CommandBar — RecoverAI Design System
+   CommandBar — PayRecover Design System
    High-efficiency command & filter input with ⌘K keyboard shortcut capture,
    quick filter pills, and instant search reactivity.
    ──────────────────────────────────────────────────────────────────────────── */

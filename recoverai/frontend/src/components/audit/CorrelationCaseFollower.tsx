@@ -13,7 +13,7 @@ import { formatDateTime, formatRelativeTime, truncateId, formatCurrency, cn } fr
 import { useToast } from "@/context/ToastContext";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CorrelationCaseFollower — RecoverAI Complete Lifecycle Visualizer
+   CorrelationCaseFollower — PayRecover Complete Lifecycle Visualizer
    Follows an entire recovery case from failure ingestion to final settlement,
    showing chronological decision nodes and verified telemetry.
    ──────────────────────────────────────────────────────────────────────────── */

@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AIOrchestrationFlow — RecoverAI AI Command Center
+   AIOrchestrationFlow — PayRecover AI Command Center
    Animated orchestration visualization showing the 7-stage AI intelligence
    and policy governance lifecycle:
    Transaction → Detection → ML Prediction → Diagnosis Agent → Recovery Planner → Policy Engine → Action Adapter
@@ -34,7 +34,7 @@ const FLOW_NODES: FlowNode[] = [
     id: "transaction",
     step: 1,
     name: "Transaction",
-    actor: "Razorpay Ingest",
+    actor: "PayRecover Ingest",
     version: "v3.2",
     type: "INGESTION",
     icon: CreditCard,
@@ -106,7 +106,7 @@ const FLOW_NODES: FlowNode[] = [
     id: "action_adapter",
     step: 7,
     name: "Action Adapter",
-    actor: "RazorpayLive",
+    actor: "PayRecoverLive",
     version: "v3.2",
     type: "ADAPTER",
     icon: Play,

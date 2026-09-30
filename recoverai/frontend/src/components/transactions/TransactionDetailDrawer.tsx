@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   TransactionDetailDrawer — RecoverAI Financial Transactions Ledger
+   TransactionDetailDrawer — PayRecover Financial Transactions Ledger
    Premium transaction inspection experience showing transaction metadata,
    failure attribution, linked recovery lifecycle, and audit telemetry.
    ──────────────────────────────────────────────────────────────────────────── */

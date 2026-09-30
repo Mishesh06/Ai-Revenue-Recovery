@@ -10,7 +10,7 @@ import {
 import { formatLatency, cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   IntelligenceLayerCard — RecoverAI AI Command Center
+   IntelligenceLayerCard — PayRecover AI Command Center
    Visualizes one of the 3 Intelligence Layers or the Deterministic Policy Engine.
    Zero chain-of-thought exposed. Pure structured outputs & fallback telemetry.
    ──────────────────────────────────────────────────────────────────────────── */

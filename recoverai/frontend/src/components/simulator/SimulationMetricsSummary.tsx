@@ -10,7 +10,7 @@ import {
 import { formatCurrency, formatPercent, cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SimulationMetricsSummary — RecoverAI Verified Metric Completion Strip
+   SimulationMetricsSummary — PayRecover Verified Metric Completion Strip
    Reveals the 9 verified simulation metrics directly from the backend payload.
    ──────────────────────────────────────────────────────────────────────────── */
 

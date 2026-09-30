@@ -13,7 +13,7 @@ import { formatTime, formatDateTime, formatLatency, truncateId, cn } from "@/lib
 import { useToast } from "@/context/ToastContext";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AgentActivityTimeline — RecoverAI AI Command Center
+   AgentActivityTimeline — PayRecover AI Command Center
    Live activity stream tracking agent operations, latencies, fallback states,
    and structured decision outputs without exposing private chain-of-thought.
    ──────────────────────────────────────────────────────────────────────────── */

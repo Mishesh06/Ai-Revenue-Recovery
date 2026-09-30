@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────
-// RecoverAI v3.2 — API Response Types
+// PayRecover v3.2 — API Response Types
 // MUST match actual FastAPI response schemas exactly.
 // ─────────────────────────────────────────────────────────────────────
 

@@ -4,7 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   GlowContainer — RecoverAI Design System
+   GlowContainer — PayRecover Design System
    Wraps high-importance operational elements with a calibrated status glow or focus ring.
    ──────────────────────────────────────────────────────────────────────────── */
 

@@ -10,7 +10,7 @@ import {
 import { cn, formatDateTime, formatEventType } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   TimelineEvent — RecoverAI Design System
+   TimelineEvent — PayRecover Design System
    Canonical timeline item for both Audit Trail and Transaction detail drawer.
    Merges: audit/EventItem + transactions/DrawerTimelineItem.
    ──────────────────────────────────────────────────────────────────────────── */

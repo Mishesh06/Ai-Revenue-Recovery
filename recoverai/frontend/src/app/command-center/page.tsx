@@ -23,8 +23,8 @@ import {
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CommandCenterPage — RecoverAI AI Command Center (/command-center)
-   Visually communicates RecoverAI's Tri-Layer Intelligence Architecture +
+   CommandCenterPage — PayRecover AI Command Center (/command-center)
+   Visually communicates PayRecover's Tri-Layer Intelligence Architecture +
    Deterministic Policy Engine separation, live activity stream, and fallback telemetry.
    ──────────────────────────────────────────────────────────────────────────── */
 
@@ -116,7 +116,7 @@ export default function CommandCenterPage() {
     name: "ML Recovery Model",
     version: "RecoveryPredictor v1.3",
     question: "How likely is recovery?",
-    description: "Gradient-boosted decision tree calibrated on Razorpay payment transactions to calculate recovery probability curves.",
+    description: "Gradient-boosted decision tree calibrated on payment gateway transactions to calculate recovery probability curves.",
     icon: BrainCircuit,
     status: mlStatus,
     fallbackStatus: isMlDegraded ? "Degraded Heuristic Active" : "FastTree Inference Engine",

@@ -5,7 +5,7 @@ import { BrainCircuit, Cpu, Zap, Activity } from "lucide-react";
 import { formatLatency, cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AIStatusIndicator — RecoverAI Design System
+   AIStatusIndicator — PayRecover Design System
    Sophisticated indicator for AI agents, ML inference latency, and fallback status.
    ──────────────────────────────────────────────────────────────────────────── */
 

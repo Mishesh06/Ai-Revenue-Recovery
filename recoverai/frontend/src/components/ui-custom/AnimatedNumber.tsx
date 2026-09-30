@@ -5,7 +5,7 @@ import { useSpring } from "framer-motion";
 import { formatCurrency, formatCurrencyCompact, formatPercent, cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AnimatedNumber — RecoverAI High-Precision Tabular Number Transitions
+   AnimatedNumber — PayRecover High-Precision Tabular Number Transitions
    Zero layout shift. Performs crisp, calibrated number transitions with spring physics.
    ──────────────────────────────────────────────────────────────────────────── */
 

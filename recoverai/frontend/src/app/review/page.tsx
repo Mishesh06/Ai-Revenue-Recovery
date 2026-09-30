@@ -25,7 +25,7 @@ import {
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   ReviewPage — RecoverAI Human Review & Operator Governance Console (/review)
+   ReviewPage — PayRecover Human Review & Operator Governance Console (/review)
    Controlled autonomy workspace: "AI handles routine recovery. Humans handle exceptions."
    ──────────────────────────────────────────────────────────────────────────── */
 

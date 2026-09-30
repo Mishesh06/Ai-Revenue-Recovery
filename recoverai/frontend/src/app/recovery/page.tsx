@@ -24,7 +24,7 @@ import {
 } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RecoveryCenterPage — RecoverAI Financial Operations Console (/recovery)
+   RecoveryCenterPage — PayRecover Financial Operations Console (/recovery)
    High-density command center for monitoring, inspecting, and authorizing
    autonomous revenue recovery interventions.
    ──────────────────────────────────────────────────────────────────────────── */

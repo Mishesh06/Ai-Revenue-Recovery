@@ -11,7 +11,7 @@ import { AuditEventOut } from "@/types/api";
 import { cn, formatCurrency } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   LiveSimulationPipeline — RecoverAI 8-Stage Sequential Orchestration
+   LiveSimulationPipeline — PayRecover 8-Stage Sequential Orchestration
    STEP 1: Transactions Analyzed
    STEP 2: Opportunities Detected
    STEP 3: ML Predictions Generated
@@ -36,7 +36,7 @@ export interface PipelineStageDef {
 }
 
 export const SIMULATION_STAGES: PipelineStageDef[] = [
-  { step: 1, id: "SCANNING",     label: "Transactions Analyzed",    subhead: "INGESTION STREAM",   eventType: "PaymentFailed",       icon: CreditCard,   actor: "Razorpay Ingest",       description: "Live ingestion of failed merchant payment stream" },
+  { step: 1, id: "SCANNING",     label: "Transactions Analyzed",    subhead: "INGESTION STREAM",   eventType: "PaymentFailed",       icon: CreditCard,   actor: "PayRecover Ingest",       description: "Live ingestion of failed merchant payment stream" },
   { step: 2, id: "DETECTING",    label: "Opportunities Detected",   subhead: "FAILURE FILTER",     eventType: "OpportunityDetected", icon: Search,       actor: "FailureManager",        description: "Filtering transient vs hard terminal failure codes" },
   { step: 3, id: "PREDICTING",   label: "ML Predictions Generated", subhead: "SCORING MODEL",      eventType: "PredictionCreated",   icon: BrainCircuit, actor: "RecoveryPredictor v1.3", description: "ML scoring & recovery probability calibration" },
   { step: 4, id: "DIAGNOSING",   label: "AI Diagnosis Formulated",  subhead: "ROOT-CAUSE LLM",     eventType: "DiagnosisCreated",    icon: Activity,     actor: "DiagnosisAgent v2.1",   description: "Attributing error codes into formal failure taxonomies" },

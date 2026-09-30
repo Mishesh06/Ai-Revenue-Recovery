@@ -5,7 +5,7 @@ import { LucideIcon, BarChart3, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   DataVisualization — RecoverAI Design System
+   DataVisualization — PayRecover Design System
    Fintech chart and telemetry visualization container with timeframe controls,
    metric highlights, and responsive chart viewport.
    ──────────────────────────────────────────────────────────────────────────── */

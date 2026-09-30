@@ -15,7 +15,7 @@ import { formatDateTime, formatRelativeTime, truncateId, formatEventType, cn } f
 import { useToast } from "@/context/ToastContext";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AuditStreamCard — RecoverAI Design System
+   AuditStreamCard — PayRecover Design System
    Production-grade expandable audit item with correlation trace and JSON telemetry.
    ──────────────────────────────────────────────────────────────────────────── */
 

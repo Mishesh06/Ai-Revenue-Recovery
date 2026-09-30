@@ -8,7 +8,7 @@ import { AnimatedNumber } from "./AnimatedNumber";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   MetricWidget — RecoverAI Design System
+   MetricWidget — PayRecover Design System
    Premium KPI card with color variants, trend indicators, and smooth Framer Motion entrance.
    ──────────────────────────────────────────────────────────────────────────── */
 

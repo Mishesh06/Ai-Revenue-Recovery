@@ -11,7 +11,7 @@ import { AuditEventOut } from "@/types/api";
 import { cn, truncateId } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CorrelationChainFlow — RecoverAI Governance Engine
+   CorrelationChainFlow — PayRecover Governance Engine
    Visualizes the 7-node correlation trace for any audit event:
    Transaction → Prediction → AI Decision → Recommendation → Policy Evaluation → Recovery Action → Attempt
    ──────────────────────────────────────────────────────────────────────────── */

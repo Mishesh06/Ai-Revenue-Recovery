@@ -11,7 +11,7 @@ import {
 import { cn, truncateId } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   MerchantSwitcher — RecoverAI Design System
+   MerchantSwitcher — PayRecover Design System
    Enterprise multi-tenant merchant workspace switcher with search,
    custom merchant ID entry, and Framer Motion animation.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -34,14 +34,14 @@ export const PRESET_MERCHANTS: MerchantOrg[] = [
   },
   {
     id: "e44d9f64-42cb-4bc1-90c7-024dc6c39f04",
-    name: "Razorpay Enterprise A",
+    name: "PayRecover Enterprise A",
     tier: "Enterprise Tier",
     currency: "INR (₹)",
     environment: "LIVE",
   },
   {
     id: "8f7e2dfa-1c39-4d65-8b9a-4c28f6d2e8b0",
-    name: "Razorpay Digital B",
+    name: "PayRecover Digital B",
     tier: "Growth Tier",
     currency: "INR (₹)",
     environment: "LIVE",
@@ -185,7 +185,7 @@ export function MerchantSwitcher() {
               <div className="flex items-center justify-between px-1.5 py-1 mb-1.5">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--fg-tertiary)] flex items-center gap-1.5">
                   <ShieldCheck className="w-3 h-3 text-[var(--brand-primary)]" />
-                  Razorpay Workspaces
+                  PayRecover Workspaces
                 </span>
                 <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[var(--status-success-subtle)] text-[var(--status-success-text)] font-semibold">
                   MULTI-TENANT

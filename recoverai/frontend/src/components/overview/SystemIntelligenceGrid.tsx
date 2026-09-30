@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { AgentSummary } from "@/types/api";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SystemIntelligenceGrid — RecoverAI Overview Section 6
+   SystemIntelligenceGrid — PayRecover Overview Section 6
    Visualizes the 5 core intelligence layers, active agent versions,
    inference latencies, and fallback reliability status.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -90,7 +90,7 @@ const MODULES: IntelligenceModule[] = [
   {
     id: "action_adapter",
     name: "Action Execution Adapter",
-    version: "RazorpayLiveAdapter v3.2",
+    version: "PayRecoverLiveAdapter v3.2",
     question: "How is the action dispatched?",
     type: "ADAPTER",
     status: "OPERATIONAL",

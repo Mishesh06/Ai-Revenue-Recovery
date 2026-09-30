@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   PageHeader — RecoverAI Design System
+   PageHeader — PayRecover Design System
    Standard page title with optional description, badge, and actions.
    Replaces the repeated `div.flex + h2` pattern across all pages.
    ──────────────────────────────────────────────────────────────────────────── */

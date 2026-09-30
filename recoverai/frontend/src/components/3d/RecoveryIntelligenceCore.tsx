@@ -20,7 +20,7 @@ export interface RecoveryIntelligenceCoreProps {
 }
 
 const ENGINE_PIPELINE_STAGES = [
-  { id: "ingest", name: "Razorpay Ingest", type: "STREAM", latency: "<1ms", status: "ONLINE", color: "var(--status-info)" },
+  { id: "ingest", name: "PayRecover Ingest", type: "STREAM", latency: "<1ms", status: "ONLINE", color: "var(--status-info)" },
   { id: "ml", name: "RecoveryPredictor", type: "GBDT v1.3", latency: "42ms", status: "CALIBRATED", color: "var(--brand-primary)" },
   { id: "diag", name: "DiagnosisAgent", type: "LLM v2.1", latency: "118ms", status: "ACTIVE", color: "var(--status-info)" },
   { id: "plan", name: "RecoveryPlanner", type: "PLANNER v2.0", latency: "80ms", status: "ACTIVE", color: "var(--status-review)" },

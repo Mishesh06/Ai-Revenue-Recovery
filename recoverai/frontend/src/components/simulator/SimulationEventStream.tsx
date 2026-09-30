@@ -11,7 +11,7 @@ import { AuditEventOut } from "@/types/api";
 import { formatTime, formatCurrency, cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SimulationEventStream — RecoverAI Design System
+   SimulationEventStream — PayRecover Design System
    Live timestamped event stream display for simulation runs.
    ──────────────────────────────────────────────────────────────────────────── */
 

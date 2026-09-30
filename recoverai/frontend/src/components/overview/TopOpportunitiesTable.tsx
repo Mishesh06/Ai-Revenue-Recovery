@@ -9,7 +9,7 @@ import { StatusBadge, ConfidenceBadge, PolicyDecisionBadge } from "@/components/
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   TopOpportunitiesTable — RecoverAI Design System
+   TopOpportunitiesTable — PayRecover Design System
    High-density fintech table displaying top high-value recovery opportunities.
    ──────────────────────────────────────────────────────────────────────────── */
 

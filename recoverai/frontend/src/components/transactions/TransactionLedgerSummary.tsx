@@ -7,7 +7,7 @@ import { CreditCard, AlertCircle, CheckCircle2, Percent, ShieldCheck } from "luc
 import { formatCurrency, formatPercent } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   TransactionLedgerSummary — RecoverAI Transactions KPI Strip
+   TransactionLedgerSummary — PayRecover Transactions KPI Strip
    Financial ledger overview showing gross ingested volume, failed payments,
    recovered capital, and policy clearance rates.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -39,7 +39,7 @@ export function TransactionLedgerSummary({
         variant="default"
         icon={CreditCard}
         size="md"
-        description="Razorpay gateway stream"
+        description="PayRecover gateway stream"
         suffix="tx"
       />
 

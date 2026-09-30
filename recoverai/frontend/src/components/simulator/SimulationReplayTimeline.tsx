@@ -134,12 +134,12 @@ function getEventNarrative(evt: AuditEventOut): EventNarrative {
         badge: "DECLINED",
         badgeColor: "bg-[var(--status-danger-subtle)] text-[var(--status-danger-text)] border-[var(--status-danger-border)]",
         statusDot: "bg-[var(--status-danger)]",
-        actor: data.actor || "Razorpay Ingest Gateway",
+        actor: data.actor || "PayRecover Ingest Gateway",
         icon: CreditCard,
         chips: [
           ...(amountStr ? [{ label: "Gross Failed Amount", value: amountStr, isHighlight: true }] : []),
           { label: "Decline Code", value: String(code) },
-          { label: "Ingest Gateway", value: "Razorpay" },
+          { label: "Ingest Gateway", value: "PayRecover" },
         ],
         technicalFields: baseTechnicalFields,
       };
@@ -150,7 +150,7 @@ function getEventNarrative(evt: AuditEventOut): EventNarrative {
       const windowMin = data.detected_window_minutes || 120;
       const isRec = data.is_recoverable !== false;
       const narrative = isRec
-        ? `RecoverAI evaluated the decline code and determined the transaction is eligible for autonomous recovery within a ${windowMin}-minute operational window.`
+        ? `PayRecover evaluated the decline code and determined the transaction is eligible for autonomous recovery within a ${windowMin}-minute operational window.`
         : `Failure manager evaluated the decline code and determined the transaction is protected by merchant policy guardrails.`;
 
       return {
@@ -374,7 +374,7 @@ function getEventNarrative(evt: AuditEventOut): EventNarrative {
     case "ActionOutcomeUnknown": {
       return {
         title: "9. Gateway Timeout & Failover Lock Engaged",
-        narrative: `The payment gateway adapter timed out without definitive confirmation. RecoverAI reserved the idempotency lock to halt blind duplicate retries and routed the case for operator verification.`,
+        narrative: `The payment gateway adapter timed out without definitive confirmation. PayRecover reserved the idempotency lock to halt blind duplicate retries and routed the case for operator verification.`,
         badge: "TIMEOUT LOCKED",
         badgeColor: "bg-[var(--status-info-subtle)] text-[var(--status-info-text)] border-[var(--status-info-border)]",
         statusDot: "bg-[var(--status-info)]",
@@ -455,7 +455,7 @@ function getEventNarrative(evt: AuditEventOut): EventNarrative {
         badge: "AUDIT EVENT",
         badgeColor: "bg-[var(--bg-raised)] text-[var(--fg-secondary)] border-[var(--border-subtle)]",
         statusDot: "bg-[var(--fg-tertiary)]",
-        actor: data.actor || "RecoverAI Core",
+        actor: data.actor || "PayRecover Core",
         icon: Info,
         chips: [
           { label: "Event Type", value: eventType, isHighlight: true },

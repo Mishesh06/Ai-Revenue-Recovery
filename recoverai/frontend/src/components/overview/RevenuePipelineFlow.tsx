@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RevenuePipelineFlow — RecoverAI Design System
+   RevenuePipelineFlow — PayRecover Design System
    Signature Fintech Visualization showing the 7-stage autonomous recovery flow:
    Failed Payments → Detection → AI Analysis → Recovery Opportunity → Policy Gate → Execution → Recovered Revenue
    ──────────────────────────────────────────────────────────────────────────── */
@@ -36,7 +36,7 @@ const STAGES: PipelineStage[] = [
     label: "Failed Payments",
     sublabel: "Ingestion Stream",
     icon: CreditCard,
-    description: "Real-time webhook capture of Razorpay failed transactions across UPI, Cards, and Netbanking.",
+    description: "Real-time webhook capture of PayRecover failed transactions across UPI, Cards, and Netbanking.",
     telemetry: "0.14ms ingestion latency",
     status: "operational",
     accentColor: "var(--status-danger)",
@@ -96,7 +96,7 @@ const STAGES: PipelineStage[] = [
     label: "Execution",
     sublabel: "Action Adapter",
     icon: Play,
-    description: "Dispatches optimal interventions via Razorpay APIs: smart timing retries, intent switches, or user nudges.",
+    description: "Dispatches optimal interventions via payment gateway APIs: smart timing retries, intent switches, or user nudges.",
     telemetry: "Idempotent execution",
     status: "operational",
     accentColor: "var(--status-info)",

@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   DataTable — RecoverAI Design System
+   DataTable — PayRecover Design System
    Canonical table wrapper with pagination controls.
    Replaces duplicated Table+pagination patterns in recovery, transactions, audit.
    ──────────────────────────────────────────────────────────────────────────── */

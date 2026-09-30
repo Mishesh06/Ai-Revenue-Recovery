@@ -8,7 +8,7 @@ import { cardVariants } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   MetricCard — RecoverAI Design System
+   MetricCard — PayRecover Design System
    High-hierarchy fintech KPI card with tabular financial numbers,
    status accent bar, micro-trend indicator, and spring entrance.
    ──────────────────────────────────────────────────────────────────────────── */

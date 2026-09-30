@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   LiveActivityFeed — RecoverAI Design System
+   LiveActivityFeed — PayRecover Design System
    Live audit event stream with timeline motion and expandable JSON telemetry.
    ──────────────────────────────────────────────────────────────────────────── */
 

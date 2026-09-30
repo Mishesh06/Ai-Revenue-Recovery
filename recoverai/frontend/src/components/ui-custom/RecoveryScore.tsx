@@ -5,7 +5,7 @@ import { BrainCircuit, Sparkles, ShieldCheck } from "lucide-react";
 import { formatPercent, cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   RecoveryScore — RecoverAI Design System
+   RecoveryScore — PayRecover Design System
    Visualizes calibrated ML recovery probability scores with radial or linear gauges,
    confidence intervals, and risk-adjusted probability bands.
    ──────────────────────────────────────────────────────────────────────────── */

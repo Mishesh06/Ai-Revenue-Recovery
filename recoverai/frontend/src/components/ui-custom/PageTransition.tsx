@@ -6,7 +6,7 @@ import { pageVariants, usePrefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   PageTransition — RecoverAI Design System
+   PageTransition — PayRecover Design System
    Fluid page transition container with calibrated blur reveal and upward settle.
    Respects user prefers-reduced-motion preferences.
    ──────────────────────────────────────────────────────────────────────────── */

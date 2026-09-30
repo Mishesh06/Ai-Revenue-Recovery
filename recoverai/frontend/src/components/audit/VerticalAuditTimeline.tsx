@@ -13,7 +13,7 @@ import { formatDateTime, formatRelativeTime, truncateId, cn } from "@/lib/utils"
 import { useToast } from "@/context/ToastContext";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   VerticalAuditTimeline — RecoverAI Progressive Audit Timeline
+   VerticalAuditTimeline — PayRecover Progressive Audit Timeline
    Sophisticated, vertical progressive timeline communicating trust, traceability,
    and financial safety without visual noise.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -86,7 +86,7 @@ function getActor(eventType: string, eventData: any): string {
   if (eventData?.agent) return eventData.agent;
 
   const e = eventType.toUpperCase();
-  if (e.includes("PAYMENT") || e.includes("OPPORTUNITY")) return "Razorpay Ingest";
+  if (e.includes("PAYMENT") || e.includes("OPPORTUNITY")) return "PayRecover Ingest";
   if (e.includes("DIAGNOS")) return "DiagnosisAgent v2.1";
   if (e.includes("PREDICT")) return "RecoveryPredictor v1.3";
   if (e.includes("PLAN")) return "RecoveryPlanner v2.0";
@@ -94,7 +94,7 @@ function getActor(eventType: string, eventData: any): string {
   if (e.includes("EXECUTE") || e.includes("SUCCEED") || e.includes("FAIL")) return "ActionAdapter v3.2";
   if (e.includes("REVIEW")) return "Human Operator";
   if (e.includes("CLOSED")) return "Settlement Ledger";
-  return "RecoverAI Core";
+  return "PayRecover Core";
 }
 
 export function VerticalAuditTimeline({

@@ -5,7 +5,7 @@ import { Bot, Clock, Activity, ArrowRight, CheckCircle2, AlertCircle } from "luc
 import { cn, formatLatency } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   AIActivity — RecoverAI Design System
+   AIActivity — PayRecover Design System
    Visualizes agent execution status, latency, diagnosis categories,
    and evidence payload insights.
    ──────────────────────────────────────────────────────────────────────────── */

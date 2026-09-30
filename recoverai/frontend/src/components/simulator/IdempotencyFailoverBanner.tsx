@@ -10,8 +10,8 @@ import {
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   IdempotencyFailoverBanner — RecoverAI Safety Architecture (Scenario C)
-   Demonstrates: "RecoverAI did NOT blindly retry."
+   IdempotencyFailoverBanner — PayRecover Safety Architecture (Scenario C)
+   Demonstrates: "PayRecover did NOT blindly retry."
    Visualizes safe failover, idempotency reservation, and human review escalation.
    ──────────────────────────────────────────────────────────────────────────── */
 
@@ -58,7 +58,7 @@ export function IdempotencyFailoverBanner({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-bold text-[var(--status-danger-text)] tracking-tight">
-                Critical Safety Gate: RecoverAI did NOT blindly retry
+                Critical Safety Gate: PayRecover did NOT blindly retry
               </h3>
               <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-[var(--status-danger)] text-white">
                 IDEMPOTENCY ENFORCED

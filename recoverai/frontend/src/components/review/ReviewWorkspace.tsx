@@ -18,7 +18,7 @@ import { formatCurrency, formatDateTime, formatRelativeTime, truncateId, cn } fr
 import { useToast } from "@/context/ToastContext";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   ReviewWorkspace — RecoverAI 3-Column Human Decision Workspace
+   ReviewWorkspace — PayRecover 3-Column Human Decision Workspace
    LEFT: Case & Transaction Context
    CENTER: AI Recommendation + Structured Evidence & Policy Bounds
    RIGHT: Human Decision Panel & Traceable Audit Timeline
@@ -314,7 +314,7 @@ export function ReviewWorkspace({
                 </span>
                 <p className="text-[11px] text-[var(--status-warning-text)] leading-relaxed">
                   {confirmingAction === "APPROVED"
-                    ? `This will immediately dispatch the recovery action on Razorpay for ${formatCurrency(amount, currency)}.`
+                    ? `This will immediately dispatch the recovery action on PayRecover for ${formatCurrency(amount, currency)}.`
                     : "This will terminate recovery attempts and safely close this case."}
                 </p>
                 <div className="flex items-center gap-2">

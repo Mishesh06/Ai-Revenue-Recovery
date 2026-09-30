@@ -17,7 +17,7 @@ import { fadeVariants } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   FeedbackStates — RecoverAI Design System
+   FeedbackStates — PayRecover Design System
    LoadingState · SkeletonBlock · SkeletonMetricCard · SkeletonTable · ErrorState · EmptyState
    Calm, technical, and informative state indicators.
    ──────────────────────────────────────────────────────────────────────────── */
@@ -122,7 +122,7 @@ function getErrorMeta(error: unknown): {
       return {
         icon: WifiOff,
         title: "Connection Timeout",
-        message: "Could not reach the RecoverAI backend service. Check network or server state.",
+        message: "Could not reach the PayRecover backend service. Check network or server state.",
       };
     }
     if (msg.includes("401") || msg.includes("403") || msg.includes("unauthorized")) {

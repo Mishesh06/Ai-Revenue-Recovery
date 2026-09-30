@@ -6,7 +6,7 @@ import { fadeVariants } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   SectionHeader — RecoverAI Design System
+   SectionHeader — PayRecover Design System
    Cinematic section and page header with category kicker, badge, actions,
    and clean fintech visual hierarchy.
    ──────────────────────────────────────────────────────────────────────────── */
